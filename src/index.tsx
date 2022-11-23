@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './styles/theme';
+import '@fontsource/montserrat';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

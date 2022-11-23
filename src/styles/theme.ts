@@ -4,6 +4,9 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     custom: { [key: string]: string | number };
   }
+  interface Palette {
+    custom: { [key: string]: string | number };
+  }
 }
 
 export const theme = createTheme({
@@ -26,7 +29,7 @@ export const theme = createTheme({
       greener: '#539713',
       white: '#FFFFFF',
       bgr: '#F5F5F5',
-      disabled: '#a19eaa',
+      disabled: '#A19EAA',
     },
   },
   spacing: [4, 8, 16, 24, 32, 64],
