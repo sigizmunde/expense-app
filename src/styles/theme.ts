@@ -2,10 +2,10 @@ import { createTheme } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface PaletteOptions {
-    custom: { [key: string]: string | number };
+    custom: { [key: string]: string };
   }
   interface Palette {
-    custom: { [key: string]: string | number };
+    custom: { [key: string]: string };
   }
 }
 
