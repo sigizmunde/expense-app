@@ -1,22 +1,22 @@
 import { styled } from '@mui/material/styles';
-import { theme } from '../../styles/theme';
 import { ButtonPrimary } from './ButtonPrimary';
 
-export const ButtonSecondary = styled(ButtonPrimary)<{ colorVersion: string }>`
-  height: 33px;
-  &,
-  &:hover,
-  &:focus {
-    background-color: ${(p) =>
-      p.colorVersion
-        ? theme.palette.custom[p.colorVersion] || 'inherit'
-        : theme.palette.custom.black};
+export const ButtonSecondary = styled(ButtonPrimary)<{ colorversion: string }>(
+  ({ theme, colorversion }) => {
+    const colorV = colorversion
+      ? theme.palette.custom[colorversion] || 'inherit'
+      : theme.palette.custom.black;
+    return {
+      height: '33px',
+      '&, &:hover, &:focus': {
+        'background-color': colorV,
+      },
+      '&:hover, &:focus': {
+        opacity: '70%',
+      },
+      '&:disabled': {
+        opacity: 1,
+      },
+    };
   }
-  &:hover,
-  &:focus {
-    opacity: 70%;
-  }
-  &:disabled {
-    opacity: 1;
-  }
-`;
+);
