@@ -13,7 +13,7 @@ const Button = styled(MuiButton)(({ theme }) => ({
     'background-color': 'custom.disabled',
     opacity: 0.5,
   },
-  '&:hover, &:active': {
+  '&, &:hover, &:active': {
     'box-shadow': 'none',
   },
 }));
