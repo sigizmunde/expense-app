@@ -5,16 +5,16 @@ import { styled } from '@mui/material/styles';
 const Button = styled(MuiButton)(({ theme }) => ({
   height: '44px',
   width: '100%',
-  'border-radius': '2px',
+  borderRadius: '2px',
   ...theme.typography.h5,
-  'text-transform': 'none',
+  textTransform: 'none',
   '&:disabled': {
-    color: 'primary.contrastText',
-    'background-color': 'custom.disabled',
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.custom.disabled,
     opacity: 0.5,
   },
   '&, &:hover, &:active': {
-    'box-shadow': 'none',
+    boxShadow: 'none',
   },
 }));
 

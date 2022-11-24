@@ -9,7 +9,7 @@ export const ButtonSecondary = styled(ButtonPrimary)<{ colorversion: string }>(
     return {
       height: '33px',
       '&, &:hover, &:focus': {
-        'background-color': colorV,
+        backgroundColor: colorV,
       },
       '&:hover, &:focus': {
         opacity: '70%',
