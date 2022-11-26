@@ -59,7 +59,7 @@ export const logInUser = createAsyncThunk<ILogInTokens, IAuth>(
   }
 );
 
-export const logOutUser = createAsyncThunk<void, never>(
+export const logOutUser = createAsyncThunk(
   'auth/logOut',
   async (_, { rejectWithValue }) => {
     try {
