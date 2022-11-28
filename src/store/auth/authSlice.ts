@@ -1,7 +1,13 @@
 import { AnyAction, Action } from 'redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { logInUser, logOutUser, refreshUser, registerUser } from './authThunk';
-import { ILogInTokens, IAuthState } from '../../types/auth';
+import {
+  getUser,
+  logInUser,
+  logOutUser,
+  refreshUser,
+  registerUser,
+} from './authThunk';
+import { ILogInTokens, IAuthState, IUser } from '../../types/auth';
 
 const initialState: IAuthState = {
   accessToken: null,
@@ -54,6 +60,11 @@ export const authSlice = createSlice({
           state.isLoggedIn = true;
         }
       )
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
+        state.isFetching = false;
+        state.isLoggedIn = true;
+        state.user = action.payload;
+      })
       .addCase(refreshUser.rejected, (state) => {
         Object.assign(state, initialState);
       })

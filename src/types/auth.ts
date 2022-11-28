@@ -22,4 +22,5 @@ export interface IAuthState {
   isLoggedIn: boolean;
   isFetching: boolean;
   message: string;
+  user?: IUser;
 }

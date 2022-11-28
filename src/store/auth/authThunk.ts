@@ -94,3 +94,19 @@ export const refreshUser = createAsyncThunk<
     return rejectWithValue(error.response.data);
   }
 });
+
+export const getUser = createAsyncThunk(
+  'auth/reconnect',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get('/users/self');
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<IValidationError>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
