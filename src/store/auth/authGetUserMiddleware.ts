@@ -5,10 +5,12 @@ export const authGetUserMiddleware: Middleware =
   (store: MiddlewareAPI<any>) =>
   (next: Dispatch<Action>) =>
   (action: Action) => {
+    console.log('hello there!');
     if (
-      action.type === refreshUser.fulfilled ||
-      action.type === logInUser.fulfilled
+      action.type === refreshUser.fulfilled.type ||
+      action.type === logInUser.fulfilled.type
     ) {
+      console.log('getting user');
       store.dispatch(getUser());
     }
     next(action);
