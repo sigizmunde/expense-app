@@ -12,6 +12,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authReconnectMiddleware } from './auth/authReconnectMiddleware';
+import { authGetUserMiddleware } from './auth/authGetUserMiddleware';
 
 const persistConfig = {
   key: 'expense_app',
@@ -30,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authReconnectMiddleware),
+    }).concat(authReconnectMiddleware, authGetUserMiddleware),
 });
 
 export const persistor = persistStore(store);
