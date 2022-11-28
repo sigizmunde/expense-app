@@ -43,6 +43,7 @@ export const authSlice = createSlice({
           state.isFetching = false;
           state.accessToken = action.payload.accessToken;
           state.refreshToken = action.payload.refreshToken;
+          state.isLoggedIn = true;
         }
       )
       .addCase(
@@ -50,12 +51,14 @@ export const authSlice = createSlice({
         (state, action: PayloadAction<{ accessToken: string }>) => {
           state.isFetching = false;
           state.accessToken = action.payload.accessToken;
+          state.isLoggedIn = true;
         }
       )
       .addCase(refreshUser.rejected, (state) => {
         Object.assign(state, initialState);
       })
       .addCase(logOutUser.fulfilled, (state) => {
+        Object.assign(state, initialState);
         state.isFetching = false;
         state.message = 'Successfully logged out.';
       })
