@@ -4,12 +4,15 @@ import { styled } from '@mui/material/styles';
 import { InputMain } from './InputMain';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOff from '@mui/icons-material/VisibilityOffOutlined';
 
 const Input = styled(InputMain)(({ theme }) => ({
   '& .MuiButtonBase-root': {
     color: theme.palette.primary.contrastText,
+  },
+  '& .Mui-error button': {
+    color: theme.palette.error.main,
   },
 }));
 
