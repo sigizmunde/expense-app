@@ -96,7 +96,7 @@ export const refreshUser = createAsyncThunk<
 });
 
 export const getUser = createAsyncThunk(
-  'auth/reconnect',
+  'auth/getUser',
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get('/users/self');
