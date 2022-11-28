@@ -1,4 +1,7 @@
 import { createTheme } from '@mui/material';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/400.css';
 
 declare module '@mui/material/styles' {
   interface PaletteOptions {
@@ -51,7 +54,7 @@ export const theme = createTheme({
       textTransform: 'uppercase',
       fontSize: '56px',
       fontWeight: 700,
-      letterSpacing: '3%',
+      letterSpacing: '0.03',
       lineHeight: '84px',
     },
     h2: {
