@@ -30,6 +30,7 @@ export const theme = createTheme({
       black: '#1D283A',
       violet: '#D4CCF1',
       blue: '#69B0FF',
+      blue70: '#D9E7F8',
       orange: '#F08E5B',
       red: '#EE5E5E',
       green: '#B2D0AD',
