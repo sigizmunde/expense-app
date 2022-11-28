@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-axios.defaults.baseURL = 'https://incode-backend-dev.herokuapp.com';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
