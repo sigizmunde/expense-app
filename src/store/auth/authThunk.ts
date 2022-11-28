@@ -78,12 +78,11 @@ export const logOutUser = createAsyncThunk(
 export const refreshUser = createAsyncThunk<
   { accessToken: string },
   { refreshToken: string }
->('auth/reconnect', async (userCredentials, { rejectWithValue }) => {
+>('auth/reconnect', async ({ refreshToken }, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post<ILogInTokens>(
-      '/auth/login',
-      userCredentials
-    );
+    const { data } = await axios.post<ILogInTokens>('/auth/refresh', {
+      refreshToken,
+    });
     token.set(data.accessToken);
     return data;
   } catch (err) {
