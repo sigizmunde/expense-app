@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RejectedActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import axios, { AxiosError } from 'axios';
 import { IAuth, ILogInTokens, IUser } from '../../types/auth';
 import { IValidationError } from '../../types/utils';
@@ -75,3 +74,23 @@ export const logOutUser = createAsyncThunk(
     }
   }
 );
+
+export const refreshUser = createAsyncThunk<
+  { accessToken: string },
+  { refreshToken: string }
+>('auth/reconnect', async (userCredentials, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post<ILogInTokens>(
+      '/auth/login',
+      userCredentials
+    );
+    token.set(data.accessToken);
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<IValidationError>;
+    if (!error.response) {
+      throw err;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});

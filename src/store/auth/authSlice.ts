@@ -1,6 +1,6 @@
 import { AnyAction, Action } from 'redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { logInUser, logOutUser, registerUser } from './authThunk';
+import { logInUser, logOutUser, refreshUser, registerUser } from './authThunk';
 import { ILogInTokens, IAuthState } from '../../types/auth';
 
 const initialState: IAuthState = {
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.fulfilled, (state, { payload }) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.isFetching = false;
         state.message = 'Successfully registered. You may now log in.';
       })
@@ -45,11 +45,21 @@ export const authSlice = createSlice({
           state.refreshToken = action.payload.refreshToken;
         }
       )
-      .addCase(logOutUser.fulfilled, (state, action) => {
+      .addCase(
+        refreshUser.fulfilled,
+        (state, action: PayloadAction<{ accessToken: string }>) => {
+          state.isFetching = false;
+          state.accessToken = action.payload.accessToken;
+        }
+      )
+      .addCase(refreshUser.rejected, (state) => {
+        Object.assign(state, initialState);
+      })
+      .addCase(logOutUser.fulfilled, (state) => {
         state.isFetching = false;
         state.message = 'Successfully logged out.';
       })
-      .addMatcher(isPendingAction, (state, action) => {
+      .addMatcher(isPendingAction, (state) => {
         state.isFetching = true;
       })
       .addMatcher(isRejectedAction, (state, { payload }) => {
