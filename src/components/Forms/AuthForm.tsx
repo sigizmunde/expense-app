@@ -26,8 +26,8 @@ export const AuthForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: 'BenNoone',
-      password: 'Password1234',
+      username: '',
+      password: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
