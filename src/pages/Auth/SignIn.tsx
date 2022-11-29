@@ -15,6 +15,17 @@ export const SignIn: FC = () => {
           New Account
         </NestedLink>
       </FormSubtitle>
+      <FormSubtitle>
+        Forgot your password?{' '}
+        <NestedLink
+          href={''}
+          onClick={() => {
+            alert('Haha, no such page yet!');
+          }}
+        >
+          Reset Password?
+        </NestedLink>
+      </FormSubtitle>
     </>
   );
 };
