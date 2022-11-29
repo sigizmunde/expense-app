@@ -49,6 +49,7 @@ export const AuthForm = () => {
               onChange={formik.handleChange}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
+              autoComplete="off"
             />
             <InputPassword
               id="password"

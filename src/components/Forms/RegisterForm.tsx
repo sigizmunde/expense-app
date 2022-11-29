@@ -61,6 +61,7 @@ export const RegisterForm = () => {
               helperText={
                 formik.touched.displayName && formik.errors.displayName
               }
+              autoComplete="off"
             />
             <InputMain
               id="username"
@@ -70,6 +71,7 @@ export const RegisterForm = () => {
               onChange={formik.handleChange}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
+              autoComplete="off"
             />
             <InputPassword
               id="password"
