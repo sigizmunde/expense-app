@@ -47,7 +47,7 @@ export const RegisterForm = () => {
     <div>
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
-          <Typography variant="h1">Sign in</Typography>
+          <Typography variant="h1">Sign up</Typography>
           <FieldsBox>
             <InputMain
               id="displayName"
