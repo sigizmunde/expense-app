@@ -12,7 +12,7 @@ export const authReconnectMiddleware: Middleware =
   (next: Dispatch<ActionWithToken>) =>
   (action: ActionWithToken) => {
     if (
-      (action.type === 'persist/REHYDRATE' && action.payload.refreshToken) ||
+      (action.type === 'persist/REHYDRATE' && action.payload?.refreshToken) ||
       action.type === logInUser.rejected.type
     ) {
       store.dispatch(
