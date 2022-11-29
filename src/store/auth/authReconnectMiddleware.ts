@@ -1,5 +1,5 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
-import { logInUser, refreshUser } from '../auth/authThunk';
+import { logInUser, refreshUser } from './authThunk';
 
 interface ActionWithToken extends Action {
   payload: {
