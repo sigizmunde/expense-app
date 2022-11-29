@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { Auth } from './pages/Auth/Auth';
 import { SignIn } from './pages/Auth/SignIn';
 import { SignUp } from './pages/Auth/SignUp';
+import { Success } from './pages/Auth/Success';
 import { Main } from './pages/Main/Main';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         <Route index element={<Navigate to={'signin'} replace={true} />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="reset" element={<div>reset password</div>} />
+        <Route path="success" element={<Success />} />
       </Route>
 
       <Route path="/" element={<Main />}>
