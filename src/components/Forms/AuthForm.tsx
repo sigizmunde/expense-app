@@ -62,7 +62,7 @@ export const AuthForm = () => {
               helperText={formik.touched.password && formik.errors.password}
             />
           </FieldsBox>
-          <ButtonPrimary type="submit">Submit</ButtonPrimary>
+          <ButtonPrimary type="submit">Login</ButtonPrimary>
         </FormBox>
       </form>
     </div>

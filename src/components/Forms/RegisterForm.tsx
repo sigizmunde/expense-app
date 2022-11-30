@@ -99,7 +99,7 @@ export const RegisterForm = () => {
               }
             />
           </FieldsBox>
-          <ButtonPrimary type="submit">Submit</ButtonPrimary>
+          <ButtonPrimary type="submit">Sign Up</ButtonPrimary>
         </FormBox>
       </form>
     </div>
