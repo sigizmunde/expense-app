@@ -1,6 +1,5 @@
 import { FormControlLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { relative } from 'node:path/win32';
 
 export const StyledCheckbox = styled(FormControlLabel)(({ theme }) => ({
   display: 'flex',
