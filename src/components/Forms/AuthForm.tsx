@@ -7,6 +7,7 @@ import { IAuth } from '../../types/auth';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { InputMain } from '../Inputs/InputMain';
 import { InputPassword } from '../Inputs/InputPassword';
+import { WarningDispatcher } from '../WarningDispatcher/WarningDispatcher';
 import { FieldsBox, FormBox } from './Form.styled';
 
 const validationSchema = yup.object({
@@ -37,6 +38,7 @@ export const AuthForm = () => {
 
   return (
     <div>
+      <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
           <Typography variant="h1">Sign in</Typography>
