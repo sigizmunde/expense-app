@@ -1,12 +1,17 @@
+import { Checkbox } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import * as yup from 'yup';
+import { LINKS } from '../../const';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { registerUser } from '../../store/auth/authThunk';
 import { IAuth } from '../../types/auth';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
+import { StyledCheckbox } from '../Checkbox/StyledCheckbox';
 import { InputMain } from '../Inputs/InputMain';
 import { InputPassword } from '../Inputs/InputPassword';
+import { FormSubtitle, NestedLink } from '../Typography/Typography';
 import { FieldsBox, FormBox } from './Form.styled';
 
 const validationSchema = yup.object({
@@ -25,6 +30,12 @@ const validationSchema = yup.object({
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
+
+  const [agreed, setAgreed] = useState(false);
+
+  const toggleAgreed = () => {
+    setAgreed((agreed) => !agreed);
+  };
 
   const handleRegisterUser = (values: IAuth) => {
     dispatch(registerUser(values));
@@ -98,8 +109,35 @@ export const RegisterForm = () => {
                 formik.touched.password && formik.errors.confirmPassword
               }
             />
+            <StyledCheckbox
+              control={<Checkbox checked={agreed} onChange={toggleAgreed} />}
+              label={
+                <FormSubtitle>
+                  By creating an account you agree to{' '}
+                  <NestedLink
+                    href={LINKS.termsOfUse}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    the terms of use
+                  </NestedLink>{' '}
+                  and our{' '}
+                  <NestedLink
+                    href={LINKS.policy}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    privacy policy
+                  </NestedLink>
+                  .
+                </FormSubtitle>
+              }
+            />
           </FieldsBox>
-          <ButtonPrimary type="submit">Sign Up</ButtonPrimary>
+
+          <ButtonPrimary type="submit" disabled={!agreed}>
+            Sign Up
+          </ButtonPrimary>
         </FormBox>
       </form>
     </div>

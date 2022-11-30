@@ -32,7 +32,6 @@ export const InputPassword: FC<TextFieldProps> = (props) => {
     <Input
       {...props}
       variant="standard"
-      id="standard-adornment-password"
       type={showPassword ? 'text' : 'password'}
       autoComplete="off"
       InputProps={{
