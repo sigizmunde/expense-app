@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import Typography from '@mui/material/Typography';
 import success from '../../images/success.svg';
 import { ButtonPrimary } from '../../components/Buttons/ButtonPrimary';
