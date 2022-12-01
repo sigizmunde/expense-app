@@ -28,7 +28,7 @@ const LinkWrapper = styled(Box)(({ theme }) => ({
     ...theme.typography.h5,
     textDecoration: 'none',
     position: 'relative',
-    opacity: 0.8,
+    opacity: 0.54,
     '&::after': {
       content: null,
       height: '1px',
