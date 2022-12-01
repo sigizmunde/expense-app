@@ -10,5 +10,5 @@ const Img = styled('img')`
 `;
 
 export const Logo: FC = () => {
-  return <Img src={logo} />;
+  return <Img src={logo} alt="app logo" />;
 };

@@ -41,7 +41,7 @@ export const authSlice = createSlice({
     builder
       .addCase(registerUser.fulfilled, (state) => {
         state.isFetching = false;
-        state.message = 'Successfully registered. You may now log in.';
+        state.message = 'success';
       })
       .addCase(
         logInUser.fulfilled,
