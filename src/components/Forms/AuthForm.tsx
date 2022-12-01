@@ -22,6 +22,7 @@ export const AuthForm = () => {
   const dispatch = useAppDispatch();
 
   const handleLoginUser = (values: IAuth) => {
+    values.username = values.username.trim();
     dispatch(logInUser(values));
   };
 
