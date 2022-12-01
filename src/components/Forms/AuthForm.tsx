@@ -38,7 +38,7 @@ export const AuthForm = () => {
   });
 
   return (
-    <div>
+    <>
       <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
@@ -68,6 +68,6 @@ export const AuthForm = () => {
           <ButtonPrimary type="submit">Login</ButtonPrimary>
         </FormBox>
       </form>
-    </div>
+    </>
   );
 };

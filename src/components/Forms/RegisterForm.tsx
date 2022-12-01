@@ -58,7 +58,7 @@ export const RegisterForm = () => {
   });
 
   return (
-    <div>
+    <>
       <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
@@ -144,6 +144,6 @@ export const RegisterForm = () => {
           </ButtonPrimary>
         </FormBox>
       </form>
-    </div>
+    </>
   );
 };
