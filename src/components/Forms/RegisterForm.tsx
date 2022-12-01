@@ -39,6 +39,8 @@ export const RegisterForm = () => {
   };
 
   const handleRegisterUser = (values: IAuth) => {
+    values.displayName = values.displayName?.trim();
+    values.username = values.username.trim();
     dispatch(registerUser(values));
   };
 
@@ -56,7 +58,7 @@ export const RegisterForm = () => {
   });
 
   return (
-    <div>
+    <>
       <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
@@ -142,6 +144,6 @@ export const RegisterForm = () => {
           </ButtonPrimary>
         </FormBox>
       </form>
-    </div>
+    </>
   );
 };

@@ -22,6 +22,7 @@ export const AuthForm = () => {
   const dispatch = useAppDispatch();
 
   const handleLoginUser = (values: IAuth) => {
+    values.username = values.username.trim();
     dispatch(logInUser(values));
   };
 
@@ -37,7 +38,7 @@ export const AuthForm = () => {
   });
 
   return (
-    <div>
+    <>
       <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
@@ -67,6 +68,6 @@ export const AuthForm = () => {
           <ButtonPrimary type="submit">Login</ButtonPrimary>
         </FormBox>
       </form>
-    </div>
+    </>
   );
 };
