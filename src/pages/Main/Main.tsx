@@ -1,17 +1,12 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { MainContainer } from '../../components/Containers/MainContainer';
-import { NavPanel } from '../../components/Containers/NavPanel';
-import { Logo } from '../../components/Logo/Logo';
-import { MainMenu } from '../../components/MainMenu/MainMenu';
+import { NavPanel } from '../../components/NavPanel/NavPanel';
 
 export const Main: FC = () => {
   return (
     <MainContainer>
-      <NavPanel>
-        <Logo />
-        <MainMenu />
-      </NavPanel>
+      <NavPanel />
       <Outlet />
     </MainContainer>
   );

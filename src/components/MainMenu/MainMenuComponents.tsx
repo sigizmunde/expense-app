@@ -13,7 +13,7 @@ export const MenuAppBar = styled(AppBar)(({ theme }) => ({
   flexShrink: 0,
   width: 'auto',
   position: 'relative',
-  marginTop: `calc(${theme.spacing(5)} * 4)`,
+  marginTop: `calc(${theme.spacing(5)} * 3)`,
   marginLeft: 'auto',
   marginRight: 'auto',
   backgroundColor: 'inherit',

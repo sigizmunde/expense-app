@@ -3,7 +3,6 @@ import { MenuAppBar, MenuLink } from './MainMenuComponents';
 import { ReactComponent as AnalyticsIcon } from '../../images/icons/menu-analytics.svg';
 import { ReactComponent as CategoriesIcon } from '../../images/icons/menu-categories.svg';
 import { ReactComponent as DashIcon } from '../../images/icons/menu-dash.svg';
-import { ReactComponent as LogoutIcon } from '../../images/icons/menu-logout.svg';
 import { ReactComponent as SettingsIcon } from '../../images/icons/menu-settings.svg';
 
 export const MainMenu: FC = () => {
