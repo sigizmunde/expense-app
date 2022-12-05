@@ -12,3 +12,12 @@ export interface IRouteProps {
   restricted?: boolean;
   children?: ReactNode;
 }
+
+interface IItem {
+  id: string;
+  text: string;
+}
+
+export interface IProps {
+  items: IItem[];
+}
