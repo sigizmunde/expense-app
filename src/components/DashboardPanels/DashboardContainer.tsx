@@ -9,6 +9,10 @@ export const DashboardContainerBox = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.bgr,
   gap: theme.spacing(3),
   padding: theme.spacing(3),
+  '& .MuiContainer-root': {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
 }));
 
 export const DashboardContainer: FC<GridProps & { children?: ReactNode }> = ({
