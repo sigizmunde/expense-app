@@ -15,7 +15,7 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 
 export const WarningDispatcher = () => {
   const dispatch = useAppDispatch();
-  const warningMessage = useAppSelector(authSelectors.getErrorMessage);
+  const warningMessage = useAppSelector(authSelectors.getMessage);
 
   let timeoutHandle: ReturnType<typeof setTimeout>;
 

@@ -1,5 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authSlice } from './auth/authSlice';
+import { dataSlice } from './data/dataSlice';
 import {
   persistStore,
   persistReducer,
@@ -13,6 +14,8 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { authReconnectMiddleware } from './auth/authReconnectMiddleware';
 import { authGetUserMiddleware } from './auth/authGetUserMiddleware';
+import { dataGetCategoriesMiddleware } from './data/dataGetCategoriesMiddleware';
+import { dataGetTransactionsMiddleware } from './data/dataGetTransactionsMiddleware';
 
 const persistConfig = {
   key: 'expense_app',
@@ -22,16 +25,26 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, authSlice.reducer);
 
+const rootReducer = combineReducers({
+  auth: persistedReducer,
+  data: dataSlice.reducer,
+});
+
 export const store = configureStore({
   reducer: {
-    persistedReducer,
+    rootReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authReconnectMiddleware, authGetUserMiddleware),
+    }).concat(
+      authReconnectMiddleware,
+      authGetUserMiddleware,
+      dataGetCategoriesMiddleware,
+      dataGetTransactionsMiddleware
+    ),
 });
 
 export const persistor = persistStore(store);

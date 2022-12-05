@@ -7,9 +7,10 @@ import {
   NestedLink,
 } from '../../components/Typography/Typography';
 import { Success } from './Success';
+import { authSelectors } from '../../store/auth/authSelectors';
 
 export const SignUp: FC = () => {
-  const message = useAppSelector((state) => state.persistedReducer.message);
+  const message = useAppSelector(authSelectors.getMessage);
 
   return (
     <>
