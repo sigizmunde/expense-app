@@ -1,4 +1,3 @@
-import { AnyAction, Action } from 'redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getUser,
@@ -8,6 +7,7 @@ import {
   registerUser,
 } from './authThunk';
 import { ILogInTokens, IAuthState, IUser } from '../../types/auth';
+import { isPendingAction, isRejectedAction } from '../actionTypeCheckers';
 
 const initialState: IAuthState = {
   accessToken: null,
@@ -17,24 +17,15 @@ const initialState: IAuthState = {
   message: '',
 };
 
-function isPendingAction(action: AnyAction): action is Action {
-  return action.type.endsWith('pending');
-}
-
-interface RejectedAction extends Action {
-  payload: { message: string };
-}
-
-function isRejectedAction(action: AnyAction): action is RejectedAction {
-  return action.type.endsWith('rejected');
-}
-
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     resetWarning: (state) => {
       state.message = '';
+    },
+    setWarning: (state, action: PayloadAction<{ message: string }>) => {
+      state.message = action.payload.message;
     },
   },
   extraReducers: (builder) => {
@@ -82,4 +73,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetWarning } = authSlice.actions;
+export const { resetWarning, setWarning } = authSlice.actions;

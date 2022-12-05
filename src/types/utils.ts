@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface IValidationError {
+export interface IFetchError {
   status?: number;
   statusCode?: number;
   message: string;
