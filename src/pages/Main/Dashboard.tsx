@@ -4,14 +4,14 @@ import { DashboardContainer } from '../../components/DashboardPanels/DashboardCo
 import { DashPanel } from '../../components/DashboardPanels/DashPanel';
 import { RightPanel } from '../../components/DashboardPanels/RightPanel';
 import { DashHeader } from '../../components/DashHeader/DashHeader';
-import { TransactionTable } from '../../components/TransactionsTable/TransactionsTable';
+import { TransactionsBoard } from '../../components/TransactionsBoard/TransactionsBoard';
 
 export const Dashboard: FC = () => {
   return (
     <DashboardContainer>
       <DashPanel>
         <DashHeader />
-        <TransactionTable />
+        <TransactionsBoard />
       </DashPanel>
       <RightPanel>
         <CategoriesTable />

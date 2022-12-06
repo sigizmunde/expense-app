@@ -6,7 +6,7 @@ export const DashPanel = styled(Container)(({ theme, ...props }) => ({
   width: '100%',
   flex: '7 7',
   display: 'flex',
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   flexDirection: 'column',
   gap: theme.spacing(3),
 }));

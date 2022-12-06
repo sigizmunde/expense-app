@@ -11,10 +11,10 @@ import Paper from '@mui/material/Paper';
 import { moneyNumToString } from '../../utils/moneyNumToString';
 import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
+import { TableContainer } from '@mui/material';
 
 const StyledTable = styled(Table)(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  minWidth: 700,
+  // minWidth: 700,
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -25,6 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.secondary,
     paddingTop: 0,
     paddingBottom: theme.spacing(1),
+    // borderTop: '2px ' + theme.palette.primary.contrastText + ' solid',
   },
   [`&.${tableCellClasses.body}`]: {
     ...theme.typography.subtitle1,
@@ -64,7 +65,7 @@ export const TransactionTable: FC = () => {
   const transactions = useAppSelector(dataSelectors.getTransactions);
 
   return (
-    <StyledTable aria-label="transactions table">
+    <StyledTable stickyHeader aria-label="transactions table">
       <TableHead>
         <TableRow>
           <StyledTableCell>#</StyledTableCell>
