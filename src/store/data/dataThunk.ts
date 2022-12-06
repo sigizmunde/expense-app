@@ -83,13 +83,14 @@ export const getTransactions = createAsyncThunk(
       limit = 10,
       sort = 'date',
       order = 'desc',
+      filter = '',
     }: ITransactionQueryProps,
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.get(
-        `/transactions?_sort=${sort}&_order=${order}&page=${page}&limit=${limit}`
-      );
+      let queryString = `?_sort=${sort}&_order=${order}&page=${page}&limit=${limit}`;
+      if (filter !== '') queryString += `&label[contains]=${filter}`;
+      const { data } = await axios.get(`/transactions${queryString}`);
       return {
         transactions: data.content || [],
         pagination: data.pagination || null,

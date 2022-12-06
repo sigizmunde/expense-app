@@ -50,4 +50,5 @@ export interface IPagination {
 export interface ITransactionQueryProps extends IPagination {
   sort?: string;
   order?: string;
+  filter?: string;
 }
