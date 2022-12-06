@@ -1,11 +1,13 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Container, styled } from '@mui/material';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
-import { moneyNumToString } from '../../utils/moneyNumToString';
 import { TransactionTable } from '../TransactionsTable/TransactionsTable';
 import { CardBox } from '../Containers/CardBox';
 import { PanelTitle } from '../Typography/Typography';
+import { SearchInput } from '../Inputs/SearchInput';
+import { getTransactions } from '../../store/data/dataThunk';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 
 const TableContainer = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(1),
@@ -13,14 +15,43 @@ const TableContainer = styled(Container)(({ theme }) => ({
   overflow: 'auto',
 }));
 
+const FlexContainer = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignContent: 'end',
+}));
+
 export const TransactionsBoard: FC = () => {
+  const dispatch = useAppDispatch();
   const { totalIncome, totalExpense, totalTransactions } = useAppSelector(
     dataSelectors.getTotalInfo
   );
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== '') {
+      dispatch(getTransactions({ filter: searchQuery.trim() }));
+    } else {
+      dispatch(getTransactions({}));
+    }
+  };
+
+  useEnhancedEffect(() => {
+    const timer = setTimeout(handleSearch, 2000);
+    return () => clearTimeout(timer);
+  }, [handleSearch, searchQuery]);
+
   return (
     <CardBox>
-      <PanelTitle>All Transactions</PanelTitle>
+      <FlexContainer>
+        <PanelTitle>All Transactions</PanelTitle>
+        <SearchInput
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          //   onBlur={handleSearch}
+        />
+      </FlexContainer>
       <TableContainer>
         <TransactionTable />
       </TableContainer>
