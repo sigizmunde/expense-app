@@ -9,10 +9,10 @@ export const moneyNumToString = (amount: number, currencySign = '$') => {
       i < split[0].length - 1
     )
       formattedArray.unshift(',');
-    if (split[0][i] === '-') formattedArray.unshift(currencySign);
+    if (split[0][i] === '-') formattedArray.unshift(currencySign + ' ');
     formattedArray.unshift(split[0][i]);
     if (split[0][i] !== '-' && i === 0)
-      formattedArray.unshift('+' + currencySign);
+      formattedArray.unshift('+' + currencySign + ' ');
   }
   return formattedArray.join('') + '.' + (split[1] || '0').padEnd(2, '0');
 };
