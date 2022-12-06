@@ -1,9 +1,9 @@
 import { RootState } from '../store';
 
 export const authSelectors = {
-  getIsFetching: (state: RootState) => state.persistedReducer.isFetching,
-  getIsLoggedIn: (state: RootState) => state.persistedReducer.isLoggedIn,
-  getErrorMessage: (state: RootState) => state.persistedReducer.message,
-  getUsername: (state: RootState) => state.persistedReducer.user?.username,
-  getRefreshToken: (state: RootState) => state.persistedReducer.refreshToken,
+  getIsFetching: (state: RootState) => state.rootReducer.auth.isFetching,
+  getIsLoggedIn: (state: RootState) => state.rootReducer.auth.isLoggedIn,
+  getMessage: (state: RootState) => state.rootReducer.auth.message,
+  getUser: (state: RootState) => state.rootReducer.auth.user,
+  getRefreshToken: (state: RootState) => state.rootReducer.auth.refreshToken,
 };

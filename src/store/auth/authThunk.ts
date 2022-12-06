@@ -1,23 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { IAuth, ILogInTokens, IUser } from '../../types/auth';
-import { IValidationError } from '../../types/utils';
+import { IFetchError } from '../../types/utils';
+import { token } from '../../services/token';
 
 // axios baseUrl initializes in the index.tsx
-
-interface IToken {
-  set(token: string): void;
-  unset(): void;
-}
-
-const token: IToken = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = '';
-  },
-};
 
 export const registerUser = createAsyncThunk<IUser, IAuth>(
   'auth/register',
@@ -29,7 +16,7 @@ export const registerUser = createAsyncThunk<IUser, IAuth>(
       );
       return data;
     } catch (err) {
-      const error = err as AxiosError<IValidationError>;
+      const error = err as AxiosError<IFetchError>;
       if (!error.response) {
         throw err;
       }
@@ -49,7 +36,7 @@ export const logInUser = createAsyncThunk<ILogInTokens, IAuth>(
       token.set(data.accessToken);
       return data;
     } catch (err) {
-      const error = err as AxiosError<IValidationError>;
+      const error = err as AxiosError<IFetchError>;
       if (!error.response) {
         throw err;
       }
@@ -62,11 +49,11 @@ export const logOutUser = createAsyncThunk(
   'auth/logOut',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post<never>('/auth/logout');
+      const { data } = await axios.get<never>('/auth/logout');
       token.unset();
       return data;
     } catch (err) {
-      const error = err as AxiosError<IValidationError>;
+      const error = err as AxiosError<IFetchError>;
       if (!error.response) {
         throw err;
       }
@@ -86,7 +73,7 @@ export const refreshUser = createAsyncThunk<
     token.set(data.accessToken);
     return data;
   } catch (err) {
-    const error = err as AxiosError<IValidationError>;
+    const error = err as AxiosError<IFetchError>;
     if (!error.response) {
       throw err;
     }
@@ -101,7 +88,7 @@ export const getUser = createAsyncThunk(
       const { data } = await axios.get('/users/self');
       return data;
     } catch (err) {
-      const error = err as AxiosError<IValidationError>;
+      const error = err as AxiosError<IFetchError>;
       if (!error.response) {
         throw err;
       }

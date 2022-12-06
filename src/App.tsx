@@ -4,6 +4,7 @@ import { PublicRoute } from './components/Routes/PublicRoute';
 import { Auth } from './pages/Auth/Auth';
 import { SignIn } from './pages/Auth/SignIn';
 import { SignUp } from './pages/Auth/SignUp';
+import { Dashboard } from './pages/Main/Dashboard';
 import { Main } from './pages/Main/Main';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <Route element={<PrivateRoute redirectTo={'/auth'} />}>
         <Route path="/" element={<Main />}>
           <Route index element={<Navigate to="/dashboard" replace={true} />} />
-          <Route path="/dashboard" element={<div>dashboard</div>} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/analytics" element={<div>analytics</div>} />
           <Route path="/categories" element={<div>categories</div>} />
           <Route path="/settings" element={<div>settings</div>} />
