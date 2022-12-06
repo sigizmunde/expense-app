@@ -6,4 +6,9 @@ export const dataSelectors = {
   getTransactions: (state: RootState) => state.rootReducer.data.transactions,
   getPagination: (state: RootState) =>
     state.rootReducer.data.pagination || null,
+  getTotalInfo: (state: RootState) => {
+    const { totalIncome, totalExpense, totalTransactions } =
+      state.rootReducer.data;
+    return { totalIncome, totalExpense, totalTransactions };
+  },
 };

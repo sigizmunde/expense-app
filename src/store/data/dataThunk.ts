@@ -5,6 +5,7 @@ import {
   INewCategory,
   INewTransaction,
   ITransaction,
+  ITransactionQueryProps,
 } from '../../types/data';
 import { IFetchError } from '../../types/utils';
 
@@ -76,9 +77,19 @@ export const updateCategory = createAsyncThunk(
 
 export const getTransactions = createAsyncThunk(
   'data/getTransactions',
-  async (_, { rejectWithValue }) => {
+  async (
+    {
+      page = -1,
+      limit = 10,
+      sort = 'date',
+      order = 'desc',
+    }: ITransactionQueryProps,
+    { rejectWithValue }
+  ) => {
     try {
-      const { data } = await axios.get('/transactions');
+      const { data } = await axios.get(
+        `/transactions?_sort=${sort}&_order=${order}&page=${page}&limit=${limit}`
+      );
       return {
         transactions: data.content || [],
         pagination: data.pagination || null,
@@ -164,6 +175,38 @@ export const updateTransaction = createAsyncThunk(
         amount,
       });
       return data;
+    } catch (err) {
+      const error = err as AxiosError<IFetchError>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getTotalInfo = createAsyncThunk(
+  'data/getTotalInfo',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get('/transactions');
+      const { totalIncome, totalExpense } = data.content.reduce(
+        (
+          acc: { totalIncome: number; totalExpense: number },
+          e: ITransaction
+        ) => {
+          if (e.amount < 0) acc.totalExpense += e.amount;
+          if (e.amount > 0) acc.totalIncome += e.amount;
+          return acc;
+        },
+        { totalIncome: 0, totalExpense: 0 }
+      );
+      const totalTransactions = data.content.length;
+      return {
+        totalIncome,
+        totalExpense,
+        totalTransactions,
+      };
     } catch (err) {
       const error = err as AxiosError<IFetchError>;
       if (!error.response) {

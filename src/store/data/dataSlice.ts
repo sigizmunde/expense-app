@@ -5,6 +5,7 @@ import {
   deleteCategory,
   deleteTransaction,
   getCategories,
+  getTotalInfo,
   getTransactions,
   updateCategory,
   updateTransaction,
@@ -32,6 +33,9 @@ const initialState: IDataState = {
   },
   sort: [{}],
   filter: {},
+  totalIncome: 0,
+  totalExpense: 0,
+  totalTransactions: 0,
   isFetching: false,
 };
 
@@ -109,6 +113,20 @@ export const dataSlice = createSlice({
           state.transactions = state.transactions.map((e) => {
             return e.id !== action.payload.id ? e : { ...e, ...action.payload };
           });
+          state.isFetching = false;
+        }
+      )
+      .addCase(
+        getTotalInfo.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            totalIncome: number;
+            totalExpense: number;
+            totalTransactions: number;
+          }>
+        ) => {
+          state = { ...state, ...action.payload };
           state.isFetching = false;
         }
       )

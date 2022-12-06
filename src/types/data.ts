@@ -25,19 +25,29 @@ export interface ICategoriesResponse {
 
 export interface ITransactionsResponse {
   transactions: ITransaction[];
-  pagination?: {
-    page: number;
-    skip: number;
-    limit: number;
-    totalPages: number;
-    totalElements: number;
-    isFistPage?: boolean;
-    isLastPage?: boolean;
-  };
+  pagination?: IPagination;
   sort?: [{}];
   filter?: {};
 }
 
 export interface IDataState extends ICategoriesResponse, ITransactionsResponse {
+  totalIncome: number;
+  totalExpense: number;
+  totalTransactions: number;
   isFetching: boolean;
+}
+
+export interface IPagination {
+  page?: number;
+  skip?: number;
+  limit?: number;
+  totalPages?: number;
+  totalElements?: number;
+  isFistPage?: boolean;
+  isLastPage?: boolean;
+}
+
+export interface ITransactionQueryProps extends IPagination {
+  sort?: string;
+  order?: string;
 }

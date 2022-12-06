@@ -7,7 +7,7 @@ export const dataGetTransactionsMiddleware: Middleware =
   (next: Dispatch<Action>) =>
   (action: Action) => {
     if (action.type === getUser.fulfilled.type) {
-      store.dispatch(getTransactions());
+      store.dispatch(getTransactions({}));
     }
     next(action);
   };
