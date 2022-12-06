@@ -126,7 +126,7 @@ export const dataSlice = createSlice({
             totalTransactions: number;
           }>
         ) => {
-          state = { ...state, ...action.payload };
+          Object.assign(state, action.payload);
           state.isFetching = false;
         }
       )
