@@ -5,6 +5,8 @@ import { ReactComponent as IncomeIcon } from '../../images/icons/income.svg';
 import { ReactComponent as ExpenseIcon } from '../../images/icons/expenses.svg';
 import { ReactComponent as TransactionIcon } from '../../images/icons/transaction.svg';
 import { InfoCard } from '../InfoCard/InfoCard';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { dataSelectors } from '../../store/data/dataSelectors';
 
 const DashHeaderPanel = styled(Container)(({ theme, ...props }) => ({
   backgroundColor: 'transparent',
@@ -15,15 +17,31 @@ const DashHeaderPanel = styled(Container)(({ theme, ...props }) => ({
 }));
 
 export const DashHeader: FC = () => {
+  const { totalIncome, totalExpense, totalTransactions } = useAppSelector(
+    dataSelectors.getTotalInfo
+  );
+
   return (
     <DashHeaderPanel>
-      <InfoCard color="greener" caption="Total Receipt" value="TempValue">
+      <InfoCard
+        color="greener"
+        caption="Total Receipt"
+        value={'$' + totalIncome}
+      >
         <IncomeIcon />
       </InfoCard>
-      <InfoCard color="orange" caption="Total Expense" value="TempValue">
+      <InfoCard
+        color="orange"
+        caption="Total Expense"
+        value={'$' + totalExpense}
+      >
         <ExpenseIcon />
       </InfoCard>
-      <InfoCard color="violet" caption="Total Transactions" value="TempValue">
+      <InfoCard
+        color="violet"
+        caption="Total Transactions"
+        value={'' + totalTransactions}
+      >
         <TransactionIcon />
       </InfoCard>
     </DashHeaderPanel>
