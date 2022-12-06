@@ -7,6 +7,7 @@ import { ReactComponent as TransactionIcon } from '../../images/icons/transactio
 import { InfoCard } from '../InfoCard/InfoCard';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
+import { moneyNumToString } from '../../utils/moneyNumToString';
 
 const DashHeaderPanel = styled(Container)(({ theme, ...props }) => ({
   backgroundColor: 'transparent',
@@ -26,14 +27,14 @@ export const DashHeader: FC = () => {
       <InfoCard
         color="greener"
         caption="Total Receipt"
-        value={'$' + totalIncome}
+        value={moneyNumToString(totalIncome, '$')}
       >
         <IncomeIcon />
       </InfoCard>
       <InfoCard
         color="orange"
         caption="Total Expense"
-        value={'$' + totalExpense}
+        value={moneyNumToString(totalExpense, '$')}
       >
         <ExpenseIcon />
       </InfoCard>
