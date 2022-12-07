@@ -8,5 +8,6 @@ export const AuthContainer = styled(Box)(({ theme }) => ({
   alignItems: 'stretch',
   justifyContent: 'stretch',
   position: 'relative',
+  color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.custom.black,
 }));

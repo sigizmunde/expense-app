@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { ButtonPrimary } from './ButtonPrimary';
 
-export const ButtonSecondary = styled(ButtonPrimary)<{ colorversion: string }>(
+export const ButtonSecondary = styled(ButtonPrimary)<{ colorversion?: string }>(
   ({ theme, colorversion }) => {
     const colorV = colorversion
       ? theme.palette.custom[colorversion] || 'inherit'
