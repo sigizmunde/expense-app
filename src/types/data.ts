@@ -1,3 +1,5 @@
+import { IProps } from './utils';
+
 export interface INewCategory {
   label: string;
   userId: number;
@@ -26,7 +28,7 @@ export interface ICategoriesResponse {
 export interface ITransactionsResponse {
   transactions: ITransaction[];
   pagination?: IPagination;
-  sort?: [{}];
+  sort?: { [key: string]: string }[];
   filter?: {};
 }
 
@@ -48,7 +50,6 @@ export interface IPagination {
 }
 
 export interface ITransactionQueryProps extends IPagination {
-  sort?: string;
-  order?: string;
+  sort?: { [key: string]: string }[];
   filter?: string;
 }
