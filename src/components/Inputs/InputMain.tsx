@@ -8,13 +8,14 @@ const Input = styled(TextField)(({ theme }) => ({
   '& label, &:hover label, &:focus-within label': {
     opacity: 0.7,
     ...theme.typography.body1,
+    color: theme.palette.primary.contrastText,
   },
   '& input': {
     marginBottom: 5,
     marginTop: 5,
-    color: theme.palette.primary.contrastText,
     opacity: 0.7,
     ...theme.typography.body2,
+    color: theme.palette.primary.contrastText,
   },
   '&:hover .MuiInput-underline:after, &:hover:not(.Mui-disabled) .MuiInput-underline:before':
     {
