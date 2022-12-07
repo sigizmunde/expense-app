@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
 import { Container, styled } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
@@ -29,13 +29,13 @@ export const TransactionsBoard: FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (searchQuery.trim() !== '') {
       dispatch(getTransactions({ filter: searchQuery.trim() }));
     } else {
       dispatch(getTransactions({}));
     }
-  };
+  }, []);
 
   useEnhancedEffect(() => {
     const timer = setTimeout(handleSearch, 2000);
