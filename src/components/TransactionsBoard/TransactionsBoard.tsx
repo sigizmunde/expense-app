@@ -44,7 +44,7 @@ export const TransactionsBoard: FC = () => {
   }, [handleSearch, searchQuery]);
 
   return (
-    <CardBox>
+    <CardBox gridColumn="span 7">
       <FlexContainer>
         <PanelTitle>All Transactions</PanelTitle>
         <SearchInput

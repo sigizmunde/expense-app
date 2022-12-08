@@ -10,6 +10,7 @@ import { dataSelectors } from '../../store/data/dataSelectors';
 import { moneyNumToString } from '../../utils/moneyNumToString';
 
 const DashHeaderPanel = styled(Container)(({ theme, ...props }) => ({
+  gridColumn: 'span 7',
   backgroundColor: 'transparent',
   width: '100%',
   display: 'flex',
