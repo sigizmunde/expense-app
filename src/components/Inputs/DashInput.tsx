@@ -3,10 +3,12 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 
 const Input = styled(TextField)(({ theme }) => ({
-  //   flexGrow: 1,
   color: theme.palette.secondary.main,
   marginTop: 0,
   height: 'auto',
+  '& .MuiInputAdornment-root .MuiTypography-root': {
+    ...theme.typography.h5,
+  },
   '& MuiTextField-root': {
     marginTop: 0,
   },
