@@ -10,6 +10,7 @@ import { addTransaction } from '../../store/data/dataThunk';
 import { INewTransaction } from '../../types/data';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { MenuItem } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
 import { DashInput } from '../Inputs/DashInput';
 
 const TransFormBox = styled(Box)(({ theme }) => ({
@@ -98,6 +99,9 @@ export const AddTransactionForm = () => {
             onChange={formik.handleChange}
             error={formik.touched.amount && Boolean(formik.errors.amount)}
             helperText={formik.touched.amount && formik.errors.amount}
+            InputProps={{
+              endAdornment: <InputAdornment position="start">$</InputAdornment>,
+            }}
           />
           <DashInput
             id="date"
