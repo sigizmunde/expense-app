@@ -29,16 +29,17 @@ export const TransactionsBoard: FC = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = useCallback(() => {
-    if (searchQuery.trim() !== '') {
-      dispatch(getTransactions({ filter: searchQuery.trim() }));
+  const handleSearch = useCallback((queryString: string) => {
+    if (queryString !== '') {
+      dispatch(getTransactions({ filter: queryString }));
+      console.log(queryString);
     } else {
       dispatch(getTransactions({}));
     }
   }, []);
 
   useEnhancedEffect(() => {
-    const timer = setTimeout(handleSearch, 2000);
+    const timer = setTimeout(() => handleSearch(searchQuery.trim()), 2000);
     return () => clearTimeout(timer);
   }, [handleSearch, searchQuery]);
 
