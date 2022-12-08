@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { AddCategoryBoard } from '../../components/AddCategoryBoard/AddCategoryBoard';
 import { AddTransactionBoard } from '../../components/AddTransactionBoard/AddTransactionBoard';
 import { CategoriesTable } from '../../components/CategoriesTable/CategoriesTable';
 import { DashboardContainer } from '../../components/DashboardPanels/DashboardContainer';
@@ -13,6 +14,7 @@ export const Dashboard: FC = () => {
       <DashPanel>
         <DashHeader />
         <AddTransactionBoard />
+        <AddCategoryBoard />
         <TransactionsBoard />
       </DashPanel>
       <RightPanel>
