@@ -37,12 +37,17 @@ const initialState: IDataState = {
   totalExpense: 0,
   totalTransactions: 0,
   isFetching: false,
+  errorMessage: null,
 };
 
 export const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {},
+  reducers: {
+    resetErrorMessage: (state) => {
+      state.errorMessage = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -91,7 +96,7 @@ export const dataSlice = createSlice({
       .addCase(
         addTransaction.fulfilled,
         (state, action: PayloadAction<ITransaction>) => {
-          state.transactions.push(action.payload);
+          state.transactions.unshift(action.payload);
           state.isFetching = false;
         }
       )
@@ -135,7 +140,9 @@ export const dataSlice = createSlice({
       })
       .addMatcher(isRejectedAction, (state, { payload }) => {
         state.isFetching = false;
-        store.dispatch(setWarning({ message: payload.message }));
+        state.errorMessage = payload.message;
       });
   },
 });
+
+export const { resetErrorMessage } = dataSlice.actions;
