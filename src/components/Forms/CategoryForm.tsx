@@ -54,7 +54,13 @@ const validationSchema = Yup.object({
   }),
 });
 
-export const CategoryForm = ({ categoryId }: { categoryId?: number }) => {
+export const CategoryForm = ({
+  categoryId,
+  afterSubmit,
+}: {
+  categoryId?: number;
+  afterSubmit?: { (): void };
+}) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(authSelectors.getUser);
   const userId = user?.id || 0;
@@ -108,6 +114,7 @@ export const CategoryForm = ({ categoryId }: { categoryId?: number }) => {
         });
       }
       formik.resetForm();
+      if (afterSubmit) afterSubmit();
     },
   });
 

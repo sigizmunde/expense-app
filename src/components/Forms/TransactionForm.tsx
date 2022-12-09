@@ -45,8 +45,10 @@ const validationSchema = Yup.object({
 
 export const TransactionForm = ({
   transactionId,
+  afterSubmit,
 }: {
   transactionId?: number;
+  afterSubmit?: { (): void };
 }) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(dataSelectors.getCategories);
@@ -70,39 +72,50 @@ export const TransactionForm = ({
     amount: 0,
   };
 
+  const getTransactionById = () => {
+    const transaction = useAppSelector(dataSelectors.getTransactions).find(
+      (e) => e.id === transactionId
+    );
+    if (transaction) {
+      const response = {
+        ...transaction,
+        date: dayjs(transaction.date).format('YYYY-MM-DD'),
+        categoryId: transaction.categoryId || categories[0].id,
+      };
+      return response;
+    }
+    return null;
+  };
+
   const initialRecord: {
     date: string;
     categoryId: number;
     label: string;
     amount: number;
     id?: number;
-  } = transactionId
-    ? useAppSelector(dataSelectors.getTransactions).find(
-        (e) => e.id === transactionId
-      ) || emptyRecord
-    : emptyRecord;
+  } = transactionId ? getTransactionById() || emptyRecord : emptyRecord;
 
   const formik = useFormik({
     initialValues: initialRecord,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       values.date = dayjs(values.date).toISOString();
+      const actionProps = {
+        ...values,
+        categoryId: values.categoryId,
+        userId,
+      };
       if (values.id) {
         handleUpdateTransaction({
-          ...values,
-          categoryId: values.categoryId,
-          userId,
+          ...actionProps,
           id: values.id as number,
         });
       }
       if (!values.id) {
-        handleCreateTransaction({
-          ...values,
-          categoryId: values.categoryId,
-          userId,
-        });
+        handleCreateTransaction(actionProps);
       }
       formik.resetForm();
+      if (afterSubmit) afterSubmit();
     },
   });
 
@@ -125,7 +138,7 @@ export const TransactionForm = ({
           <DashInput
             id="amount"
             name="amount"
-            label="Sum of transaction"
+            label="Sum of Transaction"
             type="number"
             value={formik.values.amount}
             onChange={formik.handleChange}
@@ -150,7 +163,7 @@ export const TransactionForm = ({
               name="categoryId"
               label="Category"
               type="number"
-              value={categories.length > 0 && formik.values.categoryId}
+              value={formik.values.categoryId}
               onChange={formik.handleChange}
             >
               {categories &&
@@ -162,7 +175,7 @@ export const TransactionForm = ({
             </DashInput>
           )}
           <ButtonSecondary type="submit" style={{ width: 'auto' }}>
-            Add
+            {formik.values.id ? 'Update' : 'Add'}
           </ButtonSecondary>
         </TransFormBox>
       </form>
