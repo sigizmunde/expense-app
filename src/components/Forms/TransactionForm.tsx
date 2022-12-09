@@ -6,8 +6,8 @@ import dayjs from 'dayjs';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { dataSelectors } from '../../store/data/dataSelectors';
-import { addTransaction } from '../../store/data/dataThunk';
-import { INewTransaction } from '../../types/data';
+import { addTransaction, updateTransaction } from '../../store/data/dataThunk';
+import { INewTransaction, ITransaction } from '../../types/data';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { MenuItem } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -43,7 +43,11 @@ const validationSchema = Yup.object({
     .required('Input a sum'),
 });
 
-export const AddTransactionForm = () => {
+export const TransactionForm = ({
+  transactionId,
+}: {
+  transactionId?: number;
+}) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(dataSelectors.getCategories);
   const user = useAppSelector(authSelectors.getUser);
@@ -54,22 +58,50 @@ export const AddTransactionForm = () => {
     dispatch(addTransaction(values));
   };
 
+  const handleUpdateTransaction = (values: ITransaction) => {
+    values.label = values.label.trim();
+    dispatch(updateTransaction(values));
+  };
+
+  const emptyRecord = {
+    date: dayjs(new Date()).format('YYYY-MM-DD'),
+    categoryId: categories[0]?.id || -1,
+    label: '',
+    amount: 0,
+  };
+
+  const initialRecord: {
+    date: string;
+    categoryId: number;
+    label: string;
+    amount: number;
+    id?: number;
+  } = transactionId
+    ? useAppSelector(dataSelectors.getTransactions).find(
+        (e) => e.id === transactionId
+      ) || emptyRecord
+    : emptyRecord;
+
   const formik = useFormik({
-    initialValues: {
-      date: dayjs(new Date()).format('YYYY-MM-DD'),
-      categoryId: categories[0]?.id || '',
-      label: '',
-      amount: 0,
-    },
+    initialValues: initialRecord,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       values.date = dayjs(values.date).toISOString();
-
-      handleCreateTransaction({
-        ...values,
-        categoryId: values.categoryId as number,
-        userId,
-      });
+      if (values.id) {
+        handleUpdateTransaction({
+          ...values,
+          categoryId: values.categoryId,
+          userId,
+          id: values.id as number,
+        });
+      }
+      if (!values.id) {
+        handleCreateTransaction({
+          ...values,
+          categoryId: values.categoryId,
+          userId,
+        });
+      }
       formik.resetForm();
     },
   });
@@ -111,22 +143,24 @@ export const AddTransactionForm = () => {
             value={formik.values.date}
             onChange={formik.handleChange}
           />
-          <DashInput
-            id="categoryId"
-            select
-            name="categoryId"
-            label="Category"
-            type="number"
-            value={formik.values.categoryId}
-            onChange={formik.handleChange}
-          >
-            {categories &&
-              categories.map((e) => (
-                <MenuItem key={e.id} value={e.id}>
-                  {e.label}
-                </MenuItem>
-              ))}
-          </DashInput>
+          {categories.length > 0 && (
+            <DashInput
+              id="categoryId"
+              select
+              name="categoryId"
+              label="Category"
+              type="number"
+              value={categories.length > 0 && formik.values.categoryId}
+              onChange={formik.handleChange}
+            >
+              {categories &&
+                categories.map((e) => (
+                  <MenuItem key={e.id} value={e.id}>
+                    {e.label}
+                  </MenuItem>
+                ))}
+            </DashInput>
+          )}
           <ButtonSecondary type="submit" style={{ width: 'auto' }}>
             Add
           </ButtonSecondary>

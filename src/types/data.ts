@@ -4,6 +4,7 @@ export interface INewCategory {
   label: string;
   userId: number;
   color?: string | null;
+  image?: unknown | null;
 }
 
 export interface ICategory extends INewCategory {

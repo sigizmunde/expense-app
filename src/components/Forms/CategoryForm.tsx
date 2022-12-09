@@ -6,13 +6,14 @@ import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { dataSelectors } from '../../store/data/dataSelectors';
-import { addCategory, addTransaction } from '../../store/data/dataThunk';
-import { INewCategory, INewTransaction } from '../../types/data';
+import { addCategory, updateCategory } from '../../store/data/dataThunk';
+import { ICategory, INewCategory } from '../../types/data';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { MenuItem } from '@mui/material';
 import { DashInput } from '../Inputs/DashInput';
 import { FileUploadInput } from '../Inputs/FileUploadInput';
 import { getLightColors } from '../../utils/colorLibrary';
+import { ColorSwatch } from '../ColorBadges/ColorSwatch';
 
 const CatFormBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -53,9 +54,8 @@ const validationSchema = Yup.object({
   }),
 });
 
-export const AddCategoryForm = () => {
+export const CategoryForm = ({ categoryId }: { categoryId?: number }) => {
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(dataSelectors.getCategories);
   const user = useAppSelector(authSelectors.getUser);
   const userId = user?.id || 0;
 
@@ -66,18 +66,47 @@ export const AddCategoryForm = () => {
     dispatch(addCategory(values));
   };
 
+  const handleUpdateCategory = (values: ICategory) => {
+    values.label = values.label.trim();
+    dispatch(updateCategory(values));
+  };
+
+  const emptyRecord = {
+    label: '',
+    image: null,
+    color: '',
+    userId,
+    id: null,
+  };
+
+  const initialRecord = categoryId
+    ? {
+        ...useAppSelector(dataSelectors.getCategories).find(
+          (e) => e.id === categoryId
+        ),
+        image: null,
+      } || emptyRecord
+    : emptyRecord;
+
   const formik = useFormik({
-    initialValues: {
-      label: '',
-      image: null,
-      color: '',
-    },
+    initialValues: initialRecord,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      handleCreateCategory({
-        label: values.label,
-        userId,
-      });
+      if (values.id) {
+        handleUpdateCategory({
+          id: values.id,
+          label: values.label as string,
+          color: values.color,
+          userId,
+        });
+      }
+      if (!values.id) {
+        handleCreateCategory({
+          label: values.label as string,
+          color: values.color,
+          userId,
+        });
+      }
       formik.resetForm();
     },
   });
@@ -127,9 +156,10 @@ export const AddCategoryForm = () => {
                 <MenuItem
                   key={e.id}
                   value={e.color}
-                  sx={{ backgroundColor: e.color, color: e.color }}
+                  // sx={{ backgroundColor: e.color, color: e.color }}
                 >
-                  {e.color}
+                  <ColorSwatch color={e.color} />
+                  {formik.values.label}
                 </MenuItem>
               ))}
           </DashInput>
