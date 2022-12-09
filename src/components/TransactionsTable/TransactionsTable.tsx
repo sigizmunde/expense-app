@@ -15,6 +15,8 @@ import { moneyNumToString } from '../../utils/moneyNumToString';
 import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
 import { TableSortSwitch } from '../TableSortSwitch/TableSortSwitch';
+import { ColorBullet } from '../ColorBadges/ColorBullet';
+import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
@@ -74,8 +76,7 @@ export const TransactionTable: FC = () => {
               {row.id}
             </StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
-              {categories.find(({ id }) => id === row.categoryId)?.label ||
-                'unknown'}
+              <TransactionCategory categoryId={row.categoryId} />
             </StyledTableCell>
             <StyledTableCell>{row.label}</StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
