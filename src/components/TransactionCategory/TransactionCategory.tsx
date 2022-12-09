@@ -7,7 +7,9 @@ export const TransactionCategory = ({ categoryId }: { categoryId: number }) => {
   return (
     <>
       <ColorBullet
-        color={categories.find(({ id }) => id === categoryId)?.color || 'white'}
+        color={
+          categories.find(({ id }) => id === categoryId)?.color || '#88888880'
+        }
       />
       {categories.find(({ id }) => id === categoryId)?.label || 'unknown'}
     </>
