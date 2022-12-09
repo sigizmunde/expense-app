@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 
@@ -15,12 +15,11 @@ import { moneyNumToString } from '../../utils/moneyNumToString';
 import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
 import { TableSortSwitch } from '../TableSortSwitch/TableSortSwitch';
-import { ColorBullet } from '../ColorBadges/ColorBullet';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
+import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(dataSelectors.getCategories);
   const transactions = useAppSelector(dataSelectors.getTransactions);
 
   const sort = useAppSelector(dataSelectors.getSort) as {
@@ -87,9 +86,14 @@ export const TransactionTable: FC = () => {
               style={{
                 ...theme.typography.h5,
                 color: theme.palette.custom.orange,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                justifyContent: 'end',
+                alignItems: 'center',
               }}
             >
               {moneyNumToString(row.amount, '$')}
+              <TransactionPopover id={row.id} />
             </StyledTableCell>
           </StyledTableRow>
         ))}
