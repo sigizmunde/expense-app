@@ -139,6 +139,7 @@ export const CategoryForm = ({
             name="image"
             label="Add an Image"
             type="file"
+            disabled
             onChange={formik.handleChange}
             error={formik.touched.image && Boolean(formik.errors.image)}
             helperText={formik.touched.image && formik.errors.image}

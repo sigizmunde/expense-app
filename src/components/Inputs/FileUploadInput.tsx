@@ -9,12 +9,14 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
   gridColumn: 'span 2',
   width: '100%',
   color: theme.palette.secondary.main,
-  '& .MuiInputBase-input, &:focus-within .MuiInputBase-input': {
-    opacity: 0,
+  '& .MuiFormLabel-root': {
+    ...theme.typography.h5,
   },
+  '& .MuiInputBase-input, & .MuiInputBase-input[disabled], &:focus-within .MuiInputBase-input':
+    {
+      opacity: 0,
+    },
   '& input, &:focus-within input': {
-    marginBottom: 5,
-    marginTop: 5,
     ...theme.typography.subtitle1,
     color: theme.palette.secondary.main,
     opacity: 0.7,
@@ -27,8 +29,8 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
       display: 'none',
     },
   },
-  ' &.Mui-disabled': {
-    opacity: 0.2,
+  ' & .Mui-disabled': {
+    opacity: 0.5,
   },
   '& .MuiButtonBase-root': {
     display: props.value !== '' ? 'none' : 'initial',
