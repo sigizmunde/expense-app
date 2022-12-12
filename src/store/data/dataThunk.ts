@@ -79,7 +79,7 @@ export const getTransactions = createAsyncThunk(
   'data/getTransactions',
   async (
     {
-      page = -1,
+      page = 0,
       limit = 10,
       filter = '',
       sort = [{ date: 'desc' }],
@@ -98,7 +98,7 @@ export const getTransactions = createAsyncThunk(
               .join('')}`,
           ''
         ) || '';
-      let queryString = `?${sortQueryString}&page=${page}&limit=${limit}`;
+      let queryString = `?${sortQueryString}&_page=${page}&_limit=${limit}`;
       if (filter !== '') queryString += `&label[contains]=${filter}`;
       const { data } = await axios.get(`/transactions${queryString}`);
       return {
