@@ -59,10 +59,14 @@ export const deleteCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   'data/updateCategory',
-  async ({ id, label }: { id: number; label: string }, { rejectWithValue }) => {
+  async (
+    { id, label, color }: { id: number; label: string; color?: string },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await axios.patch<ICategory>('/categories/' + id, {
         label,
+        color,
       });
       return data;
     } catch (err) {

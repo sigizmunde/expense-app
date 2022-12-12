@@ -3,7 +3,7 @@ import { IProps } from './utils';
 export interface INewCategory {
   label: string;
   userId: number;
-  color?: string | null;
+  color?: string;
   image?: unknown | null;
 }
 
