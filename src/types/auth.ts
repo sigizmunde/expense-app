@@ -17,7 +17,6 @@ export interface ILogInTokens {
 }
 
 export interface IAuthState {
-  accessToken: null | string;
   refreshToken: null | string;
   isLoggedIn: boolean;
   isFetching: boolean;

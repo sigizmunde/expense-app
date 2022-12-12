@@ -14,7 +14,6 @@ import {
 } from '../actionTypeCheckers';
 
 const initialState: IAuthState = {
-  accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
   isFetching: false,
@@ -40,7 +39,6 @@ export const authSlice = createSlice({
       .addCase(
         logInUser.fulfilled,
         (state, action: PayloadAction<ILogInTokens>) => {
-          state.accessToken = action.payload.accessToken;
           state.refreshToken = action.payload.refreshToken;
           state.isLoggedIn = true;
         }
@@ -48,7 +46,6 @@ export const authSlice = createSlice({
       .addCase(
         refreshUser.fulfilled,
         (state, action: PayloadAction<{ accessToken: string }>) => {
-          state.accessToken = action.payload.accessToken;
           state.isLoggedIn = true;
         }
       )
