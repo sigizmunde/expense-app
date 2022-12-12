@@ -5,6 +5,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { styled } from '@mui/material';
+
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  '& *': {
+    ...theme.typography.h5,
+  },
+  '& .MuiButtonBase-root': {
+    '&:hover, &:focus, &:active': { color: theme.palette.primary.main },
+  },
+}));
 
 interface IConfirmDialogProps extends DialogProps {
   title?: string;
@@ -26,7 +36,7 @@ export const ConfirmDialog: React.FC<IConfirmDialogProps> = ({
 }) => {
   return (
     <>
-      <Dialog aria-labelledby="responsive-dialog-title" open={props.open}>
+      <StyledDialog aria-labelledby="responsive-dialog-title" open={props.open}>
         {title && (
           <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
         )}
@@ -45,7 +55,7 @@ export const ConfirmDialog: React.FC<IConfirmDialogProps> = ({
             </Button>
           )}
         </DialogActions>
-      </Dialog>
+      </StyledDialog>
     </>
   );
 };
