@@ -22,7 +22,7 @@ const CatFormBox = styled(Box)(({ theme }) => ({
   flex: '1 0 auto',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  alignItems: 'baseline',
+  alignItems: 'end',
   justifyContent: 'stretch',
   rowGap: theme.spacing(1),
   columnGap: theme.spacing(3),
@@ -64,8 +64,23 @@ export const CategoryForm = ({
   const dispatch = useAppDispatch();
   const user = useAppSelector(authSelectors.getUser);
   const userId = user?.id || 0;
+  const categories = useAppSelector(dataSelectors.getCategories);
 
-  const colors = useMemo(getLightColors, []);
+  const colors = useMemo(() => {
+    const palette = getLightColors();
+    if (
+      categoryId &&
+      categories &&
+      !palette.find((e) => {
+        e.id === -1;
+      })
+    )
+      palette.unshift({
+        id: -1,
+        color: categories.find((e) => e.id === categoryId)?.color || '',
+      });
+    return palette;
+  }, []);
 
   const handleCreateCategory = (values: INewCategory) => {
     values.label = values.label.trim();
@@ -80,16 +95,14 @@ export const CategoryForm = ({
   const emptyRecord = {
     label: '',
     image: null,
-    color: '',
+    color: colors[0].color,
     userId,
     id: null,
   };
 
   const initialRecord = categoryId
     ? {
-        ...useAppSelector(dataSelectors.getCategories).find(
-          (e) => e.id === categoryId
-        ),
+        ...categories.find((e) => e.id === categoryId),
         image: null,
       } || emptyRecord
     : emptyRecord;
@@ -145,7 +158,7 @@ export const CategoryForm = ({
             helperText={formik.touched.image && formik.errors.image}
           />
           <DashInput
-            id="colord"
+            id="color"
             select
             name="color"
             label="Color"
@@ -154,7 +167,8 @@ export const CategoryForm = ({
             onChange={formik.handleChange}
             sx={{
               '& .MuiSelect-select': {
-                backgroundColor: formik.values.color,
+                display: 'flex',
+                alignItems: 'center',
                 color: formik.values.color,
               },
             }}
@@ -167,12 +181,11 @@ export const CategoryForm = ({
                   // sx={{ backgroundColor: e.color, color: e.color }}
                 >
                   <ColorSwatch color={e.color} />
-                  {formik.values.label}
                 </MenuItem>
               ))}
           </DashInput>
           <ButtonSecondary type="submit" style={{ width: 'auto' }}>
-            Add
+            {formik.values.id ? 'Update' : 'Add'}
           </ButtonSecondary>
         </CatFormBox>
       </form>
