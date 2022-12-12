@@ -18,8 +18,6 @@ import {
   ITransaction,
   ITransactionsResponse,
 } from '../../types/data';
-import { store } from '../store';
-import { setWarning } from '../auth/authSlice';
 
 const initialState: IDataState = {
   categories: [],

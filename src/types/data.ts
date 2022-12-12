@@ -31,7 +31,7 @@ export interface ITransactionsResponse {
   transactions: ITransaction[];
   pagination?: IPagination;
   sort?: { [key: string]: string }[];
-  filter?: {};
+  filter?: unknown;
 }
 
 export interface IDataState extends ICategoriesResponse, ITransactionsResponse {
