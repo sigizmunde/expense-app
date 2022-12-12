@@ -1,6 +1,6 @@
 export const moneyNumToString = (amount: number, currencySign = '$') => {
   const convertedString = (Math.round(amount * 100) / 100).toString();
-  const split = convertedString.split('.|,');
+  const split = convertedString.split('.' || ',');
   const formattedArray = [];
   for (let i = split[0].length - 1; i >= 0; i -= 1) {
     if (
