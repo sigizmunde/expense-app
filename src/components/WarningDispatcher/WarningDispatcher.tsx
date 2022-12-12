@@ -4,6 +4,7 @@ import { authSelectors } from '../../store/auth/authSelectors';
 import { resetWarning } from '../../store/auth/authSlice';
 import { Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { resetErrorMessage } from '../../store/data/dataSlice';
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   position: 'fixed',
@@ -20,7 +21,10 @@ export const WarningDispatcher = () => {
   let timeoutHandle: ReturnType<typeof setTimeout>;
 
   useEffect(() => {
-    timeoutHandle = setTimeout(() => dispatch(resetWarning()), 2500);
+    timeoutHandle = setTimeout(() => {
+      dispatch(resetWarning());
+      dispatch(resetErrorMessage());
+    }, 2500);
   }, [warningMessage]);
 
   useEffect(() => {
