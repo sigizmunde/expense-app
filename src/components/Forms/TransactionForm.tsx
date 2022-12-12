@@ -37,7 +37,7 @@ const validationSchema = Yup.object({
       return value ? dayjs(value).toDate() : value;
     })
     .required('Date is required')
-    .max(new Date(), 'Future date not allowed'),
+    .max(new Date(), "It's future"),
   amount: Yup.number()
     .typeError('age must be a number')
     .required('Input a sum'),
@@ -155,6 +155,8 @@ export const TransactionForm = ({
             type="date"
             value={formik.values.date}
             onChange={formik.handleChange}
+            error={formik.touched.date && Boolean(formik.errors.date)}
+            helperText={formik.touched.date && formik.errors.date}
           />
           {categories.length > 0 && (
             <DashInput
