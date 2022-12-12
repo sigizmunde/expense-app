@@ -10,7 +10,11 @@ import {
   updateCategory,
   updateTransaction,
 } from './dataThunk';
-import { isPendingAction, isRejectedAction } from '../actionTypeCheckers';
+import {
+  isFulfilledAction,
+  isPendingAction,
+  isRejectedAction,
+} from '../actionTypeCheckers';
 import {
   ICategoriesResponse,
   ICategory,
@@ -52,14 +56,12 @@ export const dataSlice = createSlice({
         getCategories.fulfilled,
         (state, action: PayloadAction<ICategoriesResponse>) => {
           state.categories = action.payload.categories;
-          state.isFetching = false;
         }
       )
       .addCase(
         addCategory.fulfilled,
         (state, action: PayloadAction<ICategory>) => {
           state.categories.push(action.payload);
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -68,7 +70,6 @@ export const dataSlice = createSlice({
           state.categories = state.categories.filter(
             (e) => e.id !== action.payload.id
           );
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -77,7 +78,6 @@ export const dataSlice = createSlice({
           state.categories = state.categories.map((e) => {
             return e.id !== action.payload.id ? e : { ...e, ...action.payload };
           });
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -88,14 +88,12 @@ export const dataSlice = createSlice({
           state.pagination = pagination;
           state.sort = sort;
           state.filter = filter;
-          state.isFetching = false;
         }
       )
       .addCase(
         addTransaction.fulfilled,
         (state, action: PayloadAction<ITransaction>) => {
           state.transactions.unshift(action.payload);
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -107,7 +105,6 @@ export const dataSlice = createSlice({
           state.transactions = state.transactions.filter(
             (e) => e.id !== action.payload.id
           );
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -116,7 +113,6 @@ export const dataSlice = createSlice({
           state.transactions = state.transactions.map((e) => {
             return e.id !== action.payload.id ? e : { ...e, ...action.payload };
           });
-          state.isFetching = false;
         }
       )
       .addCase(
@@ -130,9 +126,11 @@ export const dataSlice = createSlice({
           }>
         ) => {
           Object.assign(state, action.payload);
-          state.isFetching = false;
         }
       )
+      .addMatcher(isFulfilledAction, (state) => {
+        state.isFetching = false;
+      })
       .addMatcher(isPendingAction, (state) => {
         state.isFetching = true;
       })
