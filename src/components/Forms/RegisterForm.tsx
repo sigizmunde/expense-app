@@ -12,7 +12,6 @@ import { StyledCheckbox } from '../Checkbox/StyledCheckbox';
 import { InputMain } from '../Inputs/InputMain';
 import { InputPassword } from '../Inputs/InputPassword';
 import { FormSubtitle, NestedLink } from '../Typography/Typography';
-import { WarningDispatcher } from '../WarningDispatcher/WarningDispatcher';
 import { FieldsBox, FormBox } from './Form.styled';
 
 const validationSchema = yup.object({
@@ -59,7 +58,6 @@ export const RegisterForm = () => {
 
   return (
     <>
-      <WarningDispatcher />
       <form onSubmit={formik.handleSubmit}>
         <FormBox>
           <Typography variant="h1">Sign up</Typography>
