@@ -17,11 +17,13 @@ import { getTransactions } from '../../store/data/dataThunk';
 import { TableSortSwitch } from '../TableSortSwitch/TableSortSwitch';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
+import { IPagination } from '../../types/data';
+import { IProps } from '../../types/utils';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
   const transactions = useAppSelector(dataSelectors.getTransactions);
-
+  const pagination = useAppSelector(dataSelectors.getPagination);
   const sort = useAppSelector(dataSelectors.getSort) as {
     [key: string]: string;
   }[];
@@ -35,17 +37,27 @@ export const TransactionTable: FC = () => {
     return undefined;
   };
 
+  const swapPagination = (pagination: IPagination) => {
+    const swappedPagination = { ...pagination };
+    if (pagination && pagination.totalPages)
+      swappedPagination.page =
+        pagination?.totalPages - 1 - (pagination?.page || 0);
+    return swappedPagination;
+  };
+
   const changeOrder = (keyToChange: string): void => {
     if (sort) {
+      let newPagination: Record<string, unknown> | null = {};
       const newSort = sort.map((e: { [key: string]: string }) => {
         if (keyToChange in e) {
           const value =
             typeof e === 'object' && e[keyToChange] === 'asc' ? 'desc' : 'asc';
+          newPagination = pagination && swapPagination(pagination);
           return { ...e, [keyToChange]: value };
         }
         return e;
       });
-      dispatch(getTransactions({ sort: newSort }));
+      dispatch(getTransactions({ sort: newSort, ...newPagination }));
     }
   };
 

@@ -8,6 +8,7 @@ import { PanelTitle } from '../Typography/Typography';
 import { SearchInput } from '../Inputs/SearchInput';
 import { getTransactions } from '../../store/data/dataThunk';
 import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { TransactionsPagination } from '../TransactionsPagination/TransactionsPagination';
 
 const TableContainer = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(1),
@@ -56,6 +57,7 @@ export const TransactionsBoard: FC = () => {
       <TableContainer>
         <TransactionTable />
       </TableContainer>
+      <TransactionsPagination />
     </CardBox>
   );
 };
