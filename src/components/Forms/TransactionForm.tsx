@@ -12,6 +12,9 @@ import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { MenuItem } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DashInput } from '../Inputs/DashInput';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const TransFormBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -26,6 +29,12 @@ const TransFormBox = styled(Box)(({ theme }) => ({
   columnGap: theme.spacing(3),
   '& > *:not(:first-of-type)': {
     marginTop: 0,
+  },
+}));
+
+const StyledDatePicker = styled(MobileDatePicker)(({ theme }) => ({
+  '& .MuiFormHelperText-root': {
+    marginBottom: `calc(${theme.spacing(2)}* -1)`,
   },
 }));
 
@@ -148,7 +157,24 @@ export const TransactionForm = ({
               endAdornment: <InputAdornment position="start">$</InputAdornment>,
             }}
           />
-          <DashInput
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <StyledDatePicker
+              label="Date"
+              inputFormat="DD/MM/YYYY"
+              value={formik.values.date}
+              onChange={(value) => formik.setFieldValue('date', value)}
+              renderInput={(params) => (
+                <DashInput
+                  {...params}
+                  error={formik.touched.date && Boolean(formik.errors.date)}
+                  helperText={formik.touched.date && formik.errors.date}
+                  id="date"
+                  name="date"
+                />
+              )}
+            />
+          </LocalizationProvider>
+          {/* <DashInput
             id="date"
             name="date"
             label="Date"
@@ -157,7 +183,7 @@ export const TransactionForm = ({
             onChange={formik.handleChange}
             error={formik.touched.date && Boolean(formik.errors.date)}
             helperText={formik.touched.date && formik.errors.date}
-          />
+          /> */}
           {categories.length > 0 && (
             <DashInput
               id="categoryId"
