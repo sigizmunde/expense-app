@@ -1,9 +1,8 @@
-import { FC, ReactPropTypes } from 'react';
+import { FC } from 'react';
 
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { theme } from '../../styles/theme';
 import Box from '@mui/material/Box';
 
 interface IProps {

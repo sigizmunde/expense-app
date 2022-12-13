@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import Pagination, { PaginationProps } from '@mui/material/Pagination';
+import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';

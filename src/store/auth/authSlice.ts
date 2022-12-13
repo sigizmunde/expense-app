@@ -43,12 +43,9 @@ export const authSlice = createSlice({
           state.isLoggedIn = true;
         }
       )
-      .addCase(
-        refreshUser.fulfilled,
-        (state, action: PayloadAction<{ accessToken: string }>) => {
-          state.isLoggedIn = true;
-        }
-      )
+      .addCase(refreshUser.fulfilled, (state) => {
+        state.isLoggedIn = true;
+      })
       .addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoggedIn = true;
         state.user = action.payload;

@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { refreshUser } from '../store/auth/authThunk';
 import { store } from '../store/store';
 import { isTokenExpired } from './isTokenExpired';
 import { token } from './token';

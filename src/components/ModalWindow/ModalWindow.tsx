@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Modal, ModalProps } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-const CenteredModal = styled(Modal)(({ theme }) => ({
+const CenteredModal = styled(Modal)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

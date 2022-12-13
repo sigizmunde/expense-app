@@ -1,7 +1,6 @@
 import { FC, useState, useCallback } from 'react';
 import { Container, styled } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { dataSelectors } from '../../store/data/dataSelectors';
+import { useAppDispatch } from '../../hooks/reduxHooks';
 import { TransactionTable } from '../TransactionsTable/TransactionsTable';
 import { CardBox } from '../Containers/CardBox';
 import { PanelTitle } from '../Typography/Typography';
@@ -16,7 +15,7 @@ const TableContainer = styled(Container)(({ theme }) => ({
   overflow: 'auto',
 }));
 
-const FlexContainer = styled(Container)(({ theme }) => ({
+const FlexContainer = styled(Container)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignContent: 'end',
@@ -24,9 +23,6 @@ const FlexContainer = styled(Container)(({ theme }) => ({
 
 export const TransactionsBoard: FC = () => {
   const dispatch = useAppDispatch();
-  const { totalIncome, totalExpense, totalTransactions } = useAppSelector(
-    dataSelectors.getTotalInfo
-  );
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -50,7 +46,6 @@ export const TransactionsBoard: FC = () => {
         <SearchInput
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          //   onBlur={handleSearch}
         />
       </FlexContainer>
       <TableContainer>

@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { SyntheticEventData } from 'react-dom/test-utils';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { deleteCategory } from '../../store/data/dataThunk';

@@ -1,5 +1,3 @@
-import { IProps } from './utils';
-
 export interface INewCategory {
   label: string;
   userId: number;

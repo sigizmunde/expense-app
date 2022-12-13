@@ -3,7 +3,7 @@ import Table from '@mui/material/Table';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
-export const StyledTable = styled(Table)(({ theme }) => ({
+export const StyledTable = styled(Table)(() => ({
   // minWidth: 700,
 }));
 
@@ -13,6 +13,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     ...theme.typography.subtitle2,
     backgroundColor: theme.palette.primary.contrastText,
     color: theme.palette.secondary,
+    padding: theme.spacing(1),
     paddingTop: 0,
     paddingBottom: theme.spacing(1),
     whiteSpace: 'nowrap',
@@ -20,6 +21,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     ...theme.typography.subtitle1,
     color: theme.palette.secondary,
+    padding: theme.spacing(1),
     minHeight: `calc(${theme.spacing(5)} * 0.8125)`,
   },
 }));
