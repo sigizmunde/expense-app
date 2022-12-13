@@ -103,9 +103,9 @@ export const CategoryForm = ({
 
   const initialRecord = categoryId
     ? {
-        ...categories.find((e) => e.id === categoryId),
+        ...(categories.find((e) => e.id === categoryId) || emptyRecord),
         image: null,
-      } || emptyRecord
+      }
     : emptyRecord;
 
   const formik = useFormik({
@@ -142,7 +142,7 @@ export const CategoryForm = ({
             name="label"
             label="Category Name"
             type="text"
-            value={formik.values.label}
+            value={formik.values.label.trimStart()}
             onChange={formik.handleChange}
             error={formik.touched.label && Boolean(formik.errors.label)}
             helperText={formik.touched.label && formik.errors.label}
@@ -175,11 +175,7 @@ export const CategoryForm = ({
           >
             {colors &&
               colors.map((e) => (
-                <MenuItem
-                  key={e.id}
-                  value={e.color}
-                  // sx={{ backgroundColor: e.color, color: e.color }}
-                >
+                <MenuItem key={e.id} value={e.color}>
                   <ColorSwatch color={e.color} />
                 </MenuItem>
               ))}
