@@ -33,14 +33,13 @@ export const TransactionsBoard: FC = () => {
   const handleSearch = useCallback((queryString: string) => {
     if (queryString !== '') {
       dispatch(getTransactions({ filter: queryString }));
-      console.log(queryString);
     } else {
       dispatch(getTransactions({}));
     }
   }, []);
 
   useEnhancedEffect(() => {
-    const timer = setTimeout(() => handleSearch(searchQuery.trim()), 2000);
+    const timer = setTimeout(() => handleSearch(searchQuery.trim()), 1000);
     return () => clearTimeout(timer);
   }, [handleSearch, searchQuery]);
 
