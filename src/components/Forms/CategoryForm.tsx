@@ -67,6 +67,8 @@ export const CategoryForm = ({
   const userId = user?.id || 0;
   const categories = useAppSelector(dataSelectors.getCategories);
 
+  const currentRecord = categories.find((e) => e.id === categoryId) || null;
+
   const colors = useMemo(() => {
     const palette = getLightColors();
     if (
@@ -78,7 +80,7 @@ export const CategoryForm = ({
     )
       palette.unshift({
         id: -1,
-        color: categories.find((e) => e.id === categoryId)?.color || '',
+        color: currentRecord?.color || '',
       });
     return palette;
   }, []);
@@ -103,8 +105,9 @@ export const CategoryForm = ({
 
   const initialRecord = categoryId
     ? {
-        ...(categories.find((e) => e.id === categoryId) || emptyRecord),
+        ...(currentRecord || emptyRecord),
         image: null,
+        color: currentRecord?.color || colors[0].color,
       }
     : emptyRecord;
 
