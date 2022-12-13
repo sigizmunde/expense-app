@@ -9,6 +9,7 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
   gridColumn: 'span 2',
   width: '100%',
   color: theme.palette.secondary.main,
+  marginBottom: `calc(${theme.spacing(0)} * -1)`,
   '& .MuiFormLabel-root': {
     ...theme.typography.h5,
   },
@@ -31,6 +32,7 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
   },
   ' & .Mui-disabled': {
     opacity: 0.5,
+    pointerEvents: 'none',
   },
   '& .MuiButtonBase-root': {
     display: props.value !== '' ? 'none' : 'initial',

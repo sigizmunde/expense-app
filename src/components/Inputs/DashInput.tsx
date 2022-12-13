@@ -9,16 +9,6 @@ const Input = styled(TextField)(({ theme }) => ({
   '& .MuiInputAdornment-root .MuiTypography-root': {
     ...theme.typography.h5,
   },
-  '& MuiTextField-root': {
-    marginTop: 0,
-  },
-  '& input, &:focus-within input': {
-    marginBottom: 5,
-    marginTop: 5,
-    ...theme.typography.h5,
-    color: theme.palette.secondary.main,
-    opacity: 0.8,
-  },
   ' &.Mui-disabled': {
     opacity: 0.3,
   },
@@ -26,7 +16,7 @@ const Input = styled(TextField)(({ theme }) => ({
     borderBottom: 'none',
   },
   '&:focus-within .MuiInputBase-root::after': {
-    borderBottom: '1px solid' + theme.palette.primary.light,
+    borderBottom: `1px solid ${theme.palette.primary.light}`,
   },
   '& .MuiButtonBase-root': {
     color: theme.palette.secondary.main,
@@ -37,9 +27,6 @@ const Input = styled(TextField)(({ theme }) => ({
   },
   '& .Mui-error button': {
     color: theme.palette.error.main,
-  },
-  '& .MuiSelect-nativeInput, &:focus-within .MuiSelect-nativeInput': {
-    opacity: 0,
   },
   '& .MuiInput-input': {
     ...theme.typography.h5,

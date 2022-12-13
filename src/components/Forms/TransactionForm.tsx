@@ -15,6 +15,7 @@ import { DashInput } from '../Inputs/DashInput';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DashSelectInput } from '../Inputs/DashSelectInput';
 
 const TransFormBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -23,7 +24,7 @@ const TransFormBox = styled(Box)(({ theme }) => ({
   flex: '1 0 auto',
   display: 'grid',
   gridTemplateColumns: '2fr 1fr',
-  alignItems: 'baseline',
+  alignItems: 'end',
   justifyContent: 'stretch',
   rowGap: theme.spacing(1),
   columnGap: theme.spacing(3),
@@ -174,22 +175,11 @@ export const TransactionForm = ({
               )}
             />
           </LocalizationProvider>
-          {/* <DashInput
-            id="date"
-            name="date"
-            label="Date"
-            type="date"
-            value={formik.values.date}
-            onChange={formik.handleChange}
-            error={formik.touched.date && Boolean(formik.errors.date)}
-            helperText={formik.touched.date && formik.errors.date}
-          /> */}
           {categories.length > 0 && (
-            <DashInput
+            <DashSelectInput
               id="categoryId"
-              select
               name="categoryId"
-              label="Category"
+              label="Select Category"
               type="number"
               value={formik.values.categoryId}
               onChange={formik.handleChange}
@@ -200,7 +190,7 @@ export const TransactionForm = ({
                     {e.label}
                   </MenuItem>
                 ))}
-            </DashInput>
+            </DashSelectInput>
           )}
           <ButtonSecondary type="submit" style={{ width: 'auto' }}>
             {formik.values.id ? 'Update' : 'Add'}

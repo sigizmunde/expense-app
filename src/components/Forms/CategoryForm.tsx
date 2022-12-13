@@ -14,6 +14,7 @@ import { DashInput } from '../Inputs/DashInput';
 import { FileUploadInput } from '../Inputs/FileUploadInput';
 import { getLightColors } from '../../utils/colorLibrary';
 import { ColorSwatch } from '../ColorBadges/ColorSwatch';
+import { DashSelectInput } from '../Inputs/DashSelectInput';
 
 const CatFormBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -157,9 +158,8 @@ export const CategoryForm = ({
             error={formik.touched.image && Boolean(formik.errors.image)}
             helperText={formik.touched.image && formik.errors.image}
           />
-          <DashInput
+          <DashSelectInput
             id="color"
-            select
             name="color"
             label="Color"
             type="string"
@@ -183,7 +183,7 @@ export const CategoryForm = ({
                   <ColorSwatch color={e.color} />
                 </MenuItem>
               ))}
-          </DashInput>
+          </DashSelectInput>
           <ButtonSecondary type="submit" style={{ width: 'auto' }}>
             {formik.values.id ? 'Update' : 'Add'}
           </ButtonSecondary>
