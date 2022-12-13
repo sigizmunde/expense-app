@@ -18,7 +18,7 @@ import { TableSortSwitch } from '../TableSortSwitch/TableSortSwitch';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 import { IPagination } from '../../types/data';
-import { IProps } from '../../types/utils';
+import dayjs from 'dayjs';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
@@ -91,7 +91,7 @@ export const TransactionTable: FC = () => {
             </StyledTableCell>
             <StyledTableCell>{row.label}</StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
-              {row.date.slice(0, 10)}
+              {dayjs(row.date).format('DD/MM/YYYY')}
             </StyledTableCell>
             <StyledTableCell
               align="center"
