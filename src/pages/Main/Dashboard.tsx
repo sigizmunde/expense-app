@@ -17,9 +17,7 @@ export const Dashboard: FC = () => {
         <AddCategoryBoard />
         <TransactionsBoard />
       </DashPanel>
-      <RightPanel>
-        <CategoriesTable />
-      </RightPanel>
+      <RightPanel></RightPanel>
     </DashboardContainer>
   );
 };
