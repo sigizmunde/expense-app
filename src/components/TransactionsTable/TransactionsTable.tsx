@@ -7,6 +7,7 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {
+  Sorted,
   StyledTable,
   StyledTableCell,
   StyledTableRow,
@@ -75,13 +76,15 @@ export const TransactionTable: FC = () => {
           <StyledTableCell>Category</StyledTableCell>
           <StyledTableCell>Name</StyledTableCell>
           <StyledTableCell onClick={() => toggleSort('date')}>
-            Date
-            {sort && valueInSort('date') && (
-              <TableSortSwitch2
-                direction={valueInSort('date') === 'asc' ? 'asc' : 'desc'}
-                onClick={() => toggleSort('date')}
-              />
-            )}
+            <Sorted>
+              Date
+              {sort && valueInSort('date') && (
+                <TableSortSwitch2
+                  direction={valueInSort('date') === 'asc' ? 'asc' : 'desc'}
+                  onClick={() => toggleSort('date')}
+                />
+              )}
+            </Sorted>
           </StyledTableCell>
           <StyledTableCell align="center">Money</StyledTableCell>
         </TableRow>
