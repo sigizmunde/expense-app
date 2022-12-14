@@ -14,11 +14,11 @@ import {
 import { moneyNumToString } from '../../utils/moneyNumToString';
 import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
-import { TableSortSwitch } from '../TableSortSwitch/TableSortSwitch';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 import { IPagination } from '../../types/data';
 import dayjs from 'dayjs';
+import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +45,7 @@ export const TransactionTable: FC = () => {
     return swappedPagination;
   };
 
-  const changeOrder = (keyToChange: string): void => {
+  const toggleSort = (keyToChange: string): void => {
     if (sort) {
       let newPagination: Record<string, unknown> | null = {};
       const newSort = sort.map((e: { [key: string]: string }) => {
@@ -53,6 +53,11 @@ export const TransactionTable: FC = () => {
           const value =
             typeof e === 'object' && e[keyToChange] === 'asc' ? 'desc' : 'asc';
           newPagination = pagination && swapPagination(pagination);
+          return { ...e, [keyToChange]: value };
+        }
+        if (!(keyToChange in e)) {
+          const value = 'desc';
+          newPagination = pagination && { ...pagination };
           return { ...e, [keyToChange]: value };
         }
         return e;
@@ -68,12 +73,12 @@ export const TransactionTable: FC = () => {
           <StyledTableCell>#</StyledTableCell>
           <StyledTableCell>Category</StyledTableCell>
           <StyledTableCell>Name</StyledTableCell>
-          <StyledTableCell>
+          <StyledTableCell onClick={() => toggleSort('date')}>
             Date
             {sort && valueInSort('date') && (
-              <TableSortSwitch
+              <TableSortSwitch2
                 direction={valueInSort('date') === 'asc' ? 'asc' : 'desc'}
-                onClick={() => changeOrder('date')}
+                onClick={() => toggleSort('date')}
               />
             )}
           </StyledTableCell>
