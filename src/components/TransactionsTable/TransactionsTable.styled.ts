@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { Box } from '@mui/material';
 
 export const StyledTable = styled(Table)(() => ({
   // minWidth: 700,
@@ -30,4 +31,12 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
     backgroundColor: theme.palette.custom.violet + '4D',
   },
+}));
+
+export const Sorted = styled(Box)(() => ({
+  font: 'inherit',
+  lineHeight: 'inherit',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 0,
 }));

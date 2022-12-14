@@ -8,8 +8,9 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
   color: 'inherit',
   font: 'inherit',
+  lineHeight: 'inherit',
   margin: theme.spacing(0),
-  transform: 'translateY(25%)',
+  transform: 'translateY(10%)',
 }));
 
 const AscIcon = styled(ArrowDropUp)(({ theme, ...props }) => ({
