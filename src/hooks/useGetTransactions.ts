@@ -19,7 +19,7 @@ export const useGetTransactionsWithTableIndex = () => {
     return transactions.map((e, i) => ({
       ...e,
       tableIndex: backOrder
-        ? limit * (totalPages - page) - i - (totalElements % limit)
+        ? limit * (totalPages - page) - i - (limit - (totalElements % limit))
         : i + 1 + page * (pagination?.limit || 0),
     }));
   }, [transactions, pagination, backOrder]);
