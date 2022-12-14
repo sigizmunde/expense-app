@@ -19,10 +19,11 @@ import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 import { IPagination } from '../../types/data';
 import dayjs from 'dayjs';
 import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
+import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
 
 export const TransactionTable: FC = () => {
   const dispatch = useAppDispatch();
-  const transactions = useAppSelector(dataSelectors.getTransactions);
+  const transactions = useGetTransactionsWithTableIndex();
   const pagination = useAppSelector(dataSelectors.getPagination);
   const sort = useAppSelector(dataSelectors.getSort) as {
     [key: string]: string;
@@ -45,20 +46,20 @@ export const TransactionTable: FC = () => {
     return swappedPagination;
   };
 
-  const toggleSort = (keyToChange: string): void => {
+  const toggleSort = (keyToSort: string): void => {
     if (sort) {
       let newPagination: Record<string, unknown> | null = {};
       const newSort = sort.map((e: { [key: string]: string }) => {
-        if (keyToChange in e) {
+        if (keyToSort in e) {
           const value =
-            typeof e === 'object' && e[keyToChange] === 'asc' ? 'desc' : 'asc';
+            typeof e === 'object' && e[keyToSort] === 'asc' ? 'desc' : 'asc';
           newPagination = pagination && swapPagination(pagination);
-          return { ...e, [keyToChange]: value };
+          return { ...e, [keyToSort]: value };
         }
-        if (!(keyToChange in e)) {
+        if (!(keyToSort in e)) {
           const value = 'desc';
           newPagination = pagination && { ...pagination };
-          return { ...e, [keyToChange]: value };
+          return { ...e, [keyToSort]: value };
         }
         return e;
       });
@@ -89,7 +90,7 @@ export const TransactionTable: FC = () => {
         {transactions.map((row) => (
           <StyledTableRow key={row.id}>
             <StyledTableCell component="th" scope="row">
-              {row.id}
+              {row.tableIndex}
             </StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
               <TransactionCategory categoryId={row.categoryId} />
