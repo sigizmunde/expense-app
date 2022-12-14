@@ -13,7 +13,7 @@ export interface IRouteProps {
   children?: ReactNode;
 }
 
-interface IItem {
+export interface IItem {
   id: string;
   text: string;
 }

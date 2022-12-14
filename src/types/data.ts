@@ -1,6 +1,8 @@
 export interface INewCategory {
   label: string;
   userId: number;
+  color?: string;
+  image?: unknown | null;
 }
 
 export interface ICategory extends INewCategory {
@@ -26,8 +28,8 @@ export interface ICategoriesResponse {
 export interface ITransactionsResponse {
   transactions: ITransaction[];
   pagination?: IPagination;
-  sort?: [{}];
-  filter?: {};
+  sort?: { [key: string]: string }[];
+  filter?: unknown;
 }
 
 export interface IDataState extends ICategoriesResponse, ITransactionsResponse {
@@ -35,6 +37,7 @@ export interface IDataState extends ICategoriesResponse, ITransactionsResponse {
   totalExpense: number;
   totalTransactions: number;
   isFetching: boolean;
+  errorMessage: string | null;
 }
 
 export interface IPagination {
@@ -48,6 +51,6 @@ export interface IPagination {
 }
 
 export interface ITransactionQueryProps extends IPagination {
-  sort?: string;
-  order?: string;
+  sort?: { [key: string]: string }[];
+  filter?: string;
 }

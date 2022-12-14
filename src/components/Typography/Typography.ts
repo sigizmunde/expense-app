@@ -27,3 +27,8 @@ export const NestedLink = styled(Link)(({ theme }) => ({
     opacity: 1,
   },
 }));
+
+export const PanelTitle = styled(Typography)(({ theme }) => ({
+  ...theme.typography.h4,
+  color: theme.palette.secondary.main,
+}));

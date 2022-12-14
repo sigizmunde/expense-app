@@ -16,6 +16,7 @@ import { authReconnectMiddleware } from './auth/authReconnectMiddleware';
 import { authGetUserMiddleware } from './auth/authGetUserMiddleware';
 import { dataGetCategoriesMiddleware } from './data/dataGetCategoriesMiddleware';
 import { dataGetTransactionsMiddleware } from './data/dataGetTransactionsMiddleware';
+import { dataGetTotalInfoMiddleware } from './data/dataGetTotalInfoMiddleware';
 
 const persistConfig = {
   key: 'expense_app',
@@ -43,7 +44,8 @@ export const store = configureStore({
       authReconnectMiddleware,
       authGetUserMiddleware,
       dataGetCategoriesMiddleware,
-      dataGetTransactionsMiddleware
+      dataGetTransactionsMiddleware,
+      dataGetTotalInfoMiddleware
     ),
 });
 

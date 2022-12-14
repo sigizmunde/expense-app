@@ -8,6 +8,7 @@ const Button = styled(MuiButton)(({ theme }) => ({
   borderRadius: '2px',
   ...theme.typography.h5,
   textTransform: 'none',
+  color: theme.palette.primary.contrastText,
   '&:disabled': {
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.custom.disabled,

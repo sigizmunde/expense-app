@@ -8,8 +8,18 @@ interface IProps {
 
 export const CardBox = styled(Box)<IProps & BoxProps>(
   ({ theme, ...props }) => ({
-    borderRadius: props.radius || theme.spacing(0),
-    backgroundColor: props.bgcolor || theme.palette.custom.white,
+    overflow: 'auto',
+    maxHeight: '100%',
     justifySelf: 'stretch',
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    justifyContent: 'stretch',
+    padding: theme.spacing(3),
+    borderRadius: props.radius || theme.spacing(0),
+    backgroundColor:
+      theme.palette.custom[props.bgcolor as string] ||
+      props.bgcolor ||
+      theme.palette.custom.white,
   })
 );

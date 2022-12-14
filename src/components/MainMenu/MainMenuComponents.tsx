@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { AppBar, Button } from '@mui/material';
+import { FC } from 'react';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { Box } from '@mui/material';

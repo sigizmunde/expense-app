@@ -59,10 +59,14 @@ export const deleteCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   'data/updateCategory',
-  async ({ id, label }: { id: number; label: string }, { rejectWithValue }) => {
+  async (
+    { id, label, color }: { id: number; label: string; color?: string },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await axios.patch<ICategory>('/categories/' + id, {
         label,
+        color,
       });
       return data;
     } catch (err) {
@@ -79,17 +83,28 @@ export const getTransactions = createAsyncThunk(
   'data/getTransactions',
   async (
     {
-      page = -1,
+      page = 0,
       limit = 10,
-      sort = 'date',
-      order = 'desc',
+      filter = '',
+      sort = [{ date: 'desc' }],
     }: ITransactionQueryProps,
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.get(
-        `/transactions?_sort=${sort}&_order=${order}&page=${page}&limit=${limit}`
-      );
+      const sortQueryString =
+        sort?.reduce(
+          (acc, el) =>
+            acc +
+            `${Object.keys(el)
+              .map((key) => '&_sort=' + key)
+              .join('')}${Object.values(el)
+              .map((key) => '&_order=' + key)
+              .join('')}`,
+          ''
+        ) || '';
+      let queryString = `?${sortQueryString}&_page=${page}&_limit=${limit}`;
+      if (filter !== '') queryString += `&label[contains]=${filter}`;
+      const { data } = await axios.get(`/transactions${queryString}`);
       return {
         transactions: data.content || [],
         pagination: data.pagination || null,

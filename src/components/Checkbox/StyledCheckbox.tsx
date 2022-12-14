@@ -7,7 +7,7 @@ export const StyledCheckbox = styled(FormControlLabel)(({ theme }) => ({
   gap: theme.spacing(1),
   width: '100%',
   margin: 0,
-  marginTop: theme.spacing(1),
+  marginTop: theme.spacing(2),
   '& input': {
     position: 'relative',
     zIndex: 0,

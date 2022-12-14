@@ -1,24 +1,121 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 
+import TableBody from '@mui/material/TableBody';
+
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import {
+  StyledTable,
+  StyledTableCell,
+  StyledTableRow,
+} from './TransactionsTable.styled';
+import { moneyNumToString } from '../../utils/moneyNumToString';
+import { theme } from '../../styles/theme';
+import { getTransactions } from '../../store/data/dataThunk';
+import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
+import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
+import { IPagination } from '../../types/data';
+import dayjs from 'dayjs';
+import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
+import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
+
 export const TransactionTable: FC = () => {
-  const transactions = useAppSelector(dataSelectors.getTransactions);
+  const dispatch = useAppDispatch();
+  const transactions = useGetTransactionsWithTableIndex();
+  const pagination = useAppSelector(dataSelectors.getPagination);
+  const sort = useAppSelector(dataSelectors.getSort) as {
+    [key: string]: string;
+  }[];
+
+  const valueInSort = (keyToFind: string): string | undefined => {
+    if (sort) {
+      const obj = sort.find((e) => keyToFind in e) as { [key: string]: string };
+      if (!obj) return undefined;
+      return obj[keyToFind];
+    }
+    return undefined;
+  };
+
+  const swapPagination = (pagination: IPagination) => {
+    const swappedPagination = { ...pagination };
+    if (pagination && pagination.totalPages)
+      swappedPagination.page =
+        pagination?.totalPages - 1 - (pagination?.page || 0);
+    return swappedPagination;
+  };
+
+  const toggleSort = (keyToSort: string): void => {
+    if (sort) {
+      let newPagination: Record<string, unknown> | null = {};
+      const newSort = sort.map((e: { [key: string]: string }) => {
+        if (keyToSort in e) {
+          const value =
+            typeof e === 'object' && e[keyToSort] === 'asc' ? 'desc' : 'asc';
+          newPagination = pagination && swapPagination(pagination);
+          return { ...e, [keyToSort]: value };
+        }
+        if (!(keyToSort in e)) {
+          const value = 'desc';
+          newPagination = pagination && { ...pagination };
+          return { ...e, [keyToSort]: value };
+        }
+        return e;
+      });
+      dispatch(getTransactions({ sort: newSort, ...newPagination }));
+    }
+  };
+
   return (
-    <>
-      {transactions &&
-        transactions.map((e) => (
-          <div
-            style={{ width: '100%', display: 'flex', gap: '24px' }}
-            key={e.id}
-          >
-            <div>{e.id}</div>
-            <div>{e.categoryId}</div>
-            <div>{e.label}</div>
-            <div>{e.date.slice(0, 10)}</div>
-            <div>{e.amount}</div>
-          </div>
+    <StyledTable stickyHeader aria-label="transactions table">
+      <TableHead>
+        <TableRow>
+          <StyledTableCell>#</StyledTableCell>
+          <StyledTableCell>Category</StyledTableCell>
+          <StyledTableCell>Name</StyledTableCell>
+          <StyledTableCell onClick={() => toggleSort('date')}>
+            Date
+            {sort && valueInSort('date') && (
+              <TableSortSwitch2
+                direction={valueInSort('date') === 'asc' ? 'asc' : 'desc'}
+                onClick={() => toggleSort('date')}
+              />
+            )}
+          </StyledTableCell>
+          <StyledTableCell align="center">Money</StyledTableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {transactions.map((row) => (
+          <StyledTableRow key={row.id}>
+            <StyledTableCell component="th" scope="row">
+              {row.tableIndex}
+            </StyledTableCell>
+            <StyledTableCell style={{ fontSize: '12px' }}>
+              <TransactionCategory categoryId={row.categoryId} />
+            </StyledTableCell>
+            <StyledTableCell>{row.label}</StyledTableCell>
+            <StyledTableCell style={{ fontSize: '12px' }}>
+              {dayjs(row.date).format('DD/MM/YYYY')}
+            </StyledTableCell>
+            <StyledTableCell
+              align="center"
+              style={{
+                ...theme.typography.h5,
+                color: theme.palette.custom.orange,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                justifyContent: 'end',
+                alignItems: 'center',
+              }}
+            >
+              {moneyNumToString(row.amount, '$')}
+              <TransactionPopover id={row.id} />
+            </StyledTableCell>
+          </StyledTableRow>
         ))}
-    </>
+      </TableBody>
+    </StyledTable>
   );
 };

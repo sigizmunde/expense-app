@@ -16,7 +16,10 @@ export const authReconnectMiddleware: Middleware =
       (action.type === logInUser.rejected.type && store.getState().refreshToken)
     ) {
       store.dispatch(
-        refreshUser({ refreshToken: action.payload.refreshToken as string })
+        refreshUser({
+          refreshToken: (action.payload.refreshToken ||
+            store.getState().refreshToken) as string,
+        })
       );
     }
     next(action);

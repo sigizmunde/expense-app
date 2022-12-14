@@ -32,6 +32,7 @@ export const theme = createTheme({
     custom: {
       black: '#1D283A',
       violet: '#D4CCF1',
+      violet70: 'rgba(212, 204, 241, 0.7)',
       blue: '#69B0FF',
       blue70: '#D9E7F8',
       orange: '#F08E5B',
@@ -48,7 +49,7 @@ export const theme = createTheme({
     allVariants: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
       fontSize: 16,
-      color: '#fff',
+      color: 'inherit',
     },
     h1: {
       textTransform: 'uppercase',

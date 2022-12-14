@@ -11,4 +11,5 @@ export const dataSelectors = {
       state.rootReducer.data;
     return { totalIncome, totalExpense, totalTransactions };
   },
+  getSort: (state: RootState) => state.rootReducer.data.sort,
 };

@@ -7,10 +7,13 @@ import {
   registerUser,
 } from './authThunk';
 import { ILogInTokens, IAuthState, IUser } from '../../types/auth';
-import { isPendingAction, isRejectedAction } from '../actionTypeCheckers';
+import {
+  isFulfilledAction,
+  isPendingAction,
+  isRejectedAction,
+} from '../actionTypeCheckers';
 
 const initialState: IAuthState = {
-  accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
   isFetching: false,
@@ -31,28 +34,19 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.fulfilled, (state) => {
-        state.isFetching = false;
         state.message = 'success';
       })
       .addCase(
         logInUser.fulfilled,
         (state, action: PayloadAction<ILogInTokens>) => {
-          state.isFetching = false;
-          state.accessToken = action.payload.accessToken;
           state.refreshToken = action.payload.refreshToken;
           state.isLoggedIn = true;
         }
       )
-      .addCase(
-        refreshUser.fulfilled,
-        (state, action: PayloadAction<{ accessToken: string }>) => {
-          state.isFetching = false;
-          state.accessToken = action.payload.accessToken;
-          state.isLoggedIn = true;
-        }
-      )
+      .addCase(refreshUser.fulfilled, (state) => {
+        state.isLoggedIn = true;
+      })
       .addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
-        state.isFetching = false;
         state.isLoggedIn = true;
         state.user = action.payload;
       })
@@ -61,13 +55,16 @@ export const authSlice = createSlice({
       })
       .addCase(logOutUser.fulfilled, (state) => {
         Object.assign(state, initialState);
-        state.isFetching = false;
         state.message = 'Successfully logged out.';
+      })
+      .addMatcher(isFulfilledAction, (state) => {
+        state.isFetching = false;
       })
       .addMatcher(isPendingAction, (state) => {
         state.isFetching = true;
       })
       .addMatcher(isRejectedAction, (state, { payload }) => {
+        state.isFetching = false;
         state.message = payload.message;
       });
   },
