@@ -1,6 +1,4 @@
-import { FC } from 'react';
-import { styled } from '@mui/material';
-import { Box, BoxProps } from '@mui/system';
+import { styled, Box, BoxProps } from '@mui/material';
 
 const Swatch = styled(Box)(({ theme }) => ({
   display: 'inline-block',
@@ -8,11 +6,8 @@ const Swatch = styled(Box)(({ theme }) => ({
   height: theme.spacing(3),
 }));
 
-export const ColorSwatch: FC<BoxProps & { color: string }> = ({
-  color,
-  ...props
-}) => {
+export function ColorSwatch({ color, ...props }: BoxProps & { color: string }) {
   return (
     <Swatch component="span" style={{ backgroundColor: color }} {...props} />
   );
-};
+}

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Select, { SelectProps } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
@@ -20,34 +19,37 @@ const SelectInput = styled(Select)(({ theme }) => ({
     backgroundColor: 'transparent',
   },
   '&.MuiInputBase-root::after': {
-    borderBottom: '1px solid' + theme.palette.primary.light,
+    borderBottom: `1px solid${theme.palette.primary.light}`,
   },
 }));
 
-export const DashSelectInput: FC<
-  SelectProps & {
-    width?: string;
-    grow?: string;
-    gridcol?: string;
-    label?: string;
-  }
-> = (props) => {
+export function DashSelectInput({
+  id,
+  width = 'auto',
+  grow = '0',
+  gridcol = 'span 1',
+  label = '',
+  ...props
+}: SelectProps & {
+  width?: string;
+  grow?: string;
+  gridcol?: string;
+  label?: string;
+}) {
   return (
-    <>
-      <StyledLabel id={`${props.id}-label`}>
-        {props.label}
-        <SelectInput
-          {...props}
-          labelId={`${props.id}-label`}
-          style={{
-            width: props.width,
-            flexGrow: props.grow,
-            gridColumn: props.gridcol,
-          }}
-          variant="standard"
-          IconComponent={ExpandMore}
-        />
-      </StyledLabel>
-    </>
+    <StyledLabel id={`${id}-label`}>
+      {label}
+      <SelectInput
+        {...props}
+        labelId={`${id}-label`}
+        style={{
+          width,
+          flexGrow: grow,
+          gridColumn: gridcol,
+        }}
+        variant="standard"
+        IconComponent={ExpandMore}
+      />
+    </StyledLabel>
   );
-};
+}

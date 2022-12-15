@@ -1,6 +1,4 @@
-import { FC } from 'react';
-import { Modal, ModalProps } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import { Modal, ModalProps, Box, styled } from '@mui/material';
 
 const CenteredModal = styled(Modal)(() => ({
   display: 'flex',
@@ -14,7 +12,7 @@ const ModalContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.custom.bgr,
 }));
 
-export const ModalWindow: FC<ModalProps> = ({ children, onClose, open }) => {
+export function ModalWindow({ children, onClose, open }: ModalProps) {
   return (
     <CenteredModal
       open={open}
@@ -25,4 +23,4 @@ export const ModalWindow: FC<ModalProps> = ({ children, onClose, open }) => {
       <ModalContainer>{children}</ModalContainer>
     </CenteredModal>
   );
-};
+}

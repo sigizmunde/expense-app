@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
 import IconButton from '@mui/material/IconButton';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { styled } from '@mui/system';
+import { styled } from '@mui/material';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { deleteTransaction } from '../../store/data/dataThunk';
@@ -18,7 +18,7 @@ const MenuBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
 }));
 
-export const TransactionPopover = ({ id }: { id: number }) => {
+export function TransactionPopover({ id }: { id: number }) {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [edit, setEdit] = useState(false);
@@ -100,4 +100,4 @@ export const TransactionPopover = ({ id }: { id: number }) => {
       )}
     </div>
   );
-};
+}

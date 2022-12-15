@@ -1,13 +1,12 @@
-import { FC } from 'react';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 import success from '../../images/success.svg';
 import { ButtonPrimary } from '../../components/Buttons/ButtonPrimary';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/reduxHooks';
-import { resetRegistered, resetWarning } from '../../store/auth/authSlice';
+import { resetRegistered } from '../../store/auth/authSlice';
 import { FormBox } from '../../components/Forms/Form.styled';
 
-export const Success: FC = () => {
+export function Success() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -17,14 +16,12 @@ export const Success: FC = () => {
   };
 
   return (
-    <>
-      <FormBox>
-        <img src={success} alt="success illustration" />
-        <Typography variant="h5">Your account successfully created</Typography>
-        <ButtonPrimary type="button" onClick={goSignIn}>
-          Let`s Start
-        </ButtonPrimary>
-      </FormBox>
-    </>
+    <FormBox>
+      <img src={success} alt="success illustration" />
+      <Typography variant="h5">Your account successfully created</Typography>
+      <ButtonPrimary type="button" onClick={goSignIn}>
+        Let`s Start
+      </ButtonPrimary>
+    </FormBox>
   );
-};
+}

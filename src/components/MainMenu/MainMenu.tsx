@@ -1,11 +1,10 @@
-import { FC } from 'react';
 import { MenuAppBar, MenuLink } from './MainMenuComponents';
 import { ReactComponent as AnalyticsIcon } from '../../images/icons/menu-analytics.svg';
 import { ReactComponent as CategoriesIcon } from '../../images/icons/menu-categories.svg';
 import { ReactComponent as DashIcon } from '../../images/icons/menu-dash.svg';
 import { ReactComponent as SettingsIcon } from '../../images/icons/menu-settings.svg';
 
-export const MainMenu: FC = () => {
+export function MainMenu() {
   return (
     <MenuAppBar>
       <MenuLink to="/dashboard">
@@ -26,4 +25,4 @@ export const MainMenu: FC = () => {
       </MenuLink>
     </MenuAppBar>
   );
-};
+}

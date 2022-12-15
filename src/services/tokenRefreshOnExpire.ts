@@ -3,12 +3,12 @@ import { store } from '../store/store';
 import { isTokenExpired } from './isTokenExpired';
 import { token } from './token';
 
-export const tokenRefreshOnExire = async function (config: AxiosRequestConfig) {
+export async function tokenRefreshOnExpire(config: AxiosRequestConfig) {
   if (config.headers && config.headers.Authorization) {
     const currentToken = (config.headers.Authorization as string).split(' ')[1];
     if (isTokenExpired(currentToken)) {
       token.unset();
-      const refreshToken = store.getState().rootReducer.auth.refreshToken;
+      const { refreshToken } = store.getState().rootReducer.auth;
       if (refreshToken) {
         const { data } = await axios.post('/auth/refresh', {
           refreshToken,
@@ -19,4 +19,4 @@ export const tokenRefreshOnExire = async function (config: AxiosRequestConfig) {
     }
   }
   return config;
-};
+}

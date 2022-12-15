@@ -1,6 +1,5 @@
-import { FC } from 'react';
-import logo from '../../images/company_logo.svg';
 import { styled } from '@mui/material/styles';
+import logo from '../../images/company_logo.svg';
 
 const Img = styled('img')`
   display: block;
@@ -9,6 +8,6 @@ const Img = styled('img')`
   top: 48px;
 `;
 
-export const Logo: FC = () => {
+export function Logo() {
   return <Img src={logo} alt="app logo" />;
-};
+}

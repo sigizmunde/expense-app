@@ -9,7 +9,7 @@ export const useGetTransactionsWithTableIndex = () => {
     [key: string]: string;
   }[];
   const backOrder =
-    sort.find((e) => 'date' in e)?.['date'].toLowerCase() === 'desc';
+    sort.find((e) => 'date' in e)?.date.toLowerCase() === 'desc';
 
   const transactionsRemap = useMemo(() => {
     const page = pagination?.page || 0;

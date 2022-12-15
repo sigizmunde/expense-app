@@ -1,7 +1,5 @@
-import { styled, TableSortLabelProps } from '@mui/material';
-import { TableSortLabel } from '@mui/material';
+import { styled, TableSortLabelProps, TableSortLabel } from '@mui/material';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
-import { FC } from 'react';
 
 const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({
   color: theme.palette.secondary.main,
@@ -26,7 +24,7 @@ const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({
   },
 }));
 
-export const TableSortSwitch: FC<TableSortLabelProps> = (props) => {
+export function TableSortSwitch(props: TableSortLabelProps) {
   return (
     <StyledTableSortLabel
       IconComponent={ArrowDropDown}
@@ -34,4 +32,4 @@ export const TableSortSwitch: FC<TableSortLabelProps> = (props) => {
       {...props}
     />
   );
-};
+}

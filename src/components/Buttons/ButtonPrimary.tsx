@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import MuiButton, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
@@ -19,10 +18,10 @@ const Button = styled(MuiButton)(({ theme }) => ({
   },
 }));
 
-export const ButtonPrimary: FC<ButtonProps> = (props) => {
+export function ButtonPrimary({ children, ...props }: ButtonProps) {
   return (
     <Button variant="contained" {...props}>
-      {props.children}
+      {children}
     </Button>
   );
-};
+}

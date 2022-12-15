@@ -15,7 +15,7 @@ function App() {
         element={<PublicRoute redirectTo={ROUTES.MAIN.index} restricted />}
       >
         <Route path={ROUTES.AUTH.index} element={<Auth />}>
-          <Route index element={<Navigate to={'signin'} replace />} />
+          <Route index element={<Navigate to={ROUTES.AUTH.signIn} replace />} />
           <Route path={ROUTES.AUTH.signIn} element={<SignIn />} />
           <Route path={ROUTES.AUTH.signUp} element={<SignUp />} />
         </Route>

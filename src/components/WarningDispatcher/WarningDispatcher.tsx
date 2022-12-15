@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
+import { Alert } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { resetWarning } from '../../store/auth/authSlice';
-import { Alert } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { resetErrorMessage } from '../../store/data/dataSlice';
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
@@ -14,7 +14,7 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
   zIndex: 9,
 }));
 
-export const WarningDispatcher = () => {
+export function WarningDispatcher() {
   const dispatch = useAppDispatch();
   const warningMessage = useAppSelector(authSelectors.getMessage);
 
@@ -34,11 +34,9 @@ export const WarningDispatcher = () => {
     };
   }, [dispatch]);
 
-  return (
-    <>
-      {warningMessage && warningMessage !== '' && (
-        <StyledAlert severity="warning">{warningMessage}</StyledAlert>
-      )}
-    </>
+  return warningMessage && warningMessage !== '' ? (
+    <StyledAlert severity="warning">{warningMessage}</StyledAlert>
+  ) : (
+    <> </>
   );
-};
+}

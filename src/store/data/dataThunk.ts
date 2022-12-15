@@ -45,7 +45,7 @@ export const deleteCategory = createAsyncThunk(
   'data/deleteCategory',
   async (id: number, { rejectWithValue }) => {
     try {
-      const { data } = await axios.delete<ICategory>('/categories/' + id);
+      const { data } = await axios.delete<ICategory>(`/categories/${id}`);
       return data;
     } catch (err) {
       const error = err as AxiosError<IFetchError>;
@@ -64,7 +64,7 @@ export const updateCategory = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.patch<ICategory>('/categories/' + id, {
+      const { data } = await axios.patch<ICategory>(`/categories/${id}`, {
         label,
         color,
       });
@@ -94,11 +94,10 @@ export const getTransactions = createAsyncThunk(
       const sortQueryString =
         sort?.reduce(
           (acc, el) =>
-            acc +
-            `${Object.keys(el)
-              .map((key) => '&_sort=' + key)
+            `${acc}${Object.keys(el)
+              .map((key) => `&_sort=${key}`)
               .join('')}${Object.values(el)
-              .map((key) => '&_order=' + key)
+              .map((key) => `&_order=${key}`)
               .join('')}`,
           ''
         ) || '';
@@ -148,7 +147,7 @@ export const deleteTransaction = createAsyncThunk(
         id: number;
         label: string;
         userId: number;
-      }>('/transactions/' + id);
+      }>(`/transactions/${id}`);
       return data;
     } catch (err) {
       const error = err as AxiosError<IFetchError>;
@@ -183,7 +182,7 @@ export const updateTransaction = createAsyncThunk(
         id: number;
         label: string;
         userId: number;
-      }>('/transactions/' + id, {
+      }>(`/transactions/${id}`, {
         date,
         categoryId,
         label,

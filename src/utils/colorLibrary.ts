@@ -6,7 +6,7 @@ export const generateColor = ({
   const getRand = () => Math.round(Math.random() * 255);
   const stringify = (color: { r: number; g: number; b: number }) => {
     const str = (h: number) => h.toString(16).padStart(2, '0');
-    return '#' + str(color.r) + str(color.g) + str(color.b);
+    return `#${str(color.r)}${str(color.g)}${str(color.b)}`;
   };
 
   const { r, g, b } = { r: getRand(), g: getRand(), b: getRand() };

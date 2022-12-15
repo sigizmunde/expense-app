@@ -1,8 +1,6 @@
-import { FC } from 'react';
-import { AppBar } from '@mui/material';
+import { AppBar, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { NavLink, NavLinkProps } from 'react-router-dom';
-import { Box } from '@mui/material';
 
 export const MenuAppBar = styled(AppBar)(({ theme }) => ({
   display: 'flex',
@@ -54,12 +52,12 @@ const LinkWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const MenuLink: FC<NavLinkProps> = (props) => {
+export function MenuLink({ children, ...props }: NavLinkProps) {
   return (
     <LinkWrapper>
       <NavLink style={{ display: 'box', textDecoration: 'none' }} {...props}>
-        {props.children}
+        {children}
       </NavLink>
     </LinkWrapper>
   );
-};
+}

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { styled } from '@mui/material';
 import Container from '@mui/material/Container';
 import { ReactComponent as IncomeIcon } from '../../images/icons/income.svg';
@@ -18,7 +17,7 @@ const DashHeaderPanel = styled(Container)(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
-export const DashHeader: FC = () => {
+export function DashHeader() {
   const { totalIncome, totalExpense, totalTransactions } = useAppSelector(
     dataSelectors.getTotalInfo
   );
@@ -48,4 +47,4 @@ export const DashHeader: FC = () => {
       </InfoCard>
     </DashHeaderPanel>
   );
-};
+}

@@ -1,6 +1,5 @@
-import { FC, ReactNode } from 'react';
-import { Container, styled } from '@mui/material';
-import { GridProps } from '@mui/system';
+import { ReactNode } from 'react';
+import { Container, styled, GridProps } from '@mui/material';
 
 export const DashboardContainerBox = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -15,8 +14,8 @@ export const DashboardContainerBox = styled(Container)(({ theme }) => ({
   },
 }));
 
-export const DashboardContainer: FC<GridProps & { children?: ReactNode }> = ({
-  children,
-}) => {
+export function DashboardContainer({
+  children = undefined,
+}: GridProps & { children?: ReactNode }) {
   return <DashboardContainerBox>{children}</DashboardContainerBox>;
-};
+}

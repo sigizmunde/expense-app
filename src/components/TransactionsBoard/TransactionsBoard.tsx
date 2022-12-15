@@ -1,12 +1,12 @@
-import { FC, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Container, styled } from '@mui/material';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { TransactionTable } from '../TransactionsTable/TransactionsTable';
 import { CardBox } from '../Containers/CardBox';
 import { PanelTitle } from '../Typography/Typography';
 import { SearchInput } from '../Inputs/SearchInput';
 import { getTransactions } from '../../store/data/dataThunk';
-import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 import { TransactionsPagination } from '../TransactionsPagination/TransactionsPagination';
 
 const TableContainer = styled(Container)(({ theme }) => ({
@@ -21,18 +21,21 @@ const FlexContainer = styled(Container)(() => ({
   alignContent: 'end',
 }));
 
-export const TransactionsBoard: FC = () => {
+export function TransactionsBoard() {
   const dispatch = useAppDispatch();
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = useCallback((queryString: string) => {
-    if (queryString !== '') {
-      dispatch(getTransactions({ filter: queryString }));
-    } else {
-      dispatch(getTransactions({}));
-    }
-  }, []);
+  const handleSearch = useCallback(
+    (queryString: string) => {
+      if (queryString !== '') {
+        dispatch(getTransactions({ filter: queryString }));
+      } else {
+        dispatch(getTransactions({}));
+      }
+    },
+    [dispatch]
+  );
 
   useEnhancedEffect(() => {
     const timer = setTimeout(() => handleSearch(searchQuery.trim()), 1000);
@@ -54,4 +57,4 @@ export const TransactionsBoard: FC = () => {
       <TransactionsPagination />
     </CardBox>
   );
-};
+}
