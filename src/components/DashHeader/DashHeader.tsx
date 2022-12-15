@@ -42,7 +42,7 @@ export const DashHeader: FC = () => {
       <InfoCard
         color="violet"
         caption="Total Transactions"
-        value={'' + totalTransactions}
+        value={totalTransactions.toString()}
       >
         <TransactionIcon />
       </InfoCard>
