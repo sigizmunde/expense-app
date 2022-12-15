@@ -50,7 +50,15 @@ export interface IPagination {
   isLastPage?: boolean;
 }
 
+export type TSort = { [key: string]: string }[];
+
 export interface ITransactionQueryProps extends IPagination {
-  sort?: { [key: string]: string }[];
+  sort?: TSort;
   filter?: string;
+}
+
+export interface ITotalInfo {
+  totalIncome: number;
+  totalExpense: number;
+  totalTransactions: number;
 }

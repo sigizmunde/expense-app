@@ -19,6 +19,7 @@ import {
   ICategoriesResponse,
   ICategory,
   IDataState,
+  ITotalInfo,
   ITransaction,
   ITransactionsResponse,
 } from '../../types/data';
@@ -117,14 +118,7 @@ export const dataSlice = createSlice({
       )
       .addCase(
         getTotalInfo.fulfilled,
-        (
-          state,
-          action: PayloadAction<{
-            totalIncome: number;
-            totalExpense: number;
-            totalTransactions: number;
-          }>
-        ) => {
+        (state, action: PayloadAction<ITotalInfo>) => {
           Object.assign(state, action.payload);
         }
       )
