@@ -4,7 +4,7 @@ import success from '../../images/success.svg';
 import { ButtonPrimary } from '../../components/Buttons/ButtonPrimary';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/reduxHooks';
-import { resetWarning } from '../../store/auth/authSlice';
+import { resetRegistered, resetWarning } from '../../store/auth/authSlice';
 import { FormBox } from '../../components/Forms/Form.styled';
 
 export const Success: FC = () => {
@@ -12,7 +12,7 @@ export const Success: FC = () => {
   const dispatch = useAppDispatch();
 
   const goSignIn = () => {
-    dispatch(resetWarning());
+    dispatch(resetRegistered());
     navigate('/auth/signin', { replace: true });
   };
 
