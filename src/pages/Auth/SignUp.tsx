@@ -1,6 +1,4 @@
-import { FC, useState } from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import {} from 'react-router-dom';
 import { RegisterForm } from '../../components/Forms/RegisterForm';
 import {
   FormSubtitle,
@@ -9,7 +7,7 @@ import {
 import { Success } from './Success';
 import { authSelectors } from '../../store/auth/authSelectors';
 
-export const SignUp: FC = () => {
+export function SignUp() {
   const isRegistered = useAppSelector(authSelectors.getIsRegistered);
 
   return (
@@ -19,7 +17,7 @@ export const SignUp: FC = () => {
           <RegisterForm />
           <FormSubtitle>
             I have an account.{' '}
-            <NestedLink href={process.env.PUBLIC_URL + '/auth/signin'}>
+            <NestedLink href={`${process.env.PUBLIC_URL}/auth/signin`}>
               Go to Sign in
             </NestedLink>
           </FormSubtitle>
@@ -28,4 +26,4 @@ export const SignUp: FC = () => {
       {isRegistered && <Success />}
     </>
   );
-};
+}

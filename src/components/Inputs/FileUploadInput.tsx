@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -47,14 +46,17 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
   },
 }));
 
-export const FileUploadInput: FC<TextFieldProps> = (props) => {
+export function FileUploadInput(props: TextFieldProps) {
   return (
     <Input
       {...props}
       variant="outlined"
       type="file"
-      inputProps={{ accept: 'image/png, image/jpeg' }}
+      inputProps={{
+        accept: 'image/png, image/jpeg',
+      }}
       autoComplete="off"
+      // eslint-disable-next-line react/jsx-no-duplicate-props
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -64,4 +66,4 @@ export const FileUploadInput: FC<TextFieldProps> = (props) => {
       }}
     />
   );
-};
+}

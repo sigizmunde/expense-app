@@ -1,5 +1,4 @@
 import { Avatar, Box, IconButton, styled, Typography } from '@mui/material';
-import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { logOutUser } from '../../store/auth/authThunk';
@@ -56,7 +55,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.secondary.main,
   backgroundColor: theme.palette.primary.contrastText,
   '&:hover': {
-    border: '3px ' + theme.palette.primary.main,
+    border: `3px ${theme.palette.primary.main}`,
   },
   '&:active': {
     opacity: 0.5,
@@ -67,16 +66,17 @@ interface IAvatarProps {
   image?: string;
   username: string;
 }
-const UserAvatar: FC<IAvatarProps> = (props) => {
+
+function UserAvatar({ image = undefined, username }: IAvatarProps) {
   return (
     <>
-      {props.image && <StyledAvatar src={props.image} alt={props.username} />}
-      {!props.image && <StyledAvatar>{props.username}</StyledAvatar>}
+      {image && <StyledAvatar src={image} alt={username} />}
+      {!image && <StyledAvatar>{username}</StyledAvatar>}
     </>
   );
-};
+}
 
-export const UserBadge: FC = () => {
+export function UserBadge() {
   const user = useAppSelector(authSelectors.getUser);
   const dispatch = useAppDispatch();
   const username = user?.displayName || user?.username || 'Noname User';
@@ -103,4 +103,4 @@ export const UserBadge: FC = () => {
       </Icon>
     </UserBadgeBox>
   );
-};
+}

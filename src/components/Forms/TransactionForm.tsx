@@ -3,18 +3,18 @@ import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
+import { MenuItem } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { addTransaction, updateTransaction } from '../../store/data/dataThunk';
 import { INewTransaction, ITransaction } from '../../types/data';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
-import { MenuItem } from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
 import { DashInput } from '../Inputs/DashInput';
-import { MobileDatePicker } from '@mui/x-date-pickers';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DashSelectInput } from '../Inputs/DashSelectInput';
 
 const TransFormBox = styled(Box)(({ theme }) => ({
@@ -53,15 +53,16 @@ const validationSchema = Yup.object({
     .required('Input a sum'),
 });
 
-export const TransactionForm = ({
-  transactionId,
-  afterSubmit,
+export function TransactionForm({
+  transactionId = undefined,
+  afterSubmit = undefined,
 }: {
   transactionId?: number;
   afterSubmit?: { (): void };
-}) => {
+}) {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(dataSelectors.getCategories);
+  const transactions = useAppSelector(dataSelectors.getTransactions);
   const user = useAppSelector(authSelectors.getUser);
   const userId = user?.id || 0;
 
@@ -83,9 +84,7 @@ export const TransactionForm = ({
   };
 
   const getTransactionById = () => {
-    const transaction = useAppSelector(dataSelectors.getTransactions).find(
-      (e) => e.id === transactionId
-    );
+    const transaction = transactions.find((e) => e.id === transactionId);
     if (transaction) {
       const response = {
         ...transaction,
@@ -107,7 +106,7 @@ export const TransactionForm = ({
 
   const formik = useFormik({
     initialValues: initialRecord,
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
       values.date = dayjs(values.date).toISOString();
       const actionProps = {
@@ -130,73 +129,71 @@ export const TransactionForm = ({
   });
 
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
-        <TransFormBox>
-          <DashInput
-            gridcol="span 2"
-            id="label"
-            name="label"
-            label="Transaction Name"
-            type="text"
-            value={formik.values.label.trimStart()}
-            onChange={formik.handleChange}
-            error={formik.touched.label && Boolean(formik.errors.label)}
-            helperText={formik.touched.label && formik.errors.label}
-            autoComplete="off"
+    <form onSubmit={formik.handleSubmit}>
+      <TransFormBox>
+        <DashInput
+          gridcol="span 2"
+          id="label"
+          name="label"
+          label="Transaction Name"
+          type="text"
+          value={formik.values.label.trimStart()}
+          onChange={formik.handleChange}
+          error={formik.touched.label && Boolean(formik.errors.label)}
+          helperText={formik.touched.label && formik.errors.label}
+          autoComplete="off"
+        />
+        <DashInput
+          id="amount"
+          name="amount"
+          label="Sum of Transaction"
+          type="number"
+          value={formik.values.amount}
+          onChange={formik.handleChange}
+          error={formik.touched.amount && Boolean(formik.errors.amount)}
+          helperText={formik.touched.amount && formik.errors.amount}
+          InputProps={{
+            endAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <StyledDatePicker
+            label="Date"
+            inputFormat="DD/MM/YYYY"
+            value={formik.values.date}
+            onChange={(value) => formik.setFieldValue('date', value)}
+            renderInput={(params) => (
+              <DashInput
+                {...params}
+                error={formik.touched.date && Boolean(formik.errors.date)}
+                helperText={formik.touched.date && formik.errors.date}
+                id="date"
+                name="date"
+              />
+            )}
           />
-          <DashInput
-            id="amount"
-            name="amount"
-            label="Sum of Transaction"
+        </LocalizationProvider>
+        {categories.length > 0 && (
+          <DashSelectInput
+            id="categoryId"
+            name="categoryId"
+            label="Select Category"
             type="number"
-            value={formik.values.amount}
+            value={formik.values.categoryId}
             onChange={formik.handleChange}
-            error={formik.touched.amount && Boolean(formik.errors.amount)}
-            helperText={formik.touched.amount && formik.errors.amount}
-            InputProps={{
-              endAdornment: <InputAdornment position="start">$</InputAdornment>,
-            }}
-          />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledDatePicker
-              label="Date"
-              inputFormat="DD/MM/YYYY"
-              value={formik.values.date}
-              onChange={(value) => formik.setFieldValue('date', value)}
-              renderInput={(params) => (
-                <DashInput
-                  {...params}
-                  error={formik.touched.date && Boolean(formik.errors.date)}
-                  helperText={formik.touched.date && formik.errors.date}
-                  id="date"
-                  name="date"
-                />
-              )}
-            />
-          </LocalizationProvider>
-          {categories.length > 0 && (
-            <DashSelectInput
-              id="categoryId"
-              name="categoryId"
-              label="Select Category"
-              type="number"
-              value={formik.values.categoryId}
-              onChange={formik.handleChange}
-            >
-              {categories &&
-                categories.map((e) => (
-                  <MenuItem key={e.id} value={e.id}>
-                    {e.label}
-                  </MenuItem>
-                ))}
-            </DashSelectInput>
-          )}
-          <ButtonSecondary type="submit" style={{ width: 'auto' }}>
-            {formik.values.id ? 'Update' : 'Add'}
-          </ButtonSecondary>
-        </TransFormBox>
-      </form>
-    </>
+          >
+            {categories &&
+              categories.map((e) => (
+                <MenuItem key={e.id} value={e.id}>
+                  {e.label}
+                </MenuItem>
+              ))}
+          </DashSelectInput>
+        )}
+        <ButtonSecondary type="submit" style={{ width: 'auto' }}>
+          {formik.values.id ? 'Update' : 'Add'}
+        </ButtonSecondary>
+      </TransFormBox>
+    </form>
   );
-};
+}

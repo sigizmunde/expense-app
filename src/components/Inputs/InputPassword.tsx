@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import { InputMain } from './InputMain';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOffOutlined';
+import { InputMain } from './InputMain';
 
 const Input = styled(InputMain)(({ theme }) => ({
   '& .MuiButtonBase-root': {
@@ -16,11 +16,11 @@ const Input = styled(InputMain)(({ theme }) => ({
   },
 }));
 
-export const InputPassword: FC<TextFieldProps> = (props) => {
+export function InputPassword(props: TextFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
-    setShowPassword((showPassword) => !showPassword);
+    setShowPassword((value) => !value);
   };
 
   const handleMouseDownPassword = (
@@ -49,4 +49,4 @@ export const InputPassword: FC<TextFieldProps> = (props) => {
       }}
     />
   );
-};
+}

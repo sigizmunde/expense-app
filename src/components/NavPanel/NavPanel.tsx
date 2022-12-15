@@ -7,7 +7,7 @@ import { UserBadge } from '../UserBadge/UserBadge';
 const NavPanelBox = styled(Box)(({ theme }) => ({
   height: '100vh',
   width: '260px',
-  padding: theme.spacing(5) + ' ' + theme.spacing(3),
+  padding: `${theme.spacing(5)} ${theme.spacing(3)}`,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -17,7 +17,7 @@ const NavPanelBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.custom.black,
 }));
 
-export const NavPanel = () => {
+export function NavPanel() {
   return (
     <NavPanelBox>
       <Logo />
@@ -25,4 +25,4 @@ export const NavPanel = () => {
       <UserBadge />
     </NavPanelBox>
   );
-};
+}

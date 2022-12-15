@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 
@@ -35,8 +34,8 @@ const Input = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export const InputMain: FC<TextFieldProps> = (props) => {
+export function InputMain(props: TextFieldProps) {
   return (
     <Input {...props} variant="standard" InputLabelProps={{ shrink: true }} />
   );
-};
+}

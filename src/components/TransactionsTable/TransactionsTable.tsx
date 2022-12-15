@@ -1,11 +1,9 @@
-import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { dataSelectors } from '../../store/data/dataSelectors';
-
 import TableBody from '@mui/material/TableBody';
-
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import dayjs from 'dayjs';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { dataSelectors } from '../../store/data/dataSelectors';
 import {
   Sorted,
   StyledTable,
@@ -18,11 +16,10 @@ import { getTransactions } from '../../store/data/dataThunk';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 import { IPagination } from '../../types/data';
-import dayjs from 'dayjs';
 import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
 import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
 
-export const TransactionTable: FC = () => {
+export function TransactionTable() {
   const dispatch = useAppDispatch();
   const transactions = useGetTransactionsWithTableIndex();
   const pagination = useAppSelector(dataSelectors.getPagination);
@@ -39,11 +36,11 @@ export const TransactionTable: FC = () => {
     return undefined;
   };
 
-  const swapPagination = (pagination: IPagination) => {
-    const swappedPagination = { ...pagination };
-    if (pagination && pagination.totalPages) {
+  const swapPagination = (initialPagination: IPagination) => {
+    const swappedPagination = { ...initialPagination };
+    if (initialPagination && initialPagination.totalPages) {
       swappedPagination.page =
-        pagination?.totalPages - 1 - (pagination?.page || 0);
+        initialPagination.totalPages - 1 - (initialPagination?.page || 0);
     }
     return swappedPagination;
   };
@@ -122,4 +119,4 @@ export const TransactionTable: FC = () => {
       </TableBody>
     </StyledTable>
   );
-};
+}

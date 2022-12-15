@@ -1,9 +1,8 @@
-import { FC } from 'react';
+import Container from '@mui/material/Container';
+import { styled } from '@mui/material';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { CategoryCard } from '../CategoryCard/CategoryCard';
-import { styled } from '@mui/material';
-import Container from '@mui/material/Container';
 
 const TableGrid = styled(Container)(({ theme }) => ({
   backgroundColor: 'transparent',
@@ -13,7 +12,7 @@ const TableGrid = styled(Container)(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
-export const CategoriesTable: FC = () => {
+export function CategoriesTable() {
   const categories = useAppSelector(dataSelectors.getCategories);
 
   return (
@@ -21,4 +20,4 @@ export const CategoriesTable: FC = () => {
       {categories && categories.map((e) => <CategoryCard key={e.id} {...e} />)}
     </TableGrid>
   );
-};
+}

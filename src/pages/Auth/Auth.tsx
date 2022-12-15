@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AuthBox } from '../../components/Containers/AuthBox';
 import { AuthContainer } from '../../components/Containers/AuthContainer';
@@ -8,7 +7,7 @@ import { WarningDispatcher } from '../../components/WarningDispatcher/WarningDis
 import { Logo } from '../../components/Logo/Logo';
 import image from '../../images/auth_back.jpg';
 
-export const Auth: FC = () => {
+export function Auth() {
   return (
     <AuthContainer>
       <AuthBox>
@@ -20,4 +19,4 @@ export const Auth: FC = () => {
       <PhotoBox style={{ backgroundImage: `url(${image})` }} />
     </AuthContainer>
   );
-};
+}

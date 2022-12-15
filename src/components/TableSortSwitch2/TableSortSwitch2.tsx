@@ -1,8 +1,6 @@
-import { styled, TableSortLabelProps } from '@mui/material';
-import { Typography } from '@mui/material';
+import { styled, TableSortLabelProps, Typography } from '@mui/material';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
-import { FC } from 'react';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
@@ -38,11 +36,11 @@ const DescIcon = styled(ArrowDropDown)(({ theme, ...props }) => ({
       : 0.3,
 }));
 
-export const TableSortSwitch2: FC<TableSortLabelProps> = (props) => {
+export function TableSortSwitch2({ direction }: TableSortLabelProps) {
   return (
     <StyledTypography>
-      <AscIcon direction={props.direction} />
-      <DescIcon direction={props.direction} />
+      <AscIcon direction={direction} />
+      <DescIcon direction={direction} />
     </StyledTypography>
   );
-};
+}

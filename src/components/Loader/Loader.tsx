@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/reduxHooks';
 import { authSelectors } from '../../store/auth/authSelectors';
 import { dataSelectors } from '../../store/data/dataSelectors';
 
-export const Loader = () => {
+export function Loader() {
   const authFetching = useAppSelector(authSelectors.getIsFetching);
   const dataFetching = useAppSelector(dataSelectors.getIsFetching);
   const open = authFetching || dataFetching;
@@ -20,4 +20,4 @@ export const Loader = () => {
       <CircularProgress color="inherit" />
     </Backdrop>
   );
-};
+}

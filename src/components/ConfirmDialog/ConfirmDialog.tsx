@@ -25,37 +25,33 @@ interface IConfirmDialogProps extends DialogProps {
   onConfirm?: () => void;
 }
 
-export const ConfirmDialog: React.FC<IConfirmDialogProps> = ({
-  title,
-  content,
-  confirm,
-  reject,
+export function ConfirmDialog({
+  title = undefined,
+  content = undefined,
+  confirm = undefined,
+  reject = 'Close',
   onClose,
-  onConfirm,
+  onConfirm = undefined,
   ...props
-}) => {
+}: IConfirmDialogProps) {
   return (
-    <>
-      <StyledDialog aria-labelledby="responsive-dialog-title" open={props.open}>
-        {title && (
-          <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
-        )}
-        {content && (
-          <DialogContent>
-            <DialogContentText>{content}</DialogContentText>
-          </DialogContent>
-        )}
-        <DialogActions>
-          <Button autoFocus onClick={onClose}>
-            {reject || 'Close'}
+    <StyledDialog aria-labelledby="responsive-dialog-title" open={props.open}>
+      {title && <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>}
+      {content && (
+        <DialogContent>
+          <DialogContentText>{content}</DialogContentText>
+        </DialogContent>
+      )}
+      <DialogActions>
+        <Button autoFocus onClick={onClose}>
+          {reject}
+        </Button>
+        {confirm && (
+          <Button onClick={onConfirm} autoFocus>
+            {confirm}
           </Button>
-          {confirm && (
-            <Button onClick={onConfirm} autoFocus>
-              {confirm}
-            </Button>
-          )}
-        </DialogActions>
-      </StyledDialog>
-    </>
+        )}
+      </DialogActions>
+    </StyledDialog>
   );
-};
+}
