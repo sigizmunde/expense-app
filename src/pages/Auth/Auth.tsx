@@ -6,7 +6,7 @@ import { PhotoBox } from '../../components/Containers/PhotoBox';
 import { Loader } from '../../components/Loader/Loader';
 import { WarningDispatcher } from '../../components/WarningDispatcher/WarningDispatcher';
 import { Logo } from '../../components/Logo/Logo';
-import Image from '../../images/auth_back.jpg';
+import image from '../../images/auth_back.jpg';
 
 export const Auth: FC = () => {
   return (
@@ -17,7 +17,7 @@ export const Auth: FC = () => {
         <Loader />
         <WarningDispatcher />
       </AuthBox>
-      <PhotoBox style={{ backgroundImage: `url(${Image})` }}></PhotoBox>{' '}
+      <PhotoBox style={{ backgroundImage: `url(${image})` }} />
     </AuthContainer>
   );
 };

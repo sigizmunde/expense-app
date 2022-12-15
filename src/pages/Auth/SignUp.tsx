@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import {} from 'react-router-dom';
 import { RegisterForm } from '../../components/Forms/RegisterForm';
@@ -10,11 +10,11 @@ import { Success } from './Success';
 import { authSelectors } from '../../store/auth/authSelectors';
 
 export const SignUp: FC = () => {
-  const message = useAppSelector(authSelectors.getMessage);
+  const isRegistered = useAppSelector(authSelectors.getIsRegistered);
 
   return (
     <>
-      {message !== 'success' && (
+      {!isRegistered && (
         <>
           <RegisterForm />
           <FormSubtitle>
@@ -24,8 +24,8 @@ export const SignUp: FC = () => {
             </NestedLink>
           </FormSubtitle>
         </>
-      )}{' '}
-      {message === 'success' && <Success />}
+      )}
+      {isRegistered && <Success />}
     </>
   );
 };

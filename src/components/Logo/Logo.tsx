@@ -3,7 +3,7 @@ import logo from '../../images/company_logo.svg';
 import { styled } from '@mui/material/styles';
 
 const Img = styled('img')`
-  display: box;
+  display: block;
   position: absolute;
   left: 60px;
   top: 48px;

@@ -30,11 +30,14 @@ export const authSlice = createSlice({
     setWarning: (state, action: PayloadAction<{ message: string }>) => {
       state.message = action.payload.message;
     },
+    resetRegistered: (state) => {
+      state.isRegistered = false;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.fulfilled, (state) => {
-        state.message = 'success';
+        state.isRegistered = true;
       })
       .addCase(
         logInUser.fulfilled,
@@ -70,4 +73,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetWarning, setWarning } = authSlice.actions;
+export const { resetWarning, setWarning, resetRegistered } = authSlice.actions;
