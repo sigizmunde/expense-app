@@ -37,9 +37,12 @@ export const RegisterForm = () => {
     setAgreed((agreed) => !agreed);
   };
 
-  const handleRegisterUser = (values: IAuth) => {
-    values.displayName = values.displayName?.trim();
-    values.username = values.username.trim();
+  const handleRegisterUser = ({ displayName, username, ...props }: IAuth) => {
+    const values = {
+      ...props,
+      displayName: displayName?.trim(),
+      username: username.trim(),
+    };
     dispatch(registerUser(values));
   };
 

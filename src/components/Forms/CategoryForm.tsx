@@ -77,11 +77,12 @@ export const CategoryForm = ({
       !palette.find((e) => {
         e.id === -1;
       })
-    )
+    ) {
       palette.unshift({
         id: -1,
         color: currentRecord?.color || '',
       });
+    }
     return palette;
   }, []);
 

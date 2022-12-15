@@ -19,6 +19,7 @@ export interface ILogInTokens {
 export interface IAuthState {
   refreshToken: null | string;
   isLoggedIn: boolean;
+  isRegistered?: boolean;
   isFetching: boolean;
   message: string;
   user?: IUser;

@@ -15,7 +15,7 @@ export const SignIn: FC = () => {
           New Account
         </NestedLink>
       </FormSubtitle>
-      <FormSubtitle>
+      {/* <FormSubtitle>
         Forgot your password?{' '}
         <NestedLink
           href={''}
@@ -25,7 +25,7 @@ export const SignIn: FC = () => {
         >
           Reset Password?
         </NestedLink>
-      </FormSubtitle>
+      </FormSubtitle> */}
     </>
   );
 };

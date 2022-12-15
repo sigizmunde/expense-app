@@ -41,9 +41,10 @@ export const TransactionTable: FC = () => {
 
   const swapPagination = (pagination: IPagination) => {
     const swappedPagination = { ...pagination };
-    if (pagination && pagination.totalPages)
+    if (pagination && pagination.totalPages) {
       swappedPagination.page =
         pagination?.totalPages - 1 - (pagination?.page || 0);
+    }
     return swappedPagination;
   };
 
