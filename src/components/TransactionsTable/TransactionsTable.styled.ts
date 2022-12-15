@@ -29,7 +29,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
-    backgroundColor: theme.palette.custom.violet + '4D',
+    backgroundColor: `${theme.palette.custom.violet}4D`,
   },
 }));
 

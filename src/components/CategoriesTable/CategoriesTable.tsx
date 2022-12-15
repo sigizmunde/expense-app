@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { deleteCategory } from '../../store/data/dataThunk';
 import { EditCategoryBoard } from '../EditCategoryBoard/EditCategoryBoard';
 import { ModalWindow } from '../ModalWindow/ModalWindow';
 
-export const CategoriesTable: FC = () => {
+export function CategoriesTable() {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(dataSelectors.getCategories);
   const [edit, setEdit] = useState<number | null>(null);
@@ -51,4 +51,4 @@ export const CategoriesTable: FC = () => {
       )}
     </>
   );
-};
+}

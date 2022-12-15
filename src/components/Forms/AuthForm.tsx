@@ -17,7 +17,7 @@ const validationSchema = yup.object({
     .required('Password is required'),
 });
 
-export const AuthForm = () => {
+export function AuthForm() {
   const dispatch = useAppDispatch();
 
   const handleLoginUser = (values: IAuth) => {
@@ -30,42 +30,40 @@ export const AuthForm = () => {
       username: '',
       password: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
       handleLoginUser(values);
     },
   });
 
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
-        <FormBox>
-          <Typography variant="h1">Sign in</Typography>
-          <FieldsBox>
-            <InputMain
-              id="username"
-              name="username"
-              label="Username"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
-              autoComplete="off"
-            />
-            <InputPassword
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-          </FieldsBox>
-          <ButtonPrimary type="submit">Login</ButtonPrimary>
-        </FormBox>
-      </form>
-    </>
+    <form onSubmit={formik.handleSubmit}>
+      <FormBox>
+        <Typography variant="h1">Sign in</Typography>
+        <FieldsBox>
+          <InputMain
+            id="username"
+            name="username"
+            label="Username"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
+            autoComplete="off"
+          />
+          <InputPassword
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+        </FieldsBox>
+        <ButtonPrimary type="submit">Login</ButtonPrimary>
+      </FormBox>
+    </form>
   );
-};
+}

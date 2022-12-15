@@ -3,13 +3,13 @@ import { authSelectors } from '../../store/auth/authSelectors';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { IRouteProps } from '../../types/utils';
 
-export const PublicRoute = ({
+export function PublicRoute({
   restricted = false,
   redirectTo = '/',
-}: IRouteProps) => {
+}: IRouteProps) {
   const isLoggedIn = useAppSelector(authSelectors.getIsLoggedIn);
 
   const shouldRedirect = isLoggedIn && restricted;
 
-  return <>{shouldRedirect ? <Navigate to={redirectTo} /> : <Outlet />}</>;
-};
+  return shouldRedirect ? <Navigate to={redirectTo} /> : <Outlet />;
+}

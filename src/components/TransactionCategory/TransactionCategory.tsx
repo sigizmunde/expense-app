@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { ColorBullet } from '../ColorBadges/ColorBullet';
 
-export const TransactionCategory = ({ categoryId }: { categoryId: number }) => {
+export function TransactionCategory({ categoryId }: { categoryId: number }) {
   const categories = useAppSelector(dataSelectors.getCategories);
   return (
     <>
@@ -14,4 +14,4 @@ export const TransactionCategory = ({ categoryId }: { categoryId: number }) => {
       {categories.find(({ id }) => id === categoryId)?.label || 'unknown'}
     </>
   );
-};
+}

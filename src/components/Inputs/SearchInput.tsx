@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -38,7 +37,7 @@ const Input = styled(TextField)(({ theme, ...props }) => ({
   },
 }));
 
-export const SearchInput: FC<TextFieldProps> = (props) => {
+export function SearchInput(props: TextFieldProps) {
   return (
     <Input
       {...props}
@@ -56,4 +55,4 @@ export const SearchInput: FC<TextFieldProps> = (props) => {
       }}
     />
   );
-};
+}

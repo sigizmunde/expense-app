@@ -28,13 +28,13 @@ const validationSchema = yup.object({
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-export const RegisterForm = () => {
+export function RegisterForm() {
   const dispatch = useAppDispatch();
 
   const [agreed, setAgreed] = useState(false);
 
   const toggleAgreed = () => {
-    setAgreed((agreed) => !agreed);
+    setAgreed((value) => !value);
   };
 
   const handleRegisterUser = ({ displayName, username, ...props }: IAuth) => {
@@ -53,98 +53,94 @@ export const RegisterForm = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: ({ username, password, displayName }) => {
       handleRegisterUser({ username, password, displayName });
     },
   });
 
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
-        <FormBox>
-          <Typography variant="h1">Sign up</Typography>
-          <FieldsBox>
-            <InputMain
-              id="displayName"
-              name="displayName"
-              label="Full Name"
-              value={formik.values.displayName}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.displayName && Boolean(formik.errors.displayName)
-              }
-              helperText={
-                formik.touched.displayName && formik.errors.displayName
-              }
-              autoComplete="off"
-            />
-            <InputMain
-              id="username"
-              name="username"
-              label="User Name"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
-              autoComplete="off"
-            />
-            <InputPassword
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-            <InputPassword
-              id="confirmPassword"
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.confirmPassword &&
-                Boolean(formik.errors.confirmPassword)
-              }
-              helperText={
-                formik.touched.password && formik.errors.confirmPassword
-              }
-            />
-            <StyledCheckbox
-              control={<Checkbox checked={agreed} onChange={toggleAgreed} />}
-              label={
-                <FormSubtitle>
-                  By creating an account you agree to{' '}
-                  <NestedLink
-                    href={LINKS.termsOfUse}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    the terms of use
-                  </NestedLink>{' '}
-                  and our{' '}
-                  <NestedLink
-                    href={LINKS.policy}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    privacy policy
-                  </NestedLink>
-                  .
-                </FormSubtitle>
-              }
-            />
-          </FieldsBox>
+    <form onSubmit={formik.handleSubmit}>
+      <FormBox>
+        <Typography variant="h1">Sign up</Typography>
+        <FieldsBox>
+          <InputMain
+            id="displayName"
+            name="displayName"
+            label="Full Name"
+            value={formik.values.displayName}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.displayName && Boolean(formik.errors.displayName)
+            }
+            helperText={formik.touched.displayName && formik.errors.displayName}
+            autoComplete="off"
+          />
+          <InputMain
+            id="username"
+            name="username"
+            label="User Name"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
+            autoComplete="off"
+          />
+          <InputPassword
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+          <InputPassword
+            id="confirmPassword"
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.password && formik.errors.confirmPassword
+            }
+          />
+          <StyledCheckbox
+            control={<Checkbox checked={agreed} onChange={toggleAgreed} />}
+            label={
+              <FormSubtitle>
+                By creating an account you agree to{' '}
+                <NestedLink
+                  href={LINKS.termsOfUse}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  the terms of use
+                </NestedLink>{' '}
+                and our{' '}
+                <NestedLink
+                  href={LINKS.policy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  privacy policy
+                </NestedLink>
+                .
+              </FormSubtitle>
+            }
+          />
+        </FieldsBox>
 
-          <ButtonPrimary type="submit" disabled={!agreed}>
-            Sign Up
-          </ButtonPrimary>
-        </FormBox>
-      </form>
-    </>
+        <ButtonPrimary type="submit" disabled={!agreed}>
+          Sign Up
+        </ButtonPrimary>
+      </FormBox>
+    </form>
   );
-};
+}

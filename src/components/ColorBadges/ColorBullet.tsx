@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import { ColorSwatch } from './ColorSwatch';
 
-export const ColorBullet: FC<{ color: string }> = ({ color }) => {
+export function ColorBullet({ color }: { color: string }) {
   return (
     <ColorSwatch
       color={color}
@@ -14,4 +13,4 @@ export const ColorBullet: FC<{ color: string }> = ({ color }) => {
       })}
     />
   );
-};
+}

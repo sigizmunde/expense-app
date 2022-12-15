@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -13,7 +11,7 @@ const CardIcon = styled(IconButton)<IProps & IconButtonProps>(
   ({ theme, ...props }) => ({
     width: theme.spacing(5),
     height: theme.spacing(5),
-    backgroundColor: theme.palette.custom[props.bgcolor || 'green'] + '26',
+    backgroundColor: `${theme.palette.custom[props.bgcolor || 'green']}26`,
     // hex26 = opacity 0.015
   })
 );
@@ -35,18 +33,18 @@ const InfoCardBox = styled(Box)(({ theme }) => ({
 }));
 
 interface IInfoCardProps {
-  color?: string | null;
+  color?: string;
   caption?: string;
   value?: string;
   children?: JSX.Element;
 }
 
-export const InfoCard: FC<IInfoCardProps> = ({
-  color,
+export function InfoCard({
+  color = undefined,
   caption = '',
   value = '',
-  children,
-}) => {
+  children = undefined,
+}: IInfoCardProps) {
   return (
     <InfoCardBox>
       <CardIcon bgcolor={color || null}>{children}</CardIcon>
@@ -56,4 +54,4 @@ export const InfoCard: FC<IInfoCardProps> = ({
       </Box>
     </InfoCardBox>
   );
-};
+}

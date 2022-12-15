@@ -1,6 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authSlice } from './auth/authSlice';
-import { dataSlice } from './data/dataSlice';
 import {
   persistStore,
   persistReducer,
@@ -12,6 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { authSlice } from './auth/authSlice';
+import { dataSlice } from './data/dataSlice';
 import { authReconnectMiddleware } from './auth/authReconnectMiddleware';
 import { authGetUserMiddleware } from './auth/authGetUserMiddleware';
 import { dataGetCategoriesMiddleware } from './data/dataGetCategoriesMiddleware';

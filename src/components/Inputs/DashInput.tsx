@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 
@@ -37,19 +36,22 @@ const Input = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export const DashInput: FC<
-  TextFieldProps & { width?: string; grow?: string; gridcol?: string }
-> = (props) => {
+export function DashInput({
+  width = 'auto',
+  grow = '0',
+  gridcol = 'span 1',
+  ...props
+}: TextFieldProps & { width?: string; grow?: string; gridcol?: string }) {
   return (
     <Input
       {...props}
       style={{
-        width: props.width,
-        flexGrow: props.grow,
-        gridColumn: props.gridcol,
+        width,
+        flexGrow: grow,
+        gridColumn: gridcol,
       }}
       variant="standard"
       InputLabelProps={{ shrink: true }}
     />
   );
-};
+}

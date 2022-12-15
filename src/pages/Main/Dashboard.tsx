@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { AddCategoryBoard } from '../../components/AddCategoryBoard/AddCategoryBoard';
 import { AddTransactionBoard } from '../../components/AddTransactionBoard/AddTransactionBoard';
 import { CategoriesTable } from '../../components/CategoriesTable/CategoriesTable';
@@ -8,7 +7,7 @@ import { RightPanel } from '../../components/DashboardPanels/RightPanel';
 import { DashHeader } from '../../components/DashHeader/DashHeader';
 import { TransactionsBoard } from '../../components/TransactionsBoard/TransactionsBoard';
 
-export const Dashboard: FC = () => {
+export function Dashboard() {
   return (
     <DashboardContainer>
       <DashPanel>
@@ -22,4 +21,4 @@ export const Dashboard: FC = () => {
       </RightPanel>
     </DashboardContainer>
   );
-};
+}
