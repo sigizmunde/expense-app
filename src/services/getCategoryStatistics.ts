@@ -6,7 +6,7 @@ export const getCategoryStatistics = async (id: number) => {
   try {
     const queryString = `?categoryId[equals]=${id}`;
     const { data } = await axios.get(`/transactions${queryString}`);
-    if (data?.length > 0) {
+    if (data?.content?.length > 0) {
       const { income, expense } = data.content.reduce(
         (acc: { income: number; expense: number }, e: ITransaction) => {
           if (e.amount < 0) acc.expense += e.amount;
