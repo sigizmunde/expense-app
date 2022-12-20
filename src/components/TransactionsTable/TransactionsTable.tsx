@@ -14,10 +14,10 @@ import { moneyNumToString } from '../../utils/moneyNumToString';
 import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
-import { TransactionPopover } from '../TransactionPopover/TransactionPopover';
 import { IPagination } from '../../types/data';
 import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
 import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
+import { EditTransactionPopupMenu } from '../EditTransactionPopupMenu/EditTransactionPopupMenu';
 
 export function TransactionTable() {
   const dispatch = useAppDispatch();
@@ -112,7 +112,7 @@ export function TransactionTable() {
               }}
             >
               {moneyNumToString({ amount: row.amount, currencySign: '$' })}
-              <TransactionPopover id={row.id} />
+              <EditTransactionPopupMenu id={row.id} />
             </StyledTableCell>
           </StyledTableRow>
         ))}

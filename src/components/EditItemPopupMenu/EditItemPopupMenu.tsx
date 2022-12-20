@@ -5,10 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/material';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { deleteTransaction } from '../../store/data/dataThunk';
-import { ModalWindow } from '../ModalWindow/ModalWindow';
-import { EditTransactionBoard } from '../EditTransactionBoard/EditTransactionBoard';
 import { ConfirmDialog } from '../ConfirmDialog/ConfirmDialog';
 
 const MenuBox = styled(Box)(({ theme }) => ({
@@ -18,10 +14,17 @@ const MenuBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
 }));
 
-export function TransactionPopover({ id }: { id: number }) {
-  const dispatch = useAppDispatch();
+export function EditItemPopupMenu({
+  id,
+  onEditItem,
+  onDeleteItem,
+}: {
+  id: number;
+  onEditItem: (id: number) => void;
+  onDeleteItem: (id: number) => void;
+}) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [edit, setEdit] = useState(false);
+
   const [deleting, setDeleting] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,18 +35,14 @@ export function TransactionPopover({ id }: { id: number }) {
     setAnchorEl(null);
   };
 
-  const handleEditTransaction = () => {
-    setEdit(true);
+  const handleEditItem = () => {
+    onEditItem(id);
     setAnchorEl(null);
   };
 
-  const handleDeleteTransaction = () => {
-    dispatch(deleteTransaction(id));
+  const handleDeleteItem = () => {
+    onDeleteItem(id);
     setAnchorEl(null);
-  };
-
-  const handleCloseModal = () => {
-    setEdit(false);
   };
 
   const handleStartDelete = () => {
@@ -74,7 +73,7 @@ export function TransactionPopover({ id }: { id: number }) {
         }}
       >
         <MenuBox>
-          <ButtonSecondary colorversion="green" onClick={handleEditTransaction}>
+          <ButtonSecondary colorversion="green" onClick={handleEditItem}>
             Edit
           </ButtonSecondary>
           <ButtonSecondary colorversion="red" onClick={handleStartDelete}>
@@ -82,20 +81,16 @@ export function TransactionPopover({ id }: { id: number }) {
           </ButtonSecondary>
         </MenuBox>
       </Popover>
-      {edit && (
-        <ModalWindow open={edit} onClose={handleCloseModal}>
-          <EditTransactionBoard id={id} afterSubmit={handleCloseModal} />
-        </ModalWindow>
-      )}
+
       {deleting && (
         <ConfirmDialog
           open={deleting}
-          title="Delete transaction"
-          content="Confirm you are sure to delete this transaction"
+          title="Delete item"
+          content="Confirm you are sure to delete this item"
           confirm="Delete"
           reject="Cancel"
           onClose={handleCloseDelete}
-          onConfirm={handleDeleteTransaction}
+          onConfirm={handleDeleteItem}
         />
       )}
     </div>
