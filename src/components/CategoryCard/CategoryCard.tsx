@@ -1,9 +1,9 @@
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import { Typography, Divider } from '@mui/material';
 import { ICategory } from '../../types/data';
 import { ColorChip } from '../ColorBadges/ColorChip';
 import { CardBox } from '../Containers/CardBox';
-import { styled } from '@mui/material/styles';
-import { Typography, Divider } from '@mui/material';
 import { getCategoryStatistics } from '../../services/getCategoryStatistics';
 import { deleteCategory } from '../../store/data/dataThunk';
 import { EditCategoryBoard } from '../EditCategoryBoard/EditCategoryBoard';
@@ -14,28 +14,28 @@ const CategoryName = styled(Typography)(({ theme }) => ({
   ...theme.typography.h5,
 }));
 
-export const CategoryCard: FC<ICategory> = (props) => {
+export function CategoryCard({ id, color, label }: ICategory) {
   const dispatch = useAppDispatch();
   const [statistics, setStatistics] = useState({});
 
   useEffect(() => {
-    getCategoryStatistics(props.id)
+    getCategoryStatistics(id)
       .then((res) => {
         setStatistics(res);
       })
       .catch(({ error }) => {
         setStatistics({ error });
       });
-  }, []);
+  }, [id]);
 
   const [edit, setEdit] = useState<number | null>(null);
 
-  const handleDeleteCategory = (id: number) => {
-    dispatch(deleteCategory(id));
+  const handleDeleteCategory = (deleteId: number) => {
+    dispatch(deleteCategory(deleteId));
   };
 
-  const handleEditCategory = (id: number) => {
-    setEdit(id);
+  const handleEditCategory = (editId: number) => {
+    setEdit(editId);
   };
 
   const handleClose = () => {
@@ -44,22 +44,22 @@ export const CategoryCard: FC<ICategory> = (props) => {
 
   return (
     <CardBox>
-      <ColorChip color={props.color || 'white'} />
-      <CategoryName>{props.label}</CategoryName>
+      <ColorChip color={color || 'white'} />
+      <CategoryName>{label}</CategoryName>
       <Divider />
-      {'error' in statistics && <div>{'Error: ' + statistics.error}</div>}
-      {'income' in statistics && <div>{'Income ' + statistics.income}</div>}
-      {'expense' in statistics && <div>{'Expense ' + statistics.expense}</div>}
+      {'error' in statistics && <div>{`Error: ${statistics.error}`}</div>}
+      {'income' in statistics && <div>{`Income ${statistics.income}`}</div>}
+      {'expense' in statistics && <div>{`Expense ${statistics.expense}`}</div>}
       {'transactionsCount' in statistics && (
-        <div>{'Total ' + statistics.transactionsCount + ' transactions'}</div>
+        <div>{`Total ${statistics.transactionsCount} transactions`}</div>
       )}
       <div style={{ marginLeft: 'auto' }}>
-        <button type="button" onClick={() => handleEditCategory(props.id)}>
+        <button type="button" onClick={() => handleEditCategory(id)}>
           Edit
         </button>
       </div>
       <div>
-        <button type="button" onClick={() => handleDeleteCategory(props.id)}>
+        <button type="button" onClick={() => handleDeleteCategory(id)}>
           Delete
         </button>
       </div>
@@ -70,4 +70,4 @@ export const CategoryCard: FC<ICategory> = (props) => {
       )}
     </CardBox>
   );
-};
+}

@@ -1,6 +1,5 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Container, styled } from '@mui/material';
-import { GridProps } from '@mui/system';
 
 const CategoriesContainerBox = styled(Container)(({ theme }) => ({
   width: '100%',
@@ -11,8 +10,10 @@ const CategoriesContainerBox = styled(Container)(({ theme }) => ({
   overflow: 'scroll',
 }));
 
-export const CategoriesContainer: FC<GridProps & { children?: ReactNode }> = ({
-  children,
-}) => {
+export function CategoriesContainer({
+  children = undefined,
+}: {
+  children?: ReactNode;
+}) {
   return <CategoriesContainerBox>{children}</CategoriesContainerBox>;
-};
+}
