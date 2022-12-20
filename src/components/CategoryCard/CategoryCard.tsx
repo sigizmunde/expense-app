@@ -33,6 +33,7 @@ const TitleWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   padding: `${theme.spacing(3)} ${theme.spacing(2)} 0`,
   textAlign: 'center',
+  overflow: 'hidden',
 }));
 
 const StatsWrapper = styled(Box)(({ theme }) => ({
