@@ -1,21 +1,62 @@
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { Typography, Divider } from '@mui/material';
+import { Typography, Divider, Box } from '@mui/material';
 import { ICategory } from '../../types/data';
 import { ColorChip } from '../ColorBadges/ColorChip';
-import { CardBox } from '../Containers/CardBox';
 import { getCategoryStatistics } from '../../services/getCategoryStatistics';
-import { deleteCategory } from '../../store/data/dataThunk';
-import { EditCategoryBoard } from '../EditCategoryBoard/EditCategoryBoard';
-import { ModalWindow } from '../ModalWindow/ModalWindow';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { StatsBar } from '../StatsBar/StatsBar';
+import { EditCategoryPopupMenu } from '../EditCategoryPopupMenu/EditCategoryPopupMenu';
+
+const CategoryBox = styled(Box)(({ theme }) => ({
+  padding: 0,
+  position: 'relative',
+  overflow: 'auto',
+  maxHeight: '100%',
+  justifySelf: 'stretch',
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'nowrap',
+  justifyContent: 'stretch',
+  alignItems: 'ccenter',
+  borderRadius: theme.spacing(0),
+  backgroundColor: theme.palette.custom.white,
+}));
+
+const EditButtonWrapper = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(0),
+  right: theme.spacing(0),
+}));
+
+const TitleWrapper = styled(Box)(({ theme }) => ({
+  height: theme.spacing(6),
+  width: '100%',
+  padding: `${theme.spacing(3)} ${theme.spacing(2)} 0`,
+  textAlign: 'center',
+}));
+
+const StatsWrapper = styled(Box)(({ theme }) => ({
+  width: '100%',
+  padding: `0 ${theme.spacing(2)} ${theme.spacing(3)}`,
+  textAlign: 'center',
+}));
 
 const CategoryName = styled(Typography)(({ theme }) => ({
   ...theme.typography.h5,
+  marginTop: theme.spacing(1),
+}));
+
+const StatsCaption = styled(Typography)(({ theme }) => ({
+  ...theme.typography.subtitle2,
+  marginTop: theme.spacing(1),
+}));
+
+const ValueCaption = styled(Typography)(({ theme }) => ({
+  ...theme.typography.h5,
+  marginTop: 0,
 }));
 
 export function CategoryCard({ id, color, label }: ICategory) {
-  const dispatch = useAppDispatch();
   const [statistics, setStatistics] = useState({});
 
   useEffect(() => {
@@ -28,46 +69,36 @@ export function CategoryCard({ id, color, label }: ICategory) {
       });
   }, [id]);
 
-  const [edit, setEdit] = useState<number | null>(null);
-
-  const handleDeleteCategory = (deleteId: number) => {
-    dispatch(deleteCategory(deleteId));
-  };
-
-  const handleEditCategory = (editId: number) => {
-    setEdit(editId);
-  };
-
-  const handleClose = () => {
-    setEdit(null);
-  };
-
   return (
-    <CardBox>
-      <ColorChip color={color || 'white'} />
-      <CategoryName>{label}</CategoryName>
+    <CategoryBox>
+      <EditButtonWrapper>
+        <EditCategoryPopupMenu id={id} />
+      </EditButtonWrapper>
+      <TitleWrapper>
+        <ColorChip color={color || 'white'} />
+        <CategoryName>{label}</CategoryName>
+      </TitleWrapper>
       <Divider />
-      {'error' in statistics && <div>{`Error: ${statistics.error}`}</div>}
-      {'income' in statistics && <div>{`Income ${statistics.income}`}</div>}
-      {'expense' in statistics && <div>{`Expense ${statistics.expense}`}</div>}
-      {'transactionsCount' in statistics && (
-        <div>{`Total ${statistics.transactionsCount} transactions`}</div>
-      )}
-      <div style={{ marginLeft: 'auto' }}>
-        <button type="button" onClick={() => handleEditCategory(id)}>
-          Edit
-        </button>
-      </div>
-      <div>
-        <button type="button" onClick={() => handleDeleteCategory(id)}>
-          Delete
-        </button>
-      </div>
-      {edit && (
-        <ModalWindow open={edit !== null} onClose={handleClose}>
-          <EditCategoryBoard id={edit} afterSubmit={handleClose} />
-        </ModalWindow>
-      )}
-    </CardBox>
+      <StatsWrapper>
+        {'transactionsCount' in statistics && (
+          <>
+            <StatsCaption>Total Transactions</StatsCaption>
+            <ValueCaption>
+              {statistics.transactionsCount as string}
+            </ValueCaption>
+          </>
+        )}
+        {'error' in statistics && <div>{`Error: ${statistics.error}`}</div>}
+        {'income' in statistics && 'expense' in statistics && (
+          <>
+            <StatsCaption>Total of Money</StatsCaption>
+            <StatsBar
+              income={statistics.income as number}
+              expense={statistics.expense as number}
+            />
+          </>
+        )}
+      </StatsWrapper>
+    </CategoryBox>
   );
 }

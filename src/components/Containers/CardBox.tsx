@@ -8,6 +8,8 @@ interface IProps {
 
 export const CardBox = styled(Box)<IProps & BoxProps>(
   ({ theme, ...props }) => ({
+    padding: theme.spacing(3),
+    position: 'relative',
     overflow: 'auto',
     maxHeight: '100%',
     justifySelf: 'stretch',
@@ -15,7 +17,6 @@ export const CardBox = styled(Box)<IProps & BoxProps>(
     flexDirection: 'column',
     flexWrap: 'nowrap',
     justifyContent: 'stretch',
-    padding: theme.spacing(3),
     borderRadius: props.radius || theme.spacing(0),
     backgroundColor:
       theme.palette.custom[props.bgcolor as string] ||

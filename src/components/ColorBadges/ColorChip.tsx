@@ -1,16 +1,15 @@
-import { FC } from 'react';
 import { ColorSwatch } from './ColorSwatch';
 
-export const ColorChip: FC<{ color: string }> = ({ color }) => {
+export function ColorChip({ color }: { color: string }) {
   return (
     <ColorSwatch
       color={color}
       sx={(theme) => ({
-        width: theme.spacing(5),
-        height: theme.spacing(5),
+        width: `calc(${theme.spacing(2)}*2.5)`,
+        height: `calc(${theme.spacing(2)}*2.5)`,
         borderRadius: '50%',
         margin: `0 ${theme.spacing(0)}`,
       })}
     />
   );
-};
+}
