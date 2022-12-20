@@ -111,7 +111,7 @@ export function TransactionTable() {
                 alignItems: 'center',
               }}
             >
-              {moneyNumToString(row.amount, '$')}
+              {moneyNumToString({ amount: row.amount, currencySign: '$' })}
               <TransactionPopover id={row.id} />
             </StyledTableCell>
           </StyledTableRow>
