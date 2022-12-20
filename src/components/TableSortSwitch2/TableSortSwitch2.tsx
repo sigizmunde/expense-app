@@ -3,6 +3,7 @@ import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
+  cursor: 'pointer',
   display: 'inline-block',
   color: 'inherit',
   font: 'inherit',
