@@ -44,7 +44,7 @@ export const theme = createTheme({
       disabled: '#A19EAA',
     },
   },
-  spacing: [4, 8, 16, 24, 32, 64],
+  spacing: [4, 8, 16, 24, 32, 64, 128],
   typography: {
     allVariants: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
