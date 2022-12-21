@@ -23,10 +23,7 @@ export const generateColor = ({
 export const getLightColors = (n = 8) => {
   const colors = [];
   for (let i = 0; i < n; i += 1) {
-    colors.push({
-      id: i,
-      color: generateColor({ lightness: 0.95, darkness: 0.7 }),
-    });
+    colors.push(generateColor({ lightness: 0.95, darkness: 0.7 }));
   }
   return colors;
 };
@@ -34,10 +31,7 @@ export const getLightColors = (n = 8) => {
 export const getDarkColors = (n = 8) => {
   const colors = [];
   for (let i = 0; i < n; i += 1) {
-    colors.push({
-      id: i,
-      color: generateColor({ lightness: 0.5, darkness: 0.15 }),
-    });
+    colors.push(generateColor({ lightness: 0.5, darkness: 0.15 }));
   }
   return colors;
 };
