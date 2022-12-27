@@ -36,8 +36,6 @@ export interface IDataState extends ICategoriesResponse, ITransactionsResponse {
   totalIncome: number;
   totalExpense: number;
   totalTransactions: number;
-  isFetching: boolean;
-  errorMessage: string | null;
 }
 
 export interface IPagination {

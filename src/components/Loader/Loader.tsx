@@ -1,13 +1,10 @@
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { authSelectors } from '../../store/auth/authSelectors';
-import { dataSelectors } from '../../store/data/dataSelectors';
+import { uixSelectors } from '../../store/uix/uixSelectors';
 
 export function Loader() {
-  const authFetching = useAppSelector(authSelectors.getIsFetching);
-  const dataFetching = useAppSelector(dataSelectors.getIsFetching);
-  const open = authFetching || dataFetching;
+  const isFetching = useAppSelector(uixSelectors.getIsFetching);
   return (
     <Backdrop
       sx={{
@@ -15,7 +12,7 @@ export function Loader() {
         color: '#fff',
         zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
-      open={open}
+      open={isFetching}
     >
       <CircularProgress color="inherit" />
     </Backdrop>

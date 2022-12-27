@@ -1,41 +1,27 @@
 import { useEffect } from 'react';
-import { Alert } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { authSelectors } from '../../store/auth/authSelectors';
-import { resetWarning } from '../../store/auth/authSlice';
-import { resetErrorMessage } from '../../store/data/dataSlice';
 
-const StyledAlert = styled(Alert)(({ theme }) => ({
-  position: 'fixed',
-  top: theme.spacing(5),
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 9,
-}));
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { uixSelectors } from '../../store/uix/uixSelectors';
+import { resetMessage } from '../../store/uix/uixSlice';
+import { StyledAlert } from './WarningDispatcher.styled';
 
 export function WarningDispatcher() {
   const dispatch = useAppDispatch();
-  const warningMessage = useAppSelector(authSelectors.getMessage);
+  const message = useAppSelector(uixSelectors.getMessage);
 
-  let timeoutHandle: ReturnType<typeof setTimeout>;
-
-  useEffect(() => {
-    timeoutHandle = setTimeout(() => {
-      dispatch(resetWarning());
-      dispatch(resetErrorMessage());
-    }, 2500);
-  }, [warningMessage]);
+  const timeoutHandle: ReturnType<typeof setTimeout> = setTimeout(() => {
+    dispatch(resetMessage());
+  }, 2500);
 
   useEffect(() => {
     return () => {
       clearTimeout(timeoutHandle);
-      dispatch(resetWarning());
+      dispatch(resetMessage());
     };
-  }, [dispatch]);
+  }, [dispatch, timeoutHandle]);
 
-  return warningMessage && warningMessage !== '' ? (
-    <StyledAlert severity="warning">{warningMessage}</StyledAlert>
+  return message.text && message.text !== '' ? (
+    <StyledAlert severity="warning">{message.text}</StyledAlert>
   ) : (
     <> </>
   );

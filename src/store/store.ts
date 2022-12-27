@@ -17,6 +17,7 @@ import { authGetUserMiddleware } from './auth/authGetUserMiddleware';
 import { dataGetCategoriesMiddleware } from './data/dataGetCategoriesMiddleware';
 import { dataGetTransactionsMiddleware } from './data/dataGetTransactionsMiddleware';
 import { dataGetTotalInfoMiddleware } from './data/dataGetTotalInfoMiddleware';
+import { uixSlice } from './uix/uixSlice';
 
 const persistConfig = {
   key: 'expense_app',
@@ -29,6 +30,7 @@ const persistedReducer = persistReducer(persistConfig, authSlice.reducer);
 const rootReducer = combineReducers({
   auth: persistedReducer,
   data: dataSlice.reducer,
+  uix: uixSlice.reducer,
 });
 
 export const store = configureStore({
