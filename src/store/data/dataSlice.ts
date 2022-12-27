@@ -11,11 +11,6 @@ import {
   updateTransaction,
 } from './dataThunk';
 import {
-  isFulfilledAction,
-  isPendingAction,
-  isRejectedAction,
-} from '../actionTypeCheckers';
-import {
   ICategoriesResponse,
   ICategory,
   IDataState,
@@ -39,18 +34,12 @@ const initialState: IDataState = {
   totalIncome: 0,
   totalExpense: 0,
   totalTransactions: 0,
-  isFetching: false,
-  errorMessage: null,
 };
 
 export const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {
-    resetErrorMessage: (state) => {
-      state.errorMessage = '';
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -121,18 +110,6 @@ export const dataSlice = createSlice({
         (state, action: PayloadAction<ITotalInfo>) => {
           Object.assign(state, action.payload);
         }
-      )
-      .addMatcher(isFulfilledAction, (state) => {
-        state.isFetching = false;
-      })
-      .addMatcher(isPendingAction, (state) => {
-        state.isFetching = true;
-      })
-      .addMatcher(isRejectedAction, (state, { payload }) => {
-        state.isFetching = false;
-        state.errorMessage = payload.message;
-      });
+      );
   },
 });
-
-export const { resetErrorMessage } = dataSlice.actions;

@@ -7,29 +7,16 @@ import {
   registerUser,
 } from './authThunk';
 import { ILogInTokens, IAuthState, IUser } from '../../types/auth';
-import {
-  isFulfilledAction,
-  isPendingAction,
-  isRejectedAction,
-} from '../actionTypeCheckers';
 
 const initialState: IAuthState = {
   refreshToken: null,
   isLoggedIn: false,
-  isFetching: false,
-  message: '',
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    resetWarning: (state) => {
-      state.message = '';
-    },
-    setWarning: (state, action: PayloadAction<{ message: string }>) => {
-      state.message = action.payload.message;
-    },
     resetRegistered: (state) => {
       state.isRegistered = false;
     },
@@ -58,19 +45,8 @@ export const authSlice = createSlice({
       })
       .addCase(logOutUser.fulfilled, (state) => {
         Object.assign(state, initialState);
-        state.message = 'Successfully logged out.';
-      })
-      .addMatcher(isFulfilledAction, (state) => {
-        state.isFetching = false;
-      })
-      .addMatcher(isPendingAction, (state) => {
-        state.isFetching = true;
-      })
-      .addMatcher(isRejectedAction, (state, { payload }) => {
-        state.isFetching = false;
-        state.message = payload.message;
       });
   },
 });
 
-export const { resetWarning, setWarning, resetRegistered } = authSlice.actions;
+export const { resetRegistered } = authSlice.actions;

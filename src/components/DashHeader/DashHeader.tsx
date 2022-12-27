@@ -27,14 +27,18 @@ export function DashHeader() {
       <InfoCard
         color="greener"
         caption="Total Receipt"
-        value={moneyNumToString(totalIncome, '$')}
+        value={moneyNumToString({ amount: totalIncome, currencySign: '$' })}
       >
         <IncomeIcon />
       </InfoCard>
       <InfoCard
         color="orange"
         caption="Total Expense"
-        value={moneyNumToString(totalExpense, '$')}
+        value={moneyNumToString({
+          amount: totalExpense,
+          currencySign: '$',
+          negative: true,
+        })}
       >
         <ExpenseIcon />
       </InfoCard>

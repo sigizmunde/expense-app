@@ -12,9 +12,10 @@ import { ICategory, INewCategory } from '../../types/data';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 import { DashInput } from '../Inputs/DashInput';
 import { FileUploadInput } from '../Inputs/FileUploadInput';
-import { getLightColors } from '../../utils/colorLibrary';
+import { getLightColors } from '../../utils/colorLibraryGenerator';
 import { ColorSwatch } from '../ColorBadges/ColorSwatch';
 import { DashSelectInput } from '../Inputs/DashSelectInput';
+import { COLORS } from '../../const';
 
 const CatFormBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -70,7 +71,12 @@ export function CategoryForm({
   const currentRecord = categories.find((e) => e.id === categoryId) || null;
 
   const colors = useMemo(() => {
-    const palette = getLightColors();
+    const palette = COLORS.map((color, index) => ({ id: index, color }));
+    const additionalColors = getLightColors(3);
+    const { length } = palette;
+    palette.push(
+      ...additionalColors.map((color, index) => ({ id: index + length, color }))
+    );
     if (categoryId && categories && !palette.find((e) => e.id === -1)) {
       palette.unshift({
         id: -1,

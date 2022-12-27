@@ -1,13 +1,15 @@
 import { styled } from '@mui/material';
 import Box, { BoxProps } from '@mui/material/Box';
 
-interface IProps {
+interface ICustomProps {
   radius?: string;
   bgcolor?: string;
 }
 
-export const CardBox = styled(Box)<IProps & BoxProps>(
+export const CardBox = styled(Box)<ICustomProps & BoxProps>(
   ({ theme, ...props }) => ({
+    padding: theme.spacing(3),
+    position: 'relative',
     overflow: 'auto',
     maxHeight: '100%',
     justifySelf: 'stretch',
@@ -15,7 +17,6 @@ export const CardBox = styled(Box)<IProps & BoxProps>(
     flexDirection: 'column',
     flexWrap: 'nowrap',
     justifyContent: 'stretch',
-    padding: theme.spacing(3),
     borderRadius: props.radius || theme.spacing(0),
     backgroundColor:
       theme.palette.custom[props.bgcolor as string] ||

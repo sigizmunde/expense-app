@@ -13,6 +13,15 @@ declare module '@mui/material/styles' {
 }
 
 export const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
       main: '#539713',
@@ -44,7 +53,7 @@ export const theme = createTheme({
       disabled: '#A19EAA',
     },
   },
-  spacing: [4, 8, 16, 24, 32, 64],
+  spacing: [4, 8, 16, 24, 32, 64, 128],
   typography: {
     allVariants: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),

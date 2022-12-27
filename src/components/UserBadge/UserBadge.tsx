@@ -79,7 +79,7 @@ function UserAvatar({ image = undefined, username }: IAvatarProps) {
 export function UserBadge() {
   const user = useAppSelector(authSelectors.getUser);
   const dispatch = useAppDispatch();
-  const username = user?.displayName || user?.username || 'Noname User';
+  const username = user?.displayName || user?.username || '';
 
   const handleLogOut = () => {
     dispatch(logOutUser());

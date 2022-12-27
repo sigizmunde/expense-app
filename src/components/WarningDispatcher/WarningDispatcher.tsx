@@ -1,42 +1,43 @@
-import { useEffect } from 'react';
-import { Alert } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import Snackbar from '@mui/material/Snackbar';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { authSelectors } from '../../store/auth/authSelectors';
-import { resetWarning } from '../../store/auth/authSlice';
-import { resetErrorMessage } from '../../store/data/dataSlice';
+import { uixSelectors } from '../../store/uix/uixSelectors';
+import { resetMessage } from '../../store/uix/uixSlice';
+import { StyledAlert } from './WarningDispatcher.styled';
 
-const StyledAlert = styled(Alert)(({ theme }) => ({
-  position: 'fixed',
-  top: theme.spacing(5),
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 9,
-}));
+const HIDE_AFTER = 3000;
 
 export function WarningDispatcher() {
   const dispatch = useAppDispatch();
-  const warningMessage = useAppSelector(authSelectors.getMessage);
-
-  let timeoutHandle: ReturnType<typeof setTimeout>;
-
-  useEffect(() => {
-    timeoutHandle = setTimeout(() => {
-      dispatch(resetWarning());
-      dispatch(resetErrorMessage());
-    }, 2500);
-  }, [warningMessage]);
+  const [open, setOpen] = useState(false);
+  const message = useAppSelector(uixSelectors.getMessage);
 
   useEffect(() => {
-    return () => {
-      clearTimeout(timeoutHandle);
-      dispatch(resetWarning());
-    };
-  }, [dispatch]);
+    setOpen(!!message.text && message.text !== '');
+    setTimeout(() => dispatch(resetMessage()), HIDE_AFTER);
+  }, [message.text, dispatch]);
 
-  return warningMessage && warningMessage !== '' ? (
-    <StyledAlert severity="warning">{warningMessage}</StyledAlert>
-  ) : (
-    <> </>
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  return (
+    <>
+      {message.text && message.text !== '' && (
+        <Snackbar
+          open={open}
+          autoHideDuration={HIDE_AFTER}
+          onClose={handleClose}
+        >
+          <StyledAlert severity={message.type}>{message.text}</StyledAlert>
+        </Snackbar>
+      )}{' '}
+    </>
   );
 }

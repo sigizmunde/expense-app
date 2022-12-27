@@ -1,6 +1,5 @@
 import { AddCategoryBoard } from '../../components/AddCategoryBoard/AddCategoryBoard';
 import { AddTransactionBoard } from '../../components/AddTransactionBoard/AddTransactionBoard';
-import { CategoriesTable } from '../../components/CategoriesTable/CategoriesTable';
 import { DashboardContainer } from '../../components/DashboardPanels/DashboardContainer';
 import { DashPanel } from '../../components/DashboardPanels/DashPanel';
 import { RightPanel } from '../../components/DashboardPanels/RightPanel';
@@ -16,9 +15,7 @@ export function Dashboard() {
         <AddCategoryBoard />
         <TransactionsBoard />
       </DashPanel>
-      <RightPanel>
-        <CategoriesTable />
-      </RightPanel>
+      <RightPanel />
     </DashboardContainer>
   );
 }

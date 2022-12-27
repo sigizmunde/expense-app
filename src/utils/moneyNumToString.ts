@@ -1,4 +1,13 @@
-export const moneyNumToString = (amount: number, currencySign = '$') => {
+export const moneyNumToString = ({
+  amount,
+  currencySign = '$',
+  negative = false,
+}: {
+  amount: number;
+  currencySign?: string;
+  negative?: boolean;
+}) => {
+  if (amount === 0 && negative) return `-${currencySign} 0.00`;
   const convertedString = (Math.round(amount * 100) / 100).toString();
   const split = convertedString.split('.' || ',');
   const formattedArray = [];

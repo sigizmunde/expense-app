@@ -5,6 +5,7 @@ import { ROUTES } from './const';
 import { Auth } from './pages/Auth/Auth';
 import { SignIn } from './pages/Auth/SignIn';
 import { SignUp } from './pages/Auth/SignUp';
+import { Categories } from './pages/Main/Categories';
 import { Dashboard } from './pages/Main/Dashboard';
 import { Main } from './pages/Main/Main';
 
@@ -28,10 +29,7 @@ function App() {
           />
           <Route path={ROUTES.MAIN.dashboard} element={<Dashboard />} />
           <Route path={ROUTES.MAIN.analytics} element={<div>analytics</div>} />
-          <Route
-            path={ROUTES.MAIN.categories}
-            element={<div>categories</div>}
-          />
+          <Route path={ROUTES.MAIN.categories} element={<Categories />} />
           <Route path={ROUTES.MAIN.settings} element={<div>settings</div>} />
         </Route>
       </Route>

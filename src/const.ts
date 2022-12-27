@@ -17,3 +17,14 @@ export const ROUTES = {
     settings: 'settings',
   },
 };
+
+export const COLORS = [
+  '#80db64',
+  '#eb6998',
+  '#fbda67',
+  '#5571ff',
+  '#ff8d55',
+  '#b9d07a',
+  '#62b2ea',
+  '#ad7ee7',
+];

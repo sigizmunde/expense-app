@@ -8,4 +8,8 @@ export const DashPanel = styled(Container)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(7, 1fr)',
   gap: theme.spacing(3),
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 }));

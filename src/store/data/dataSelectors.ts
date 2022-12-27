@@ -8,8 +8,6 @@ import {
 import { RootState } from '../store';
 
 export const dataSelectors = {
-  getIsFetching: (state: RootState): boolean =>
-    state.rootReducer.data.isFetching,
   getCategories: (state: RootState): ICategory[] =>
     state.rootReducer.data.categories,
   getTransactions: (state: RootState): ITransaction[] =>
