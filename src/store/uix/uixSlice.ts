@@ -6,6 +6,14 @@ import {
   isRejectedAction,
 } from '../actionTypeCheckers';
 import { logOutUser, registerUser } from '../auth/authThunk';
+import {
+  addCategory,
+  addTransaction,
+  deleteCategory,
+  deleteTransaction,
+  updateCategory,
+  updateTransaction,
+} from '../data/dataThunk';
 
 const initialState: IUixState = {
   isFetching: false,
@@ -41,6 +49,42 @@ export const uixSlice = createSlice({
         state.message = {
           type: 'success',
           text: 'Successfully logged out',
+        };
+      })
+      .addCase(addCategory.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'New category added',
+        };
+      })
+      .addCase(deleteCategory.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'Category deleted',
+        };
+      })
+      .addCase(updateCategory.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'Category updated',
+        };
+      })
+      .addCase(addTransaction.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'New transaction added',
+        };
+      })
+      .addCase(deleteTransaction.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'Transaction deleted',
+        };
+      })
+      .addCase(updateTransaction.fulfilled, (state) => {
+        state.message = {
+          type: 'success',
+          text: 'Transaction updated',
         };
       })
       .addMatcher(isFulfilledAction, (state) => {
