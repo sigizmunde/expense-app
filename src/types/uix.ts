@@ -6,6 +6,6 @@ export type TMessage = {
 };
 
 export interface IUixState {
-  isFetching: boolean;
+  isFetching: number;
   message: TMessage;
 }

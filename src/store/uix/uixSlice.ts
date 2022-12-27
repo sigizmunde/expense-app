@@ -16,7 +16,7 @@ import {
 } from '../data/dataThunk';
 
 const initialState: IUixState = {
-  isFetching: false,
+  isFetching: 0,
   message: { type: undefined, text: null },
 };
 
@@ -35,6 +35,17 @@ export const uixSlice = createSlice({
       }>
     ) => {
       state.message = action.payload;
+    },
+    increaseIsFetching: (state) => {
+      state.isFetching += 1;
+    },
+    decreaseIsFetching: (state) => {
+      if (state.isFetching > 0) {
+        state.isFetching -= 1;
+      }
+    },
+    resetIsFetching: (state) => {
+      state.isFetching = 0;
     },
   },
   extraReducers: (builder) => {
@@ -88,16 +99,22 @@ export const uixSlice = createSlice({
         };
       })
       .addMatcher(isFulfilledAction, (state) => {
-        state.isFetching = false;
+        state.isFetching -= 1;
       })
       .addMatcher(isPendingAction, (state) => {
-        state.isFetching = true;
+        state.isFetching += 1;
       })
       .addMatcher(isRejectedAction, (state, { payload }) => {
-        state.isFetching = false;
+        state.isFetching -= 1;
         state.message = { type: 'error', text: payload.message };
       });
   },
 });
 
-export const { resetMessage, setMessage } = uixSlice.actions;
+export const {
+  resetMessage,
+  setMessage,
+  increaseIsFetching,
+  decreaseIsFetching,
+  resetIsFetching,
+} = uixSlice.actions;
