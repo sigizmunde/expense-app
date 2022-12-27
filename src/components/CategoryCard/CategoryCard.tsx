@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography, Divider, Box } from '@mui/material';
 import { ICategory } from '../../types/data';
@@ -6,6 +6,7 @@ import { ColorChip } from '../ColorBadges/ColorChip';
 import { getCategoryStatistics } from '../../services/getCategoryStatistics';
 import { StatsBar } from '../StatsBar/StatsBar';
 import { EditCategoryPopupMenu } from '../EditCategoryPopupMenu/EditCategoryPopupMenu';
+import { useEffectOnce } from '../../hooks/useEffectOnce';
 
 const CategoryBox = styled(Box)(({ theme }) => ({
   padding: 0,
@@ -60,7 +61,7 @@ const ValueCaption = styled(Typography)(({ theme }) => ({
 export function CategoryCard({ id, color, label }: ICategory) {
   const [statistics, setStatistics] = useState({});
 
-  useEffect(() => {
+  useEffectOnce(() => {
     getCategoryStatistics(id)
       .then((res) => {
         setStatistics(res);
@@ -68,7 +69,7 @@ export function CategoryCard({ id, color, label }: ICategory) {
       .catch(({ error }) => {
         setStatistics({ error });
       });
-  }, [id]);
+  });
 
   return (
     <CategoryBox>

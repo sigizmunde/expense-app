@@ -23,7 +23,9 @@ export function CategoriesTable() {
 
   return (
     <TableGrid>
-      {categories && categories.map((e) => <CategoryCard key={e.id} {...e} />)}
+      {categories.map((e) => (
+        <CategoryCard key={e.id} {...e} />
+      ))}
     </TableGrid>
   );
 }
