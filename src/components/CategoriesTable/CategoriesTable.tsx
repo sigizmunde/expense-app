@@ -10,6 +10,12 @@ const TableGrid = styled(Container)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: theme.spacing(3),
+  [theme.breakpoints.down('lg')]: {
+    gridTemplateColumns: 'repeat(2, 1fr)',
+  },
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: 'unset',
+  },
 }));
 
 export function CategoriesTable() {
