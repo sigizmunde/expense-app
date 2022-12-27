@@ -7,6 +7,6 @@ export const CategoriesPanel = styled(Container)(({ theme }) => ({
   },
   backgroundColor: theme.palette.custom.blue70,
   width: '100%',
-  padding: theme.spacing(5),
+  padding: theme.spacing(4),
   gap: theme.spacing(3),
 }));
