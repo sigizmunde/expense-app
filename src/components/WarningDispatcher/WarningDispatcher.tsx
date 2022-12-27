@@ -5,6 +5,8 @@ import { uixSelectors } from '../../store/uix/uixSelectors';
 import { resetMessage } from '../../store/uix/uixSlice';
 import { StyledAlert } from './WarningDispatcher.styled';
 
+const HIDE_AFTER = 3000;
+
 export function WarningDispatcher() {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -12,10 +14,7 @@ export function WarningDispatcher() {
 
   useEffect(() => {
     setOpen(!!message.text && message.text !== '');
-    // dispatch(resetMessage);
-    return function Cleanup() {
-      dispatch(resetMessage);
-    };
+    setTimeout(() => dispatch(resetMessage()), HIDE_AFTER);
   }, [message.text, dispatch]);
 
   const handleClose = (
@@ -31,7 +30,11 @@ export function WarningDispatcher() {
   return (
     <>
       {message.text && message.text !== '' && (
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Snackbar
+          open={open}
+          autoHideDuration={HIDE_AFTER}
+          onClose={handleClose}
+        >
           <StyledAlert severity={message.type}>{message.text}</StyledAlert>
         </Snackbar>
       )}{' '}
