@@ -1,12 +1,12 @@
 import { styled } from '@mui/material';
 import Box, { BoxProps } from '@mui/material/Box';
 
-interface IProps {
+interface ICustomProps {
   radius?: string;
   bgcolor?: string;
 }
 
-export const CardBox = styled(Box)<IProps & BoxProps>(
+export const CardBox = styled(Box)<ICustomProps & BoxProps>(
   ({ theme, ...props }) => ({
     padding: theme.spacing(3),
     position: 'relative',

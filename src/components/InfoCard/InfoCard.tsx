@@ -3,11 +3,11 @@ import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-interface IProps {
+interface ICustomProps {
   bgcolor?: string | null;
 }
 
-const CardIcon = styled(IconButton)<IProps & IconButtonProps>(
+const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
   ({ theme, ...props }) => ({
     width: theme.spacing(5),
     height: theme.spacing(5),
