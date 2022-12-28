@@ -15,7 +15,7 @@ declare module '@mui/material/styles' {
 export const theme = createTheme({
   breakpoints: {
     values: {
-      xs: 0,
+      xs: 320,
       sm: 600,
       md: 900,
       lg: 1200,

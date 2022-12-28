@@ -60,3 +60,10 @@ export interface ITotalInfo {
   totalExpense: number;
   totalTransactions: number;
 }
+
+export interface IDiagramDataRecord {
+  id: number;
+  name: string;
+  value: number;
+  fill: string;
+}
