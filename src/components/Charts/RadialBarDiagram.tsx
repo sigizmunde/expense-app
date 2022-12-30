@@ -4,8 +4,11 @@ import { ResponsiveContainer, RadialBarChart, RadialBar, Cell } from 'recharts';
 import { LegendInfoCard } from './LegendInfoCard';
 import { CardBox } from '../Containers/CardBox';
 import { moneyNumToString } from '../../utils/moneyNumToString';
+import { ICircleDiagramDataRecord } from '../../types/data';
+import { ChartNameWithIcon } from './ChartNameWithIcon';
+import { ReactComponent as ChartIcon } from '../../images/icons/pie-chart.svg';
 
-const data = [
+const testData = [
   {
     id: 10,
     name: '18-24',
@@ -48,21 +51,82 @@ const data = [
     value: 6.67,
     fill: '#ffc658',
   },
+  // {
+  //   id: 50,
+  //   name: '40-49',
+  //   value: 8.63,
+  //   fill: '#a4de6c',
+  // },
+  // {
+  //   id: 6,
+  //   name: '50+',
+  //   value: 2.63,
+  //   fill: '#d0ed57',
+  // },
+  // {
+  //   id: 7,
+  //   name: 'unknown',
+  //   value: 6.67,
+  //   fill: '#ffc658',
+  // },
+  // {
+  //   id: 50,
+  //   name: '40-49',
+  //   value: 8.63,
+  //   fill: '#a4de6c',
+  // },
+  // {
+  //   id: 6,
+  //   name: '50+',
+  //   value: 2.63,
+  //   fill: '#d0ed57',
+  // },
+  // {
+  //   id: 7,
+  //   name: 'unknown',
+  //   value: 6.67,
+  //   fill: '#ffc658',
+  // },
+  // {
+  //   id: 50,
+  //   name: '40-49',
+  //   value: 8.63,
+  //   fill: '#a4de6c',
+  // },
+  // {
+  //   id: 6,
+  //   name: '50+',
+  //   value: 2.63,
+  //   fill: '#d0ed57',
+  // },
+  // {
+  //   id: 7,
+  //   name: 'unknown',
+  //   value: 6.67,
+  //   fill: '#ffc658',
+  // },
 ];
 
-const LegendContainer = styled(Box)(({ theme }) => ({
+const LegendContainer = styled(Box)(() => ({
   width: '100%',
   transition: 'opacity 250ms',
   position: 'relative',
   transform: 'translate(0, -25%)',
 }));
 
-export function RadialBarDiagram() {
+export function RadialBarDiagram({
+  data = testData,
+}: {
+  data: ICircleDiagramDataRecord[];
+}) {
+  // data = testData;
   const [show, setShow] = useState(false);
   const [tip, setTip] = useState({ color: '', name: '', value: '' });
 
   const handleMouseEnter = (e: MouseEvent<SVGElement>) => {
     e.currentTarget.style.filter = 'drop-shadow(0 0 2px #D11A2A3D)';
+
+    // attributes of data translated to Cell component
     const id = e.currentTarget.getAttribute('id');
     const currentRec = data.find((record) => record.id?.toString() === id);
     if (currentRec)
@@ -79,32 +143,45 @@ export function RadialBarDiagram() {
     setShow(false);
   };
 
+  const mappedData = data.map((rec) => ({
+    ...rec,
+    value: Math.abs(rec.value),
+  }));
+
+  // radius shrinks on bigger data set
+  const innRadius = 5 + 1 / (0.011 * data.length);
+
   return (
     <CardBox height="50%">
+      <ChartNameWithIcon color="red" caption="By Categories Per Week">
+        <ChartIcon />
+      </ChartNameWithIcon>
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart
           cx="50%"
           cy="45%"
-          innerRadius="30%"
-          outerRadius="80%"
-          margin={{ top: -5, bottom: -5, left: -15, right: -15 }}
-          barCategoryGap="20%"
-          data={data}
+          innerRadius={`${innRadius}%`}
+          outerRadius="95%"
+          margin={{ top: 2, bottom: 2, left: 2, right: 2 }}
+          barCategoryGap="50%"
+          data={mappedData}
           startAngle={300}
           endAngle={0}
         >
-          <RadialBar
-            // label={{ position: 'insideStart', fill: '#fff' }}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={entry.id}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                // tabIndex={index}
-              />
-            ))}
+          <RadialBar dataKey="value">
+            {data.map((entry) => {
+              return (
+                <Cell
+                  key={entry.id}
+                  stroke={entry.fill}
+                  strokeWidth={5}
+                  strokeLinejoin="round"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={{ transition: 'fill 250ms ease' }}
+                />
+              );
+            })}
           </RadialBar>
         </RadialBarChart>
       </ResponsiveContainer>
