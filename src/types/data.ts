@@ -61,9 +61,19 @@ export interface ITotalInfo {
   totalTransactions: number;
 }
 
-export interface IDiagramDataRecord {
+export interface ICircleDiagramDataRecord {
   id: number;
   name: string;
   value: number;
   fill: string;
+}
+
+export interface IStatisticsState extends ITransactionsResponse {
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface IStatisticsQueryProps {
+  dateFrom: string;
+  dateTo: string;
 }
