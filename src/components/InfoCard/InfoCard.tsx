@@ -9,15 +9,20 @@ interface ICustomProps {
 
 const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
   ({ theme, ...props }) => ({
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: `calc(${theme.spacing(3)} * 2)`,
+    height: `calc(${theme.spacing(3)} * 2)`,
     backgroundColor: `${theme.palette.custom[props.bgcolor || 'green']}26`,
     // hex26 = opacity 0.015
+    '& svg': {
+      maxWidth: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+      maxHeight: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+    },
   })
 );
 
 const CardValue = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
+  lineHeight: 1.2,
   color: theme.palette.secondary.main,
 }));
 
