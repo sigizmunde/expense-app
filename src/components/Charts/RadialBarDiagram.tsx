@@ -2,11 +2,8 @@ import { MouseEvent, useState } from 'react';
 import { styled, Box } from '@mui/material';
 import { ResponsiveContainer, RadialBarChart, RadialBar, Cell } from 'recharts';
 import { LegendInfoCard } from './LegendInfoCard';
-import { CardBox } from '../Containers/CardBox';
 import { moneyNumToString } from '../../utils/moneyNumToString';
 import { ICircleDiagramDataRecord } from '../../types/data';
-import { ChartNameWithIcon } from './ChartNameWithIcon';
-import { ReactComponent as ChartIcon } from '../../images/icons/pie-chart.svg';
 
 const testData = [
   {
@@ -117,7 +114,7 @@ const LegendContainer = styled(Box)(() => ({
 export function RadialBarDiagram({
   data = testData,
 }: {
-  data: ICircleDiagramDataRecord[];
+  data?: ICircleDiagramDataRecord[];
 }) {
   // data = testData;
   const [show, setShow] = useState(false);
@@ -152,10 +149,7 @@ export function RadialBarDiagram({
   const innRadius = 5 + 1 / (0.011 * data.length);
 
   return (
-    <CardBox height="50%">
-      <ChartNameWithIcon color="red" caption="By Categories Per Week">
-        <ChartIcon />
-      </ChartNameWithIcon>
+    <>
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart
           cx="50%"
@@ -188,6 +182,6 @@ export function RadialBarDiagram({
       <LegendContainer style={{ opacity: Number(show) }}>
         <LegendInfoCard {...tip} />
       </LegendContainer>
-    </CardBox>
+    </>
   );
 }

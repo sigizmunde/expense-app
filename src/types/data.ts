@@ -68,6 +68,13 @@ export interface ICircleDiagramDataRecord {
   fill: string;
 }
 
+export interface IAreaDiagramDataRecord {
+  id: number;
+  name?: string;
+  expense?: number;
+  income?: number;
+}
+
 export interface IStatisticsState extends ITransactionsResponse {
   dateFrom: string;
   dateTo: string;
