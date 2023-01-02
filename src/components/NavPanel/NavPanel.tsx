@@ -1,8 +1,8 @@
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import { Box, IconButton, styled } from '@mui/material';
 import { Logo } from '../Logo/Logo';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { UserBadge } from '../UserBadge/UserBadge';
+import { ReactComponent as ArrowDown } from '../../images/icons/chevron-down.svg';
 
 const NavPanelBox = styled(Box)(({ theme }) => ({
   height: '100vh',
@@ -15,14 +15,54 @@ const NavPanelBox = styled(Box)(({ theme }) => ({
   flexShrink: 0,
   position: 'relative',
   backgroundColor: theme.palette.custom.black,
+  [theme.breakpoints.down('lg')]: {
+    position: 'fixed',
+    left: '-235px',
+    zIndex: 5,
+    transition: 'all 250ms ease-out',
+    '& .right-arrow': { transform: 'rotate(-90deg)', fill: 'currentColor' },
+    '&:hover, &:focus-within': {
+      left: 0,
+    },
+  },
+}));
+
+const OpenButton = styled(IconButton)(({ theme }) => ({
+  width: theme.spacing(4),
+  height: theme.spacing(5),
+  borderRadius: theme.spacing(2),
+  position: 'absolute',
+  top: theme.spacing(6),
+  right: 0,
+  transform: 'translateX(50%)',
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.custom.black,
+  '&:hover': { backgroundColor: theme.palette.custom.black },
+  display: 'none',
+  [theme.breakpoints.down('lg')]: {
+    display: 'block',
+  },
+}));
+
+const Placeholder = styled(Box)(({ theme }) => ({
+  width: 0,
+  [theme.breakpoints.down('lg')]: {
+    width: theme.spacing(4),
+  },
 }));
 
 export function NavPanel() {
   return (
-    <NavPanelBox>
-      <Logo />
-      <MainMenu />
-      <UserBadge />
-    </NavPanelBox>
+    <>
+      <Placeholder />
+      <NavPanelBox>
+        <OpenButton>
+          <ArrowDown className="right-arrow" />
+        </OpenButton>
+        <Logo />
+        <MainMenu />
+        <UserBadge />
+      </NavPanelBox>
+    </>
   );
 }
