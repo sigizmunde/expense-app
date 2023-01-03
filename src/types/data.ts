@@ -84,3 +84,5 @@ export interface IStatisticsQueryProps {
   dateFrom: string;
   dateTo: string;
 }
+
+export type TPeriodType = 'day' | 'week' | 'month' | 'year';
