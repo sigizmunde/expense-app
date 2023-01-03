@@ -5,9 +5,14 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
+  TooltipProps,
   XAxis,
   YAxis,
 } from 'recharts';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 import { theme } from '../../styles/theme';
 import { IAreaDiagramDataRecord } from '../../types/data';
 
@@ -64,6 +69,28 @@ const DiagramBox = styled(Box)(() => ({
   bottom: 0,
 }));
 
+const TooltipBox = styled(Box)(({ theme: styleTheme }) => ({
+  padding: styleTheme.spacing(1),
+  minWidth: styleTheme.spacing(5),
+  backgroundColor: `${styleTheme.palette.custom.bgr}B3`,
+  borderRadius: styleTheme.spacing(0),
+  '& p': {
+    margin: '0 auto',
+    '&:first-of-type': {
+      fontWeight: 600,
+    },
+  },
+}));
+
+function CustomTooltip({ payload }: TooltipProps<ValueType, NameType>) {
+  return (
+    <TooltipBox className="custom-tooltip">
+      {payload && payload[0] && <p>{payload[0].payload?.name}</p>}
+      {payload && payload[0] && <p>{`$${payload[0].value as string}`}</p>}
+    </TooltipBox>
+  );
+}
+
 export function ExpenseIncomeAreaChart({
   data = testData,
   grid = false,
@@ -85,8 +112,6 @@ export function ExpenseIncomeAreaChart({
     <DiagramBox>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
-          // width={500}
-          // height={200}
           data={data}
           margin={{
             top: 10,
@@ -124,7 +149,7 @@ export function ExpenseIncomeAreaChart({
           {grid && <CartesianGrid strokeDasharray="3 3" />}
           {axis && <XAxis dataKey="name" />}
           {axis && <YAxis />}
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
           {shouldDrawExpense && (
             <Area
               animationDuration={500}
