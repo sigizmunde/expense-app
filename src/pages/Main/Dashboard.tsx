@@ -1,6 +1,6 @@
 import { AddCategoryBoard } from '../../components/AddCategoryBoard/AddCategoryBoard';
 import { AddTransactionBoard } from '../../components/AddTransactionBoard/AddTransactionBoard';
-import { ChartPanelWeekly } from '../../components/ChartPanels/ChartPanelWeekly';
+import { ChartPanelOnDashboard } from '../../components/ChartPanels/ChartPanelOnDashboard';
 import { DashboardContainer } from '../../components/DashboardPanels/DashboardContainer';
 import { DashPanel } from '../../components/DashboardPanels/DashPanel';
 import { DashHeader } from '../../components/DashHeader/DashHeader';
@@ -15,7 +15,7 @@ export function Dashboard() {
         <AddCategoryBoard />
         <TransactionsBoard />
       </DashPanel>
-      <ChartPanelWeekly />
+      <ChartPanelOnDashboard />
     </DashboardContainer>
   );
 }

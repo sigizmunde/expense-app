@@ -91,7 +91,7 @@ const reduceTransactionsToWeekChartData = ({
     );
 };
 
-export function ChartPanelWeekly() {
+export function ChartPanelOnDashboard() {
   const dispatch = useAppDispatch();
   const isFetching = useAppSelector(uixSelectors.getIsFetching);
   const categories = useAppSelector(dataSelectors.getCategories);
