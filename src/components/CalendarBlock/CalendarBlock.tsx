@@ -77,8 +77,8 @@ export function CalendarBlock() {
 
     dispatch(
       getStatistics({
-        dateFrom: `${dateFrom.format('YYYY-MM-DD')}T02:00:00.000Z`,
-        dateTo: `${dayjs(pickedData).format('YYYY-MM-DD')}T02:00:00.000Z`,
+        dateFrom: dateFrom.format('YYYY-MM-DD'),
+        dateTo: dayjs(pickedData).format('YYYY-MM-DD'),
       })
     );
   }, [dispatch, periodType, pickedData, setShownValue]);
