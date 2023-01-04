@@ -12,8 +12,9 @@ import { TPeriodType } from '../../types/data';
 import { CardBox } from '../Containers/CardBox';
 import { ReactComponent as CalendarIcon } from '../../images/icons/calendar.svg';
 import { DashInput } from '../Inputs/DashInput';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { getStatistics } from '../../store/statistics/statisticsThunk';
+import { authSelectors } from '../../store/auth/authSelectors';
 
 const FlexContainer = styled(Container)(({ theme }) => ({
   padding: 0,
@@ -52,6 +53,7 @@ const Icon = styled(IconButton)(({ theme }) => ({
 
 export function CalendarBlock() {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(authSelectors.getIsLoggedIn);
   const calendarRef = useRef<HTMLDivElement>(null);
   const [periodType, setPeriodType] = useState<TPeriodType>('year');
   const [pickedData, setPickedData] = useState<Dayjs | null>(
@@ -75,13 +77,15 @@ export function CalendarBlock() {
       )}`
     );
 
-    dispatch(
-      getStatistics({
-        dateFrom: dateFrom.format('YYYY-MM-DD'),
-        dateTo: dayjs(pickedData).format('YYYY-MM-DD'),
-      })
-    );
-  }, [dispatch, periodType, pickedData, setShownValue]);
+    if (isLoggedIn) {
+      dispatch(
+        getStatistics({
+          dateFrom: dateFrom.format('YYYY-MM-DD'),
+          dateTo: dayjs(pickedData).format('YYYY-MM-DD'),
+        })
+      );
+    }
+  }, [dispatch, isLoggedIn, periodType, pickedData, setShownValue]);
 
   return (
     <FlexContainer>
