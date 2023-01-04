@@ -31,8 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "npx eslint src/**/*.{js,jsx,ts,tsx,html}",
-    "lint:fix": "npx eslint src/**/*.{js,jsx,ts,tsx,html} --fix",
+    "lint": "npx eslint \"src/**/*.{js,jsx,ts,tsx,html}\"",
+    "lint:fix": "npx eslint \"src/**/*.{js,jsx,ts,tsx,html}\" --fix",
     "format:check": "npx prettier --check src/**/*.{js,jsx,ts,tsx,json,html}",
     "format:write": "npx prettier --write src/**/*.{js,jsx,ts,tsx,json,html}"
   },
