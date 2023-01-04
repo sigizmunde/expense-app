@@ -34,10 +34,10 @@ export function ChartPanelOnDashboard() {
   const [circleDiagData, setCircleDiagData] = useState<
     ICircleDiagramDataRecord[]
   >([]);
-  const [expenseChartData, setExpenseDiagData] = useState<
+  const [expenseChartData, setExpenseChartData] = useState<
     IAreaDiagramDataRecord[]
   >([]);
-  const [incomeChartData, setIncomeDiagData] = useState<
+  const [incomeChartData, setIncomeChartData] = useState<
     IAreaDiagramDataRecord[]
   >([]);
 
@@ -86,7 +86,7 @@ export function ChartPanelOnDashboard() {
       setCircleDiagData(
         reduceTransactionsToCircleBarData({ transactions, categories })
       );
-      setExpenseDiagData(
+      setExpenseChartData(
         reduceTransactionsToAreaChartData({
           transactions,
           type: 'expense',
@@ -94,7 +94,7 @@ export function ChartPanelOnDashboard() {
           periodType,
         })
       );
-      setIncomeDiagData(
+      setIncomeChartData(
         reduceTransactionsToAreaChartData({
           transactions,
           type: 'income',
