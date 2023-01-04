@@ -95,10 +95,14 @@ export function ExpenseIncomeAreaChart({
   data = testData,
   grid = false,
   axis = false,
+  income = false,
+  expense = false,
 }: {
   data?: IAreaDiagramDataRecord[];
   grid?: boolean;
   axis?: boolean;
+  income?: boolean;
+  expense?: boolean;
 }) {
   const shouldDrawExpense = !!data.find((e) =>
     Object.prototype.hasOwnProperty.call(e, 'expense')
@@ -150,7 +154,7 @@ export function ExpenseIncomeAreaChart({
           {axis && <XAxis dataKey="name" />}
           {axis && <YAxis />}
           <Tooltip content={<CustomTooltip />} />
-          {shouldDrawExpense && (
+          {shouldDrawExpense && expense && (
             <Area
               animationDuration={500}
               connectNulls
@@ -160,7 +164,7 @@ export function ExpenseIncomeAreaChart({
               fill="url(#Gradient2)"
             />
           )}
-          {shouldDrawIncome && (
+          {shouldDrawIncome && income && (
             <Area
               animationDuration={500}
               connectNulls

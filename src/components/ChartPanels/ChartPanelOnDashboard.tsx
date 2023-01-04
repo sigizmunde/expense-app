@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { getCategories } from '../../store/data/dataThunk';
@@ -7,16 +8,9 @@ import { getStatistics } from '../../store/statistics/statisticsThunk';
 import { uixSelectors } from '../../store/uix/uixSelectors';
 import {
   IAreaDiagramDataRecord,
-  ICategory,
   ICircleDiagramDataRecord,
-  ITransaction,
+  TPeriodType,
 } from '../../types/data';
-import { generateColor } from '../../utils/colorLibraryGenerator';
-import {
-  getDateWithDefaultTime,
-  getDayAWeekAgo,
-  getDayName,
-} from '../../utils/dateFunctions';
 import { ChartNameWithIcon } from '../Charts/ChartNameWithIcon';
 import { RadialBarDiagram } from '../Charts/RadialBarDiagram';
 import { CardBox } from '../Containers/CardBox';
@@ -25,74 +19,15 @@ import { ReactComponent as ChartIcon } from '../../images/icons/pie-chart.svg';
 import { ReactComponent as IncomeIcon } from '../../images/icons/income.svg';
 import { ReactComponent as ExpenseIcon } from '../../images/icons/expenses.svg';
 import { ExpenseIncomeAreaChart } from '../Charts/ExpenseIncomeAreaChart';
-
-const reduceTransactionsToCircleBarData = ({
-  transactions,
-  categories,
-}: {
-  transactions: ITransaction[];
-  categories: ICategory[];
-}) =>
-  transactions.reduce((acc: ICircleDiagramDataRecord[], rec) => {
-    const currentRec = acc.find((el) => el.id === rec.categoryId);
-    if (currentRec) {
-      currentRec.value += rec.amount;
-      return acc;
-    }
-    return [
-      ...acc,
-      {
-        id: rec.categoryId,
-        name:
-          categories.find((e) => e.id === rec.categoryId)?.label || 'unknown',
-        value: rec.amount,
-        fill:
-          categories.find((e) => e.id === rec.categoryId)?.color ||
-          generateColor({ lightness: 0.75, darkness: 0.7 }),
-      },
-    ];
-  }, []);
-
-const reduceTransactionsToWeekChartData = ({
-  transactions,
-  type,
-  startDay,
-}: {
-  transactions: ITransaction[];
-  type: 'income' | 'expense';
-  startDay: string;
-}) => {
-  const weekArray = [];
-  for (let i = 0, day = new Date(startDay).getDay(); i < 7; i += 1) {
-    const id = (day + i) % 7;
-    weekArray.push({ id, name: getDayName(id), [type]: 0 });
-  }
-  return transactions
-    .filter((rec) => rec.amount > 0 === (type === 'income'))
-    .reduce(
-      (acc: IAreaDiagramDataRecord[], rec) => {
-        const recordDay = new Date(rec.date).getDay();
-        const currentRec = acc.find((el) => el.id === recordDay) || {
-          id: recordDay,
-          name: getDayName(recordDay),
-        };
-        if (type === 'income') {
-          currentRec.income = currentRec.income
-            ? currentRec.income + rec.amount
-            : rec.amount;
-          return acc;
-        }
-        currentRec.expense = currentRec.expense
-          ? currentRec.expense - rec.amount
-          : Math.abs(rec.amount);
-        return acc;
-      },
-      [...weekArray]
-    );
-};
+import CalendarButtons from '../CalendarButtons/CalendarButtons';
+import {
+  reduceTransactionsToCircleBarData,
+  reduceTransactionsToAreaChartData,
+} from './dataChartConversionFunctions';
 
 export function ChartPanelOnDashboard() {
   const dispatch = useAppDispatch();
+  const [periodType, setPeriodType] = useState<TPeriodType>('week');
   const isFetching = useAppSelector(uixSelectors.getIsFetching);
   const categories = useAppSelector(dataSelectors.getCategories);
   const statistics = useAppSelector(statisticsSelectors.getStatistics);
@@ -106,20 +41,38 @@ export function ChartPanelOnDashboard() {
     IAreaDiagramDataRecord[]
   >([]);
 
+  const handlePeriodTypeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newPeriodType: TPeriodType
+  ) => {
+    setPeriodType(newPeriodType);
+  };
+
   useEffect(() => {
     const { transactions, dateFrom, dateTo } = statistics;
-    const weekStart = getDayAWeekAgo(new Date()).toISOString();
-    const weekEnd = getDateWithDefaultTime(new Date()).toISOString();
+    const periodStart = dayjs()
+      .subtract(1, periodType)
+      .hour(23)
+      .minute(59)
+      .second(59)
+      .millisecond(999)
+      .toISOString();
+    const periodEnd = dayjs()
+      .hour(23)
+      .minute(59)
+      .second(59)
+      .millisecond(999)
+      .toISOString();
 
     if (!isFetching) {
       if (!(categories.length > 0)) {
         dispatch(getCategories);
       }
-      if (dateFrom !== weekStart || dateTo !== weekEnd) {
+      if (dateFrom !== periodStart || dateTo !== periodEnd) {
         dispatch(
           getStatistics({
-            dateFrom: weekStart,
-            dateTo: weekEnd,
+            dateFrom: periodStart,
+            dateTo: periodEnd,
           })
         );
       }
@@ -127,38 +80,44 @@ export function ChartPanelOnDashboard() {
         reduceTransactionsToCircleBarData({ transactions, categories })
       );
       setExpenseDiagData(
-        reduceTransactionsToWeekChartData({
+        reduceTransactionsToAreaChartData({
           transactions,
           type: 'expense',
-          startDay: weekStart,
+          startDay: periodStart,
+          periodType,
         })
       );
       setIncomeDiagData(
-        reduceTransactionsToWeekChartData({
+        reduceTransactionsToAreaChartData({
           transactions,
           type: 'income',
-          startDay: weekStart,
+          startDay: periodStart,
+          periodType,
         })
       );
     }
-  }, [statistics, dispatch, categories, isFetching]);
+  }, [statistics, dispatch, categories, isFetching, periodType]);
 
   return (
     <RightPanel>
-      <CardBox height="25%" style={{ overflow: 'hidden' }}>
-        <ChartNameWithIcon color="greener" caption="Week Receipt">
+      <CalendarButtons value={periodType} onChange={handlePeriodTypeChange} />
+      <CardBox height="25%" style={{ overflow: 'hidden', marginTop: '-10px' }}>
+        <ChartNameWithIcon color="greener" caption={`${periodType} receipt`}>
           <IncomeIcon />
         </ChartNameWithIcon>
-        <ExpenseIncomeAreaChart data={incomeChartData} />
+        <ExpenseIncomeAreaChart data={incomeChartData} income />
       </CardBox>
       <CardBox height="25%" style={{ overflow: 'hidden' }}>
-        <ChartNameWithIcon color="red" caption="Week Expense">
+        <ChartNameWithIcon color="red" caption={`${periodType} expense`}>
           <ExpenseIcon />
         </ChartNameWithIcon>
-        <ExpenseIncomeAreaChart data={expenseChartData} />
+        <ExpenseIncomeAreaChart data={expenseChartData} expense />
       </CardBox>
       <CardBox height="50%" style={{ overflow: 'hidden' }}>
-        <ChartNameWithIcon color="red" caption="By Categories Per Week">
+        <ChartNameWithIcon
+          color="red"
+          caption={`By categories per ${periodType}`}
+        >
           <ChartIcon />
         </ChartNameWithIcon>
         <RadialBarDiagram data={circleDiagData} />

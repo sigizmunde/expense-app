@@ -22,6 +22,7 @@ const ChartIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
 
 const ChartName = styled(Typography)(({ theme }) => ({
   ...theme.typography.h5,
+  textTransform: 'capitalize',
   color: theme.palette.secondary.main,
   opacity: 0.7,
 }));
