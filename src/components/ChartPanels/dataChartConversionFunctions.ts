@@ -132,7 +132,6 @@ export const reduceTransactionsToAreaChartData = ({
   periodType: TPeriodType;
 }) => {
   const initialArray = generateInitialArray(periodType, startDay);
-  console.log(initialArray);
   return transactions
     .filter((rec) => rec.amount > 0 === (type === 'income'))
     .reduce(
