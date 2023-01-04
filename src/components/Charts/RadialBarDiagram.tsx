@@ -161,6 +161,7 @@ export function RadialBarDiagram({
           data={mappedData}
           startAngle={300}
           endAngle={0}
+          onMouseLeave={() => setShow(false)}
         >
           <RadialBar dataKey="value">
             {data.map((entry) => {
