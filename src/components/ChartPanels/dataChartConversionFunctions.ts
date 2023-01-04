@@ -71,23 +71,21 @@ const getTimingCell = (
 const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
   switch (periodType) {
     case 'day':
-      return Array.from({ length: 24 }, (_, i) => {
-        const startIdx = dayjs(startDate).hour();
+      return Array.from({ length: 25 }, (_, i) => {
+        const hour = dayjs(startDate).add(i, 'hour');
         return {
-          id: startIdx + i,
-          name: dayjs(startDate).add(i, 'hour').format('hh'),
+          id: hour.hour(),
+          name: hour.format('hh'),
           expense: 0,
           income: 0,
         };
       });
     case 'week':
       return Array.from({ length: 7 }, (_, i) => {
-        const startIdx = dayjs(startDate).day();
+        const day = dayjs(startDate || null).add(i, 'day');
         return {
-          id: startIdx + i,
-          name: dayjs(startDate || null)
-            .add(i, 'day')
-            .format('ddd'),
+          id: day.day(),
+          name: day.format('ddd'),
           expense: 0,
           income: 0,
         };
@@ -96,10 +94,10 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
       return Array.from(
         { length: dayjs(startDate || null).daysInMonth() },
         (_, i) => {
-          const startIdx = dayjs(startDate).date();
+          const date = dayjs().add(i, 'day');
           return {
-            id: startIdx + i,
-            name: dayjs().add(i, 'day').format('DD'),
+            id: date.date(),
+            name: date.format('DD'),
             expense: 0,
             income: 0,
           };
@@ -107,10 +105,10 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
       );
     case 'year':
       return Array.from({ length: 12 }, (_, i) => {
-        const startIdx = dayjs(startDate).month();
+        const month = dayjs().add(i, 'month');
         return {
-          id: startIdx + i,
-          name: dayjs().add(i, 'month').format('MMM'),
+          id: month.month(),
+          name: month.format('MMM'),
           expense: 0,
           income: 0,
         };
@@ -123,33 +121,39 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
 export const reduceTransactionsToAreaChartData = ({
   transactions,
   type,
-  startDay,
+  startDate,
   periodType,
 }: {
   transactions: ITransaction[];
   type: 'income' | 'expense';
-  startDay: string;
+  startDate: string;
   periodType: TPeriodType;
 }) => {
-  const initialArray = generateInitialArray(periodType, startDay);
-  return transactions
+  const initialArray = generateInitialArray(periodType, startDate);
+  const newData = transactions
     .filter((rec) => rec.amount > 0 === (type === 'income'))
     .reduce(
       (acc: IAreaDiagramDataRecord[], rec) => {
         const recordDateUnit = getTimingCell(rec.date, periodType);
-        const currentRec =
-          acc.find((el) => el.id === recordDateUnit.id) || recordDateUnit;
-        if (type === 'income') {
-          currentRec.income = currentRec.income
-            ? currentRec.income + rec.amount
-            : rec.amount;
+        const currentRec = acc.find((el) => el.id === recordDateUnit.id);
+        if (currentRec) {
+          if (type === 'income') {
+            currentRec.income = currentRec.income
+              ? currentRec.income + rec.amount
+              : rec.amount;
+            return acc;
+          }
+          currentRec.expense = currentRec.expense
+            ? currentRec.expense - rec.amount
+            : Math.abs(rec.amount);
           return acc;
         }
-        currentRec.expense = currentRec.expense
-          ? currentRec.expense - rec.amount
-          : Math.abs(rec.amount);
+        if (type === 'income') recordDateUnit.income = rec.amount;
+        if (type === 'expense') recordDateUnit.expense = rec.amount;
+        acc.push(recordDateUnit);
         return acc;
       },
       [...initialArray]
     );
+  return newData;
 };

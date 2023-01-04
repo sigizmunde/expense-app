@@ -50,19 +50,26 @@ export function ChartPanelOnDashboard() {
 
   useEffect(() => {
     const { transactions, dateFrom, dateTo } = statistics;
-    const periodStart = dayjs()
-      .subtract(1, periodType)
-      .hour(23)
-      .minute(59)
-      .second(59)
-      .millisecond(999)
-      .toISOString();
-    const periodEnd = dayjs()
-      .hour(23)
-      .minute(59)
-      .second(59)
-      .millisecond(999)
-      .toISOString();
+    const periodStart =
+      periodType === 'day'
+        ? dayjs()
+            .subtract(1, periodType)
+            .add(1, 'minute')
+            .millisecond(0)
+            .second(0)
+            .toISOString()
+        : dayjs()
+            .subtract(1, periodType)
+            .add(1, 'day')
+            .hour(23)
+            .minute(59)
+            .second(59)
+            .millisecond(999)
+            .toISOString();
+    const periodEnd =
+      periodType === 'day'
+        ? dayjs().add(1, 'minute').millisecond(0).second(0).toISOString()
+        : dayjs().hour(23).minute(59).second(59).millisecond(999).toISOString();
 
     if (!isFetching) {
       if (!(categories.length > 0)) {
@@ -83,7 +90,7 @@ export function ChartPanelOnDashboard() {
         reduceTransactionsToAreaChartData({
           transactions,
           type: 'expense',
-          startDay: periodStart,
+          startDate: periodStart,
           periodType,
         })
       );
@@ -91,7 +98,7 @@ export function ChartPanelOnDashboard() {
         reduceTransactionsToAreaChartData({
           transactions,
           type: 'income',
-          startDay: periodStart,
+          startDate: periodStart,
           periodType,
         })
       );
