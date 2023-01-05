@@ -157,6 +157,64 @@ function CustomDot({
   );
 }
 
+function CustomizedYAxisTick({
+  x = 0,
+  y = 0,
+  payload = undefined,
+}: {
+  x?: number;
+  y?: number;
+  payload?: { value: string };
+}) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        dy={16}
+        textAnchor="end"
+        fill="currentColor"
+        opacity={0.7}
+        transform="translate(-30, -5) rotate(-90)"
+        fontFamily="Montserrat, Sans-Serif"
+        fontWeight={400}
+        fontSize={12}
+      >
+        {payload && payload.value}
+      </text>
+    </g>
+  );
+}
+
+function CustomizedXAxisTick({
+  x = 0,
+  y = 0,
+  payload = undefined,
+}: {
+  x?: number;
+  y?: number;
+  payload?: { value: string };
+}) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        dy={16}
+        textAnchor="end"
+        fill="currentColor"
+        opacity={0.7}
+        transform="translate(0, -8)"
+        fontFamily="Montserrat, Sans-Serif"
+        fontWeight={400}
+        fontSize={12}
+      >
+        {payload && payload.value}
+      </text>
+    </g>
+  );
+}
+
 export function ExpenseIncomeAreaChart({
   data = testData,
   grid = false,
@@ -217,8 +275,24 @@ export function ExpenseIncomeAreaChart({
             </linearGradient>
           </defs>
           {grid && <CartesianGrid strokeDasharray="3 3" />}
-          {axis && <XAxis dataKey="name" />}
-          {axis && <YAxis />}
+          {axis && (
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickSize={0}
+              // padding={{ right: 30 }}
+              tick={<CustomizedXAxisTick />}
+            />
+          )}
+          {axis && (
+            <YAxis
+              axisLine={false}
+              tickSize={0}
+              padding={{ bottom: 16 }}
+              width={45}
+              tick={<CustomizedYAxisTick />}
+            />
+          )}
           <Tooltip content={<CustomTooltip />} />
           {shouldDrawExpense && expense && (
             <Area

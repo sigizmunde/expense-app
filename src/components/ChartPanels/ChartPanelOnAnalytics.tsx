@@ -78,7 +78,7 @@ export function ChartPanelOnAnalytics() {
         <ChartNameWithIcon color="red" caption={`${periodType} expense income`}>
           <ExpenseIcon />
         </ChartNameWithIcon>
-        <ExpenseIncomeAreaChart data={areaChartData} expense income />
+        <ExpenseIncomeAreaChart data={areaChartData} expense income axis />
       </CardBox>
       <CardBox height="100%" gridColumn="span 4" style={{ overflow: 'hidden' }}>
         <ChartNameWithIcon color="red" caption="Expense by categories">
