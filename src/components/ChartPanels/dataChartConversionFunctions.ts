@@ -73,7 +73,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
   switch (periodType) {
     case 'day':
       return Array.from({ length: 25 }, (_, i) => {
-        const hour = dayjs(startDate).add(i, 'hour');
+        const hour = dayjs(startDate).add(i + 1, 'hour');
         return {
           id: hour.hour(),
           name: hour.format('hh'),
@@ -83,7 +83,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
       });
     case 'week':
       return Array.from({ length: 7 }, (_, i) => {
-        const day = dayjs(startDate).add(i, 'day');
+        const day = dayjs(startDate).add(i + 1, 'day');
         return {
           id: day.day(),
           name: day.format('ddd'),
@@ -93,7 +93,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
       });
     case 'month':
       return Array.from({ length: dayjs(startDate).daysInMonth() }, (_, i) => {
-        const startDateInMonth = dayjs(startDate).add(i, 'day');
+        const startDateInMonth = dayjs(startDate).add(i + 1, 'day');
         return {
           id: startDateInMonth.date(),
           name: startDateInMonth.format('DD'),
@@ -103,7 +103,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
       });
     case 'year':
       return Array.from({ length: 12 }, (_, i) => {
-        const startDateInYear = dayjs(startDate).add(i, 'month');
+        const startDateInYear = dayjs(startDate).add(i + 1, 'month');
         return {
           // attention!
           id: startDateInYear.year() * 100 + startDateInYear.month(),
@@ -130,26 +130,28 @@ export const reduceTransactionsToAreaChartData = ({
 }) => {
   const initialArray = generateInitialArray(periodType, startDate);
   const newData = transactions
-    .filter((rec) => rec.amount > 0 === (type === 'income'))
+    // .filter((rec) => rec.amount > 0 === (type === 'income'))
     .reduce(
       (acc: IAreaDiagramDataRecord[], rec) => {
         const recordDateUnit = getTimingCell(rec.date, periodType);
         const currentRec = acc.find((el) => el.id === recordDateUnit.id);
         if (currentRec) {
-          if (!type || type !== 'expense') {
+          if ((!type || type !== 'expense') && rec.amount > 0) {
             currentRec.income = currentRec.income
               ? currentRec.income + rec.amount
               : rec.amount;
           }
-          if (!type || type !== 'income') {
+          if ((!type || type !== 'income') && rec.amount < 0) {
             currentRec.expense = currentRec.expense
               ? currentRec.expense - rec.amount
               : Math.abs(rec.amount);
           }
           return acc;
         }
-        if (type === 'income') recordDateUnit.income = rec.amount;
-        if (type === 'expense') recordDateUnit.expense = rec.amount;
+        if (type === 'income' && rec.amount > 0)
+          recordDateUnit.income = rec.amount;
+        if (type === 'expense' && rec.amount < 0)
+          recordDateUnit.expense = rec.amount;
         acc.push(recordDateUnit);
         return acc;
       },

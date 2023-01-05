@@ -52,15 +52,9 @@ export function ChartPanelOnDashboard() {
     const { transactions, dateFrom, dateTo } = statistics;
     const periodStart =
       periodType === 'day'
-        ? dayjs()
-            .subtract(1, periodType)
-            .add(1, 'minute')
-            .millisecond(0)
-            .second(0)
-            .toISOString()
+        ? dayjs().subtract(1, periodType).millisecond(0).second(0).toISOString()
         : dayjs()
             .subtract(1, periodType)
-            .add(1, 'day')
             .hour(23)
             .minute(59)
             .second(59)
