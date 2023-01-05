@@ -69,6 +69,14 @@ const DiagramBox = styled(Box)(() => ({
   bottom: 0,
 }));
 
+const TooltipContainer = styled(Box)(({ theme: styleTheme }) => ({
+  padding: styleTheme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(3),
+  '&:focus, &:focus-within': { outline: 'none' },
+}));
+
 const TooltipBox = styled(Box)(({ theme: styleTheme }) => ({
   padding: styleTheme.spacing(1),
   minWidth: styleTheme.spacing(5),
@@ -84,10 +92,68 @@ const TooltipBox = styled(Box)(({ theme: styleTheme }) => ({
 
 function CustomTooltip({ payload }: TooltipProps<ValueType, NameType>) {
   return (
-    <TooltipBox className="custom-tooltip">
-      {payload && payload[0] && <p>{payload[0].payload?.name}</p>}
-      {payload && payload[0] && <p>{`$${payload[0].value as string}`}</p>}
-    </TooltipBox>
+    <TooltipContainer>
+      <TooltipBox
+        className="custom-tooltip"
+        style={{
+          color: theme.palette.custom.white,
+          backgroundColor:
+            payload && payload[0] && payload[0].name === 'expense'
+              ? theme.palette.custom.orange
+              : theme.palette.custom.greener,
+        }}
+      >
+        {payload && payload[0] && <p>{payload[0].payload?.name}</p>}
+        {payload && payload[0] && (
+          <p>
+            {payload[0].name === 'expense' && '-'}
+            {`$ ${payload[0].value as string}`}
+          </p>
+        )}
+      </TooltipBox>
+      {payload && payload[1] && (
+        <TooltipBox
+          className="custom-tooltip"
+          style={{
+            color: theme.palette.custom.white,
+            backgroundColor:
+              payload && payload[1] && payload[1].name === 'expense'
+                ? theme.palette.custom.orange
+                : theme.palette.custom.greener,
+          }}
+        >
+          {payload && payload[1] && <p>{payload[1].payload?.name}</p>}
+          {payload && payload[1] && (
+            <p>
+              {payload[1].name === 'expense' && '-'}
+              {`$ ${payload[1].value as string}`}
+            </p>
+          )}
+        </TooltipBox>
+      )}
+    </TooltipContainer>
+  );
+}
+
+function CustomDot({
+  cx = 0,
+  cy = 0,
+  color = 'currentColor',
+}: {
+  cx?: number;
+  cy?: number;
+  color?: string;
+}): JSX.Element {
+  return (
+    <circle
+      cx={cx}
+      cy={cy}
+      r={5}
+      stroke={color}
+      style={{ opacity: '1' }}
+      strokeWidth={1.2}
+      fill="white"
+    />
   );
 }
 
@@ -162,6 +228,7 @@ export function ExpenseIncomeAreaChart({
               dataKey="expense"
               stroke={theme.palette.custom.orange}
               fill="url(#Gradient2)"
+              activeDot={<CustomDot color={theme.palette.custom.orange} />}
             />
           )}
           {shouldDrawIncome && income && (
@@ -172,6 +239,7 @@ export function ExpenseIncomeAreaChart({
               dataKey="income"
               stroke={theme.palette.custom.greener}
               fill="url(#Gradient1)"
+              activeDot={<CustomDot color={theme.palette.custom.greener} />}
             />
           )}
         </AreaChart>
