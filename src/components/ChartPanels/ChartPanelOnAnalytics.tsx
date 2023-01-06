@@ -6,6 +6,7 @@ import { statisticsSelectors } from '../../store/statistics/statisticsSelectors'
 import { uixSelectors } from '../../store/uix/uixSelectors';
 import {
   IAreaDiagramDataRecord,
+  IBarDiagramDataRecord,
   ICircleDiagramDataRecord,
   TPeriodType,
 } from '../../types/data';
@@ -18,7 +19,9 @@ import { ExpenseIncomeAreaChart } from '../Charts/ExpenseIncomeAreaChart';
 import {
   reduceTransactionsToCircleBarData,
   reduceTransactionsToAreaChartData,
+  reduceTransactionsToBarChartData,
 } from './dataChartConversionFunctions';
+import { TransactionsBarChart } from '../Charts/TransactionsBarChart';
 
 export function ChartPanelOnAnalytics() {
   const [periodType, setPeriodType] = useState<TPeriodType>('week');
@@ -31,6 +34,7 @@ export function ChartPanelOnAnalytics() {
   const [areaChartData, setAreaChartData] = useState<IAreaDiagramDataRecord[]>(
     []
   );
+  const [barChartData, setBarChartData] = useState<IBarDiagramDataRecord[]>([]);
 
   useEffect(() => {
     const { dateFrom, dateTo } = statistics;
@@ -64,6 +68,13 @@ export function ChartPanelOnAnalytics() {
           periodType,
         })
       );
+      setBarChartData(
+        reduceTransactionsToBarChartData({
+          transactions,
+          startDate: dateFrom,
+          periodType,
+        })
+      );
     }
   }, [statistics, categories, isFetching, periodType]);
 
@@ -80,17 +91,17 @@ export function ChartPanelOnAnalytics() {
         </ChartNameWithIcon>
         <ExpenseIncomeAreaChart data={areaChartData} expense income axis />
       </CardBox>
-      <CardBox height="100%" gridColumn="span 4" style={{ overflow: 'hidden' }}>
-        <ChartNameWithIcon color="red" caption="Expense by categories">
-          <ChartIcon />
-        </ChartNameWithIcon>
-        <RadialBarDiagram data={circleDiagData} />
-      </CardBox>
       <CardBox height="100%" gridColumn="span 3" style={{ overflow: 'hidden' }}>
         <ChartNameWithIcon color="red" caption="Expense by categories">
           <ChartIcon />
         </ChartNameWithIcon>
         <RadialBarDiagram data={circleDiagData} />
+      </CardBox>
+      <CardBox height="100%" gridColumn="span 4" style={{ overflow: 'hidden' }}>
+        <ChartNameWithIcon color="red" caption="Expense by categories">
+          <ChartIcon />
+        </ChartNameWithIcon>
+        <TransactionsBarChart data={barChartData} axis />
       </CardBox>
     </>
   );

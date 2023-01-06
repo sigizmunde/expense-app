@@ -1,11 +1,14 @@
 import dayjs from 'dayjs';
 import {
   IAreaDiagramDataRecord,
+  IBarDiagramDataRecord,
   ICategory,
   ICircleDiagramDataRecord,
+  IDiagramDataRecord,
   ITransaction,
   TPeriodType,
 } from '../../types/data';
+import { IDefaultObject } from '../../types/utils';
 import { generateColor } from '../../utils/colorLibraryGenerator';
 
 export const reduceTransactionsToCircleBarData = ({
@@ -38,7 +41,7 @@ export const reduceTransactionsToCircleBarData = ({
 const getTimingCell = (
   time: string,
   periodType: TPeriodType
-): IAreaDiagramDataRecord => {
+): IDiagramDataRecord => {
   switch (periodType) {
     case 'day':
       return {
@@ -69,7 +72,15 @@ const getTimingCell = (
   }
 };
 
-const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
+const initialAreaValue = { expense: 0, income: 0 };
+
+const initialBarValue = { value: 0 };
+
+const generateInitialArray = (
+  periodType: TPeriodType,
+  startDate: string,
+  initialRecordValue: IDefaultObject
+) => {
   switch (periodType) {
     case 'day':
       return Array.from({ length: 25 }, (_, i) => {
@@ -77,8 +88,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
         return {
           id: hour.hour(),
           name: hour.format('hh'),
-          expense: 0,
-          income: 0,
+          ...initialRecordValue,
         };
       });
     case 'week':
@@ -87,8 +97,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
         return {
           id: day.day(),
           name: day.format('ddd'),
-          expense: 0,
-          income: 0,
+          ...initialRecordValue,
         };
       });
     case 'month':
@@ -97,8 +106,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
         return {
           id: startDateInMonth.date(),
           name: startDateInMonth.format('DD'),
-          expense: 0,
-          income: 0,
+          ...initialRecordValue,
         };
       });
     case 'year':
@@ -108,8 +116,7 @@ const generateInitialArray = (periodType: TPeriodType, startDate: string) => {
           // attention!
           id: startDateInYear.year() * 100 + startDateInYear.month(),
           name: startDateInYear.format('MMM'),
-          expense: 0,
-          income: 0,
+          ...initialRecordValue,
         };
       });
     default:
@@ -128,7 +135,11 @@ export const reduceTransactionsToAreaChartData = ({
   startDate: string;
   periodType: TPeriodType;
 }) => {
-  const initialArray = generateInitialArray(periodType, startDate);
+  const initialArray = generateInitialArray(
+    periodType,
+    startDate,
+    initialAreaValue
+  );
   const newData = transactions
     // .filter((rec) => rec.amount > 0 === (type === 'income'))
     .reduce(
@@ -148,14 +159,57 @@ export const reduceTransactionsToAreaChartData = ({
           }
           return acc;
         }
-        if (type === 'income' && rec.amount > 0)
-          recordDateUnit.income = rec.amount;
-        if (type === 'expense' && rec.amount < 0)
-          recordDateUnit.expense = rec.amount;
-        acc.push(recordDateUnit);
+        if (type === 'income' && rec.amount > 0) {
+          const newRecord: IAreaDiagramDataRecord = {
+            ...recordDateUnit,
+            income: rec.amount,
+          };
+          acc.push(newRecord);
+        }
+        if (type === 'expense' && rec.amount < 0) {
+          const newRecord: IAreaDiagramDataRecord = {
+            ...recordDateUnit,
+            expense: rec.amount,
+          };
+          acc.push(newRecord);
+        }
         return acc;
       },
       [...initialArray]
     );
+  return newData;
+};
+
+export const reduceTransactionsToBarChartData = ({
+  transactions,
+  startDate,
+  periodType,
+}: {
+  transactions: ITransaction[];
+  startDate: string;
+  periodType: TPeriodType;
+}) => {
+  const initialArray = generateInitialArray(
+    periodType,
+    startDate,
+    initialBarValue
+  );
+  const newData = transactions.reduce(
+    (acc: IBarDiagramDataRecord[], rec) => {
+      const recordDateBar = getTimingCell(rec.date, periodType);
+      const currentRec = acc.find((el) => el.id === recordDateBar.id);
+      if (currentRec) {
+        currentRec.value = currentRec.value ? currentRec.value + 1 : 1;
+        return acc;
+      }
+      const newRecord: IBarDiagramDataRecord = {
+        ...recordDateBar,
+        value: 1,
+      };
+      acc.push(newRecord);
+      return acc;
+    },
+    [...initialArray]
+  );
   return newData;
 };
