@@ -3,21 +3,47 @@ import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+type TInfoCardSize = 'small' | 'medium' | 'large';
+
 interface ICustomProps {
+  // name of color in theme custom palette or hex code
   bgcolor?: string | null;
+  sizetype?: TInfoCardSize;
 }
 
 const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
-  ({ theme, ...props }) => ({
-    width: `calc(${theme.spacing(3)} * 2)`,
-    height: `calc(${theme.spacing(3)} * 2)`,
-    backgroundColor: `${theme.palette.custom[props.bgcolor || 'green']}26`,
+  ({ theme, ...props }) => {
+    const { bgcolor, sizetype } = props;
+    const color =
+      bgcolor && theme.palette.custom[bgcolor] !== undefined
+        ? `${theme.palette.custom[bgcolor]}26`
+        : `${bgcolor || '#B2D0AD26'}`;
     // hex26 = opacity 0.015
-    '& svg': {
-      maxWidth: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
-      maxHeight: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
-    },
-  })
+    let diameter;
+    switch (sizetype) {
+      case 'small':
+        diameter = theme.spacing(4);
+        break;
+      case 'large':
+        diameter = theme.spacing(5);
+        break;
+      default:
+        diameter = `calc(${theme.spacing(3)} * 2)`;
+    }
+    return {
+      width: diameter,
+      height: diameter,
+      backgroundColor: color,
+      '&:hover': {
+        cursor: 'auto',
+        backgroundColor: color,
+      },
+      '& svg': {
+        maxWidth: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+        maxHeight: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+      },
+    };
+  }
 );
 
 const CardValue = styled(Typography)(({ theme }) => ({
@@ -37,11 +63,30 @@ const InfoCardBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
 }));
 
+const InfoCardInnerBox = styled(Box)<{ sizetype: TInfoCardSize }>(
+  ({ sizetype }) => {
+    return sizetype === 'large'
+      ? {
+          display: 'flex',
+          flexDirection: 'column-reverse',
+          justifyContent: 'center',
+          gap: 0,
+        }
+      : {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          gap: 0,
+        };
+  }
+);
+
 interface IInfoCardProps {
   color?: string;
   caption?: string;
   value?: string;
   children?: JSX.Element;
+  sizetype?: TInfoCardSize;
 }
 
 export function InfoCard({
@@ -49,14 +94,17 @@ export function InfoCard({
   caption = '',
   value = '',
   children = undefined,
+  sizetype = 'medium',
 }: IInfoCardProps) {
   return (
     <InfoCardBox>
-      <CardIcon bgcolor={color || null}>{children}</CardIcon>
-      <Box>
+      <CardIcon bgcolor={color || null} sizetype={sizetype}>
+        {children}
+      </CardIcon>
+      <InfoCardInnerBox sizetype={sizetype}>
         <CardValue>{value || '---'} </CardValue>
         <CardCaption>{caption || ''}</CardCaption>
-      </Box>
+      </InfoCardInnerBox>
     </InfoCardBox>
   );
 }
