@@ -1,3 +1,4 @@
+import { AnalyticsInfoBlock } from '../../components/AnalyticsInfoBlock/AnalyticsInfoBlock';
 import { CalendarBlock } from '../../components/CalendarBlock/CalendarBlock';
 import { ChartPanelOnAnalytics } from '../../components/ChartPanels/ChartPanelOnAnalytics';
 import { DashboardContainer } from '../../components/DashboardPanels/DashboardContainer';
@@ -14,6 +15,7 @@ export function Analytics() {
       </DashPanel>
       <RightPanel>
         <CalendarBlock />
+        <AnalyticsInfoBlock />
       </RightPanel>
     </DashboardContainer>
   );
