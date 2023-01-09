@@ -148,6 +148,45 @@ function CustomizedXAxisTick({
   );
 }
 
+const getPath = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number
+) => {
+  const r =
+    // eslint-disable-next-line no-nested-ternary
+    radius > width / 2 || radius > height / 2
+      ? width > height
+        ? height / 2
+        : width / 2
+      : radius;
+  return `M${x} ${y + height}
+          V${y + r}
+          Q${x} ${y}, ${x + r} ${y}
+          H${x + width - r}
+          Q${x + width} ${y}, ${x + width} ${y + r}
+          V${y + height}
+          Z`;
+};
+
+function CustomBarShape({
+  fill = '#000',
+  x = 0,
+  y = 0,
+  width = 0,
+  height = 0,
+}: {
+  fill?: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+}): JSX.Element {
+  return <path d={getPath(x, y, width, height, 8)} stroke="none" fill={fill} />;
+}
+
 export function TransactionsBarChart({
   data = testData,
   grid = false,
@@ -210,6 +249,7 @@ export function TransactionsBarChart({
             animationDuration={500}
             dataKey="value"
             fill="url(#BarGradient)"
+            shape={<CustomBarShape />}
           />
         </BarChart>
       </ResponsiveContainer>
