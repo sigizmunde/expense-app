@@ -128,6 +128,10 @@ function CustomizedXAxisTick({
   y?: number;
   payload?: { value: string };
 }) {
+  const transform =
+    payload && payload?.value.length > 2
+      ? 'translate(-15, -5) rotate(-90)'
+      : 'translate(5, -8)';
   return (
     <g transform={`translate(${x},${y})`}>
       <text
@@ -137,7 +141,7 @@ function CustomizedXAxisTick({
         textAnchor="end"
         fill="currentColor"
         opacity={0.7}
-        transform="translate(5, -8)"
+        transform={transform}
         fontFamily="Montserrat, Sans-Serif"
         fontWeight={400}
         fontSize={12}
@@ -192,7 +196,7 @@ export function TransactionsBarChart({
   grid = false,
   axis = false,
 }: {
-  data?: IAreaDiagramDataRecord[];
+  data: IAreaDiagramDataRecord[];
   grid?: boolean;
   axis?: boolean;
 }) {
@@ -232,6 +236,9 @@ export function TransactionsBarChart({
               tickSize={0}
               // padding={{ right: 30 }}
               tick={<CustomizedXAxisTick />}
+              minTickGap={1}
+              tickCount={data.length}
+              interval={data.length < 24 ? 0 : 1}
             />
           )}
           {axis && (

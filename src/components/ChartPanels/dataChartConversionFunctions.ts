@@ -46,7 +46,7 @@ const getTimingCell = (
     case 'day':
       return {
         id: dayjs(time).hour(),
-        name: dayjs(time).format('hh'),
+        name: dayjs(time).format('HH'),
       };
     case 'week':
       return {
@@ -87,7 +87,7 @@ const generateInitialArray = (
         const hour = dayjs(startDate).add(i + 1, 'hour');
         return {
           id: hour.hour(),
-          name: hour.format('hh'),
+          name: hour.format('HH'),
           ...initialRecordValue,
         };
       });
