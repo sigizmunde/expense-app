@@ -42,6 +42,10 @@ const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
         maxWidth: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
         maxHeight: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
       },
+      [theme.breakpoints.down('lg')]: {
+        maxWidth: `calc(${theme.spacing(3)} * 2)`,
+        maxHeight: `calc(${theme.spacing(3)} * 2)`,
+      },
     };
   }
 );
@@ -50,33 +54,50 @@ const CardValue = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
   lineHeight: 1.2,
   color: theme.palette.secondary.main,
+  whiteSpace: 'nowrap',
+  minWidth: 0,
+  maxWidth: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }));
 
 const CardCaption = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.secondary.main,
   opacity: 0.7,
+  whiteSpace: 'nowrap',
+  minWidth: 0,
+  maxWidth: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }));
 
 const InfoCardBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(1),
+  maxWidth: '100%',
 }));
 
 const InfoCardInnerBox = styled(Box)<{ sizetype: TInfoCardSize }>(
-  ({ sizetype }) => {
+  ({ theme, sizetype }) => {
+    const style = {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: 0,
+    };
     return sizetype === 'large'
       ? {
-          display: 'flex',
+          ...style,
           flexDirection: 'column-reverse',
-          justifyContent: 'center',
-          gap: 0,
+
+          [theme.breakpoints.down('lg')]: {
+            flexDirection: 'column',
+          },
         }
       : {
-          display: 'flex',
+          ...style,
           flexDirection: 'column',
-          justifyContent: 'center',
-          gap: 0,
         };
   }
 );

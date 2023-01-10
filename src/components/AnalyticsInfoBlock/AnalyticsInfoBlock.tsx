@@ -31,6 +31,7 @@ const InfoCardWrapper = styled(CardBox)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'start',
   height: '100%',
+  overflow: 'hidden',
 }));
 
 export function AnalyticsInfoBlock() {
