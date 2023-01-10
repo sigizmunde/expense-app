@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { getStatistics } from '../../store/statistics/statisticsThunk';
 import { authSelectors } from '../../store/auth/authSelectors';
 
-const FlexContainer = styled(Container)(({ theme }) => ({
+const FlexCalendarContainer = styled(Container)(({ theme }) => ({
   padding: 0,
   display: 'flex',
   flexDirection: 'column',
@@ -48,6 +48,34 @@ const Icon = styled(IconButton)(({ theme }) => ({
   },
   '&:active, &:hover, &:focus': {
     backgroundColor: `${theme.palette.custom.grey}B3`,
+  },
+}));
+
+const StyledDatePicker = styled(StaticDatePicker)(({ theme }) => ({
+  '& .MuiCalendarPicker-root, & .MuiPickerStaticWrapper-content, & .MuiCalendarOrClockPicker-root > div':
+    {
+      minWidth: '240px',
+      width: '100%',
+    },
+  '& .MuiCalendarPicker-root': { padding: theme.spacing(2) },
+  '& .PrivatePickersSlideTransition-root': {
+    minHeight: '12rem',
+  },
+  '& .MuiPickersCalendarHeader-root': {
+    width: 'auto',
+  },
+  '& .MuiPickersDay-root, & .MuiDayPicker-header span': {
+    ...theme.typography.subtitle1,
+    color: undefined,
+    width: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+    height: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  '& .PrivatePickersYear-yearButton': {
+    width: 'auto',
+    margin: '1px 0',
+    padding: '1px',
   },
 }));
 
@@ -88,7 +116,7 @@ export function CalendarBlock() {
   }, [dispatch, isLoggedIn, periodType, pickedData, setShownValue]);
 
   return (
-    <FlexContainer>
+    <FlexCalendarContainer>
       <CalendarButtons value={periodType} onChange={handlePeriodTypeChange} />
       <CardBox style={{ padding: 0 }}>
         <CalendarTopper>
@@ -106,18 +134,18 @@ export function CalendarBlock() {
           </Box>
         </CalendarTopper>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticDatePicker
+          <StyledDatePicker
             ref={calendarRef}
             displayStaticWrapperAs="desktop"
             openTo="day"
             value={pickedData}
             onChange={(newValue) => {
-              setPickedData(newValue);
+              setPickedData(newValue as Dayjs);
             }}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
       </CardBox>
-    </FlexContainer>
+    </FlexCalendarContainer>
   );
 }
