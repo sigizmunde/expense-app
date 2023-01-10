@@ -27,6 +27,17 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+export const StyledAmountTableCell = styled(StyledTableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    ...theme.typography.h5,
+    color: theme.palette.custom.orange,
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'end',
+    alignItems: 'center',
+  },
+}));
+
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
     backgroundColor: `${theme.palette.custom.violet}4D`,
