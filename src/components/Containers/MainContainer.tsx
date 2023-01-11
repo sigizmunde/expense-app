@@ -12,4 +12,7 @@ export const MainContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'stretch',
   position: 'relative',
   backgroundColor: theme.palette.custom.bgr,
+  [theme.breakpoints.down('md')]: {
+    height: 'auto',
+  },
 }));

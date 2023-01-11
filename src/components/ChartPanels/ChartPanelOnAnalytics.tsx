@@ -90,20 +90,28 @@ export function ChartPanelOnAnalytics() {
         minHeight="38vh"
         height="100%"
         gridColumn="span 7"
-        style={{ overflow: 'hidden' }}
+        style={{ overflow: 'hidden', minHeight: '298px' }}
       >
         <StatisticsHeading>
           Income expense statistics for {periodType}
         </StatisticsHeading>
         <ExpenseIncomeAreaChart data={areaChartData} expense income axis />
       </CardBox>
-      <CardBox height="100%" gridColumn="span 3" style={{ overflow: 'hidden' }}>
+      <CardBox
+        height="100%"
+        gridColumn="span 3"
+        style={{ overflow: 'hidden', minHeight: '298px' }}
+      >
         <ChartNameWithIcon color="red" caption="Expense by categories">
           <ChartIcon />
         </ChartNameWithIcon>
         <RadialBarDiagram data={circleDiagData} />
       </CardBox>
-      <CardBox height="100%" gridColumn="span 4" style={{ overflow: 'hidden' }}>
+      <CardBox
+        height="100%"
+        gridColumn="span 4"
+        style={{ overflow: 'hidden', minHeight: '256px' }}
+      >
         <ChartNameWithIcon color="violet" caption="Number of transactions">
           <TransactionIcon />
         </ChartNameWithIcon>

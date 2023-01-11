@@ -11,6 +11,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  ...theme.typography.subtitle1,
   flexGrow: 1,
   flexShrink: 1,
   margin: 0,

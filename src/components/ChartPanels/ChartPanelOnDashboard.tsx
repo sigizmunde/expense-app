@@ -100,21 +100,24 @@ export function ChartPanelOnDashboard() {
   }, [statistics, dispatch, categories, isFetching, periodType]);
 
   return (
-    <RightPanel>
+    <RightPanel style={{ order: '-1' }}>
       <CalendarButtons value={periodType} onChange={handlePeriodTypeChange} />
-      <CardBox height="25%" style={{ overflow: 'hidden', marginTop: '-10px' }}>
+      <CardBox
+        height="25%"
+        style={{ overflow: 'hidden', marginTop: '-10px', minHeight: '140px' }}
+      >
         <ChartNameWithIcon color="greener" caption={`${periodType} receipt`}>
           <IncomeIcon />
         </ChartNameWithIcon>
         <ExpenseIncomeAreaChart data={incomeChartData} income />
       </CardBox>
-      <CardBox height="25%" style={{ overflow: 'hidden' }}>
+      <CardBox height="25%" style={{ overflow: 'hidden', minHeight: '140px' }}>
         <ChartNameWithIcon color="red" caption={`${periodType} expense`}>
           <ExpenseIcon />
         </ChartNameWithIcon>
         <ExpenseIncomeAreaChart data={expenseChartData} expense />
       </CardBox>
-      <CardBox height="50%" style={{ overflow: 'hidden' }}>
+      <CardBox height="50%" style={{ overflow: 'hidden', minHeight: '298px' }}>
         <ChartNameWithIcon
           color="red"
           caption={`By categories per ${periodType}`}

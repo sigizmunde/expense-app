@@ -10,4 +10,13 @@ export const RightPanel = styled(Container)(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing(3),
   overflowY: 'auto',
+  [theme.breakpoints.down('md')]: {
+    flex: 'unset',
+    height: 'auto',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'repeat(1, 1fr)',
+    },
+  },
 }));

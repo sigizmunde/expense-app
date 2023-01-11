@@ -63,6 +63,13 @@ const StyledDatePicker = styled(StaticDatePicker)(({ theme }) => ({
   },
   '& .MuiPickersCalendarHeader-root': {
     width: 'auto',
+    padding: `0 ${theme.spacing(1)}`,
+  },
+  '& .MuiPickersCalendarHeader-label': {
+    [theme.breakpoints.down('sm')]: {
+      ...theme.typography.h5,
+      lineHeight: 1.05,
+    },
   },
   '& .MuiPickersDay-root, & .MuiDayPicker-header span': {
     ...theme.typography.subtitle1,

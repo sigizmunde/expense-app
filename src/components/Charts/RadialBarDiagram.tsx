@@ -155,7 +155,7 @@ export function RadialBarDiagram({
           cx="50%"
           cy="45%"
           innerRadius={`${innRadius}%`}
-          outerRadius="95%"
+          outerRadius="90%"
           margin={{ top: 2, bottom: 2, left: 2, right: 2 }}
           barCategoryGap="50%"
           data={mappedData}
