@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { styled } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import { getCategories } from '../../store/data/dataThunk';
@@ -47,6 +48,18 @@ export function ChartPanelOnDashboard() {
   ) => {
     setPeriodType(newPeriodType);
   };
+
+  const ChartPanelWrapper = styled(RightPanel)(({ theme }) => ({
+    '& > :first-of-type': {
+      marginBottom: '-10px',
+    },
+    [theme.breakpoints.down('md')]: {
+      order: '-1',
+      '& > :first-of-type': {
+        marginBottom: 0,
+      },
+    },
+  }));
 
   useEffect(() => {
     const { transactions, dateFrom, dateTo } = statistics;
@@ -100,11 +113,14 @@ export function ChartPanelOnDashboard() {
   }, [statistics, dispatch, categories, isFetching, periodType]);
 
   return (
-    <RightPanel style={{ order: '-1' }}>
+    <ChartPanelWrapper>
       <CalendarButtons value={periodType} onChange={handlePeriodTypeChange} />
       <CardBox
         height="25%"
-        style={{ overflow: 'hidden', marginTop: '-10px', minHeight: '140px' }}
+        style={{
+          overflow: 'hidden',
+          minHeight: '140px',
+        }}
       >
         <ChartNameWithIcon color="greener" caption={`${periodType} receipt`}>
           <IncomeIcon />
@@ -126,6 +142,6 @@ export function ChartPanelOnDashboard() {
         </ChartNameWithIcon>
         <RadialBarDiagram data={circleDiagData} />
       </CardBox>
-    </RightPanel>
+    </ChartPanelWrapper>
   );
 }

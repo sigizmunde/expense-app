@@ -8,6 +8,9 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   justifyContent: 'stretch',
   width: '100%',
   gap: theme.spacing(1),
+  [theme.breakpoints.down('md')]: {
+    gridColumn: 'span 2',
+  },
 }));
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
