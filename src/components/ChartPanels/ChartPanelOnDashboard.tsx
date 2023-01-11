@@ -26,6 +26,18 @@ import {
   reduceTransactionsToAreaChartData,
 } from './dataChartConversionFunctions';
 
+const ChartPanelWrapper = styled(RightPanel)(({ theme }) => ({
+  '& > :first-of-type': {
+    marginBottom: '-10px',
+  },
+  [theme.breakpoints.down('md')]: {
+    order: '-1',
+    '& > :first-of-type': {
+      marginBottom: 0,
+    },
+  },
+}));
+
 export function ChartPanelOnDashboard() {
   const dispatch = useAppDispatch();
   const [periodType, setPeriodType] = useState<TPeriodType>('week');
@@ -48,18 +60,6 @@ export function ChartPanelOnDashboard() {
   ) => {
     setPeriodType(newPeriodType);
   };
-
-  const ChartPanelWrapper = styled(RightPanel)(({ theme }) => ({
-    '& > :first-of-type': {
-      marginBottom: '-10px',
-    },
-    [theme.breakpoints.down('md')]: {
-      order: '-1',
-      '& > :first-of-type': {
-        marginBottom: 0,
-      },
-    },
-  }));
 
   useEffect(() => {
     const { transactions, dateFrom, dateTo } = statistics;

@@ -29,6 +29,14 @@ const StatisticsHeading = styled(Typography)(({ theme }) => ({
   textTransform: 'capitalize',
 }));
 
+const ChartBox = styled(CardBox)(({ theme }) => ({
+  minHeight: '38vh',
+  overflow: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    minHeight: `calc(${theme.spacing(6)}) * 2`,
+  },
+}));
+
 export function ChartPanelOnAnalytics() {
   const [periodType, setPeriodType] = useState<TPeriodType>('week');
   const isFetching = useAppSelector(uixSelectors.getIsFetching);
@@ -86,37 +94,24 @@ export function ChartPanelOnAnalytics() {
 
   return (
     <>
-      <CardBox
-        minHeight="38vh"
-        height="100%"
-        gridColumn="span 7"
-        style={{ overflow: 'hidden', minHeight: '298px' }}
-      >
+      <ChartBox gridColumn="span 7">
         <StatisticsHeading>
           Income expense statistics for {periodType}
         </StatisticsHeading>
         <ExpenseIncomeAreaChart data={areaChartData} expense income axis />
-      </CardBox>
-      <CardBox
-        height="100%"
-        gridColumn="span 3"
-        style={{ overflow: 'hidden', minHeight: '298px' }}
-      >
+      </ChartBox>
+      <ChartBox gridColumn="span 3">
         <ChartNameWithIcon color="red" caption="Expense by categories">
           <ChartIcon />
         </ChartNameWithIcon>
         <RadialBarDiagram data={circleDiagData} />
-      </CardBox>
-      <CardBox
-        height="100%"
-        gridColumn="span 4"
-        style={{ overflow: 'hidden', minHeight: '256px' }}
-      >
+      </ChartBox>
+      <ChartBox gridColumn="span 4">
         <ChartNameWithIcon color="violet" caption="Number of transactions">
           <TransactionIcon />
         </ChartNameWithIcon>
         <TransactionsBarChart data={barChartData} axis />
-      </CardBox>
+      </ChartBox>
     </>
   );
 }

@@ -16,7 +16,8 @@ export const RightPanel = styled(Container)(({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
+      display: 'flex',
+      flexDirection: 'column',
     },
   },
 }));

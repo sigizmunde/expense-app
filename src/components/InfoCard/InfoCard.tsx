@@ -63,7 +63,10 @@ const CardValue = styled(Typography)(({ theme }) => ({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
-  [theme.breakpoints.down('sm')]: {
+  [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
+    fontSize: '20px',
+  },
+  [`${theme.breakpoints.down('md')} or (max-height: 680px)`]: {
     ...theme.typography.h5,
   },
 }));
