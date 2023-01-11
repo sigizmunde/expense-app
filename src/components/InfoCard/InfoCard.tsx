@@ -3,7 +3,7 @@ import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-type TInfoCardSize = 'small' | 'medium' | 'large';
+export type TInfoCardSize = 'small' | 'medium' | 'large';
 
 interface ICustomProps {
   // name of color in theme custom palette or hex code
@@ -42,9 +42,13 @@ const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
         maxWidth: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
         maxHeight: `calc(${theme.spacing(3)} + ${theme.spacing(0)})`,
       },
-      [theme.breakpoints.down('lg')]: {
+      [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
         maxWidth: `calc(${theme.spacing(3)} * 2)`,
         maxHeight: `calc(${theme.spacing(3)} * 2)`,
+      },
+      [`${theme.breakpoints.down('md')} or (max-height: 680px)`]: {
+        maxWidth: theme.spacing(4),
+        maxHeight: theme.spacing(4),
       },
     };
   }
@@ -54,26 +58,31 @@ const CardValue = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
   lineHeight: 1.2,
   color: theme.palette.secondary.main,
-  whiteSpace: 'nowrap',
   minWidth: 0,
   maxWidth: '100%',
   overflow: 'hidden',
+  whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  [theme.breakpoints.down('sm')]: {
+    ...theme.typography.h5,
+  },
 }));
 
 const CardCaption = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.secondary.main,
   opacity: 0.7,
-  whiteSpace: 'nowrap',
   minWidth: 0,
   maxWidth: '100%',
   overflow: 'hidden',
+  whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
 }));
 
 const InfoCardBox = styled(Box)(({ theme }) => ({
   display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'center',
   gap: theme.spacing(1),
   maxWidth: '100%',
 }));
@@ -84,15 +93,21 @@ const InfoCardInnerBox = styled(Box)<{ sizetype: TInfoCardSize }>(
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      gap: 0,
+      gap: `0 ${theme.spacing(1)}`,
+      overflow: 'hidden',
     };
     return sizetype === 'large'
       ? {
           ...style,
           flexDirection: 'column-reverse',
 
-          [theme.breakpoints.down('lg')]: {
+          [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
             flexDirection: 'column',
+          },
+          [`${theme.breakpoints.down('md')} or (max-height: 680px)`]: {
+            flexDirection: 'row-reverse',
+            flexWrap: 'wrap',
+            justifyContent: 'start',
           },
         }
       : {

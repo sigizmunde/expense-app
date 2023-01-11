@@ -24,8 +24,8 @@ const InfoBlockWrapper = styled(Container)(({ theme }) => ({
 }));
 
 const InfoCardWrapper = styled(CardBox)(({ theme }) => ({
-  paddingTop: 0,
-  paddingBottom: 0,
+  paddingTop: theme.spacing(0),
+  paddingBottom: theme.spacing(0),
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(2),
   justifyContent: 'center',
