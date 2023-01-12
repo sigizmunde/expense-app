@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { AppBar, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { NavLink, NavLinkProps } from 'react-router-dom';
@@ -53,9 +54,20 @@ const LinkWrapper = styled(Box)(({ theme }) => ({
 }));
 
 export function MenuLink({ children, ...props }: NavLinkProps) {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  const handleClick = () => {
+    if (linkRef.current) linkRef.current.blur();
+  };
+
   return (
     <LinkWrapper>
-      <NavLink style={{ display: 'box', textDecoration: 'none' }} {...props}>
+      <NavLink
+        ref={linkRef}
+        style={{ display: 'box', textDecoration: 'none' }}
+        {...props}
+        onClick={handleClick}
+      >
         {children}
       </NavLink>
     </LinkWrapper>
