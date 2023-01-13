@@ -12,4 +12,8 @@ export const AuthBox = styled(Box)(({ theme }) => ({
   flexShrink: 0,
   position: 'relative',
   backgroundColor: theme.palette.custom.black,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    height: '100%',
+  },
 }));
