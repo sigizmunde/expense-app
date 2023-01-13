@@ -11,6 +11,9 @@ const CategoriesContainerBox = styled(Container)(({ theme }) => ({
   padding: theme.spacing(3),
   paddingBottom: 0,
   overflow: 'scroll',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1),
+  },
 }));
 
 export function CategoriesContainer({

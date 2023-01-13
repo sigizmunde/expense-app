@@ -24,6 +24,11 @@ const NavPanelBox = styled(Box)(({ theme }) => ({
     '&:hover, &:focus-within': {
       left: 0,
     },
+    [theme.breakpoints.down('sm')]: {
+      left: '-250px',
+      zIndex: 5,
+      transition: 'all 250ms ease-out',
+    },
   },
 }));
 
@@ -46,8 +51,13 @@ const OpenButton = styled(IconButton)(({ theme }) => ({
 
 const Placeholder = styled(Box)(({ theme }) => ({
   width: 0,
+  padding: 0,
+  margin: 0,
   [theme.breakpoints.down('lg')]: {
     width: theme.spacing(4),
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: theme.spacing(1),
   },
 }));
 

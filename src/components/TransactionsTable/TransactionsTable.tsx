@@ -18,6 +18,11 @@ import { IPagination } from '../../types/data';
 import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
 import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
 import { EditTransactionPopupMenu } from '../EditTransactionPopupMenu/EditTransactionPopupMenu';
+import {
+  HideNotOnMobile,
+  HideOnMobile,
+  RotateOnMobile,
+} from '../AdaptiveMarkupUtils/AdaptiveMarkupUtils';
 
 export function TransactionTable() {
   const dispatch = useAppDispatch();
@@ -71,7 +76,9 @@ export function TransactionTable() {
       <TableHead>
         <TableRow>
           <StyledTableCell>#</StyledTableCell>
-          <StyledTableCell>Category</StyledTableCell>
+          <StyledTableCell>
+            <HideOnMobile>Category</HideOnMobile>
+          </StyledTableCell>
           <StyledTableCell>Name</StyledTableCell>
           <StyledTableCell onClick={() => toggleSort('date')}>
             <Sorted>
@@ -98,11 +105,18 @@ export function TransactionTable() {
             </StyledTableCell>
             <StyledTableCell>{row.label}</StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
-              {dayjs(row.date).format('DD/MM/YYYY')}
+              <HideOnMobile>
+                {dayjs(row.date).format('DD/MM/YYYY')}
+              </HideOnMobile>
+              <HideNotOnMobile>
+                {dayjs(row.date).format('DD/MM')}
+              </HideNotOnMobile>
             </StyledTableCell>
             <StyledAmountTableCell>
               {moneyNumToString({ amount: row.amount, currencySign: '$' })}
-              <EditTransactionPopupMenu id={row.id} />
+              <RotateOnMobile>
+                <EditTransactionPopupMenu id={row.id} />
+              </RotateOnMobile>
             </StyledAmountTableCell>
           </StyledTableRow>
         ))}

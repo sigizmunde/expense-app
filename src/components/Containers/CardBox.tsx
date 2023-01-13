@@ -22,5 +22,8 @@ export const CardBox = styled(Box)<ICustomProps & BoxProps>(
       theme.palette.custom[props.bgcolor as string] ||
       props.bgcolor ||
       theme.palette.custom.white,
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1),
+    },
   })
 );
