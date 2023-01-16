@@ -100,7 +100,10 @@ export function AnalyticsInfoBlock() {
         <InfoCard
           color="red"
           sizetype="large"
-          value={moneyNumToString({ amount: totalExpense })}
+          value={moneyNumToString({
+            amount: totalExpense * -1,
+            negative: true,
+          })}
           caption="Expense for Periud"
         >
           <ExpenseIcon />
