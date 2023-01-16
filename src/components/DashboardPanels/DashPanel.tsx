@@ -7,6 +7,7 @@ export const DashPanel = styled(Container)(({ theme }) => ({
   flex: '7 7',
   display: 'grid',
   gridTemplateColumns: 'repeat(7, 1fr)',
+  alignContent: 'start',
   gap: theme.spacing(3),
   [theme.breakpoints.down('md')]: {
     gridTemplateColumns: 'repeat(2, 1fr)',
