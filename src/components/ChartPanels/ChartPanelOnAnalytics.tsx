@@ -78,14 +78,14 @@ export function ChartPanelOnAnalytics() {
       setAreaChartData(
         reduceTransactionsToAreaChartData({
           transactions,
-          startDate: dateFrom,
+          startDate: dateFrom || dayjs().toISOString(),
           periodType,
         })
       );
       setBarChartData(
         reduceTransactionsToBarChartData({
           transactions,
-          startDate: dateFrom,
+          startDate: dateFrom || dayjs().toISOString(),
           periodType,
         })
       );

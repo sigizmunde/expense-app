@@ -112,14 +112,14 @@ export function CalendarBlock() {
       )}`
     );
 
-    if (isLoggedIn) {
-      dispatch(
-        getStatistics({
-          dateFrom: dateFrom.format('YYYY-MM-DD'),
-          dateTo: dayjs(pickedData).format('YYYY-MM-DD'),
-        })
-      );
-    }
+    if (!isLoggedIn) return;
+
+    dispatch(
+      getStatistics({
+        dateFrom: dateFrom.format('YYYY-MM-DD'),
+        dateTo: dayjs(pickedData).format('YYYY-MM-DD'),
+      })
+    );
   }, [dispatch, isLoggedIn, periodType, pickedData, setShownValue]);
 
   return (

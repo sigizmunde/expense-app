@@ -140,43 +140,41 @@ export const reduceTransactionsToAreaChartData = ({
     startDate,
     initialAreaValue
   );
-  const newData = transactions
-    // .filter((rec) => rec.amount > 0 === (type === 'income'))
-    .reduce(
-      (acc: IAreaDiagramDataRecord[], rec) => {
-        const recordDateUnit = getTimingCell(rec.date, periodType);
-        const currentRec = acc.find((el) => el.id === recordDateUnit.id);
-        if (currentRec) {
-          if ((!type || type !== 'expense') && rec.amount > 0) {
-            currentRec.income = currentRec.income
-              ? currentRec.income + rec.amount
-              : rec.amount;
-          }
-          if ((!type || type !== 'income') && rec.amount < 0) {
-            currentRec.expense = currentRec.expense
-              ? currentRec.expense - rec.amount
-              : Math.abs(rec.amount);
-          }
-          return acc;
+  const newData = transactions.reduce(
+    (acc: IAreaDiagramDataRecord[], rec) => {
+      const recordDateUnit = getTimingCell(rec.date, periodType);
+      const currentRec = acc.find((el) => el.id === recordDateUnit.id);
+      if (currentRec) {
+        if ((!type || type !== 'expense') && rec.amount > 0) {
+          currentRec.income = currentRec.income
+            ? currentRec.income + rec.amount
+            : rec.amount;
         }
-        if (type === 'income' && rec.amount > 0) {
-          const newRecord: IAreaDiagramDataRecord = {
-            ...recordDateUnit,
-            income: rec.amount,
-          };
-          acc.push(newRecord);
-        }
-        if (type === 'expense' && rec.amount < 0) {
-          const newRecord: IAreaDiagramDataRecord = {
-            ...recordDateUnit,
-            expense: rec.amount,
-          };
-          acc.push(newRecord);
+        if ((!type || type !== 'income') && rec.amount < 0) {
+          currentRec.expense = currentRec.expense
+            ? currentRec.expense - rec.amount
+            : Math.abs(rec.amount);
         }
         return acc;
-      },
-      [...initialArray]
-    );
+      }
+      if (type === 'income' && rec.amount > 0) {
+        const newRecord: IAreaDiagramDataRecord = {
+          ...recordDateUnit,
+          income: rec.amount,
+        };
+        acc.push(newRecord);
+      }
+      if (type === 'expense' && rec.amount < 0) {
+        const newRecord: IAreaDiagramDataRecord = {
+          ...recordDateUnit,
+          expense: rec.amount,
+        };
+        acc.push(newRecord);
+      }
+      return acc;
+    },
+    [...initialArray]
+  );
   return newData;
 };
 
