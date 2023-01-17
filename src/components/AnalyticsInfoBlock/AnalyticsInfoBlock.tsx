@@ -91,7 +91,7 @@ export function AnalyticsInfoBlock() {
           color="greener"
           sizetype="large"
           value={moneyNumToString({ amount: totalIncome })}
-          caption="Income for Periud"
+          caption="Income for Period"
         >
           <IncomeIcon />
         </InfoCard>
@@ -104,7 +104,7 @@ export function AnalyticsInfoBlock() {
             amount: totalExpense * -1,
             negative: true,
           })}
-          caption="Expense for Periud"
+          caption="Expense for Period"
         >
           <ExpenseIcon />
         </InfoCard>
@@ -114,7 +114,7 @@ export function AnalyticsInfoBlock() {
           color={maximum.color}
           sizetype="large"
           value={moneyNumToString({ amount: maximum.amount })}
-          caption="Max Transaction for Periud"
+          caption="Max Transaction for Period"
         />
       </InfoCardWrapper>
       <InfoCardWrapper>
@@ -122,7 +122,7 @@ export function AnalyticsInfoBlock() {
           color="violet"
           sizetype="large"
           value={transactions.length.toString()}
-          caption="Total Transactions for Periud"
+          caption="Total Transactions for Period"
         >
           <TransactionIcon />
         </InfoCard>
