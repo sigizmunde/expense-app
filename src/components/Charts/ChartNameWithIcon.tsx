@@ -33,7 +33,7 @@ const ChartNameBox = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
 }));
 
-interface IChartNameProps {
+export interface IChartNameProps {
   color?: string;
   caption?: string;
   children?: JSX.Element;

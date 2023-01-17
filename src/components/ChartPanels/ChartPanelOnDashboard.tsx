@@ -25,6 +25,8 @@ import {
   reduceTransactionsToCircleBarData,
   reduceTransactionsToAreaChartData,
 } from './dataChartConversionFunctions';
+import { ChartNameWithValue } from '../Charts/ChartNameWithValue';
+import { moneyNumToString } from '../../utils/moneyNumToString';
 
 const ChartPanelWrapper = styled(RightPanel)(({ theme }) => ({
   '& > :first-of-type': {
@@ -44,6 +46,8 @@ export function ChartPanelOnDashboard() {
   const isFetching = useAppSelector(uixSelectors.getIsFetching);
   const categories = useAppSelector(dataSelectors.getCategories);
   const statistics = useAppSelector(statisticsSelectors.getStatistics);
+  const [overalExpense, setOveralExpense] = useState(0);
+  const [overalIncome, setOveralIncome] = useState(0);
   const [circleDiagData, setCircleDiagData] = useState<
     ICircleDiagramDataRecord[]
   >([]);
@@ -62,6 +66,8 @@ export function ChartPanelOnDashboard() {
   };
 
   useEffect(() => {
+    if (isFetching) return;
+
     const { transactions, dateFrom, dateTo } = statistics;
     const periodStart =
       periodType === 'day'
@@ -78,38 +84,46 @@ export function ChartPanelOnDashboard() {
         ? dayjs().add(1, 'minute').millisecond(0).second(0).toISOString()
         : dayjs().hour(23).minute(59).second(59).millisecond(999).toISOString();
 
-    if (!isFetching) {
-      if (!(categories.length > 0)) {
-        dispatch(getCategories);
-      }
-      if (dateFrom !== periodStart || dateTo !== periodEnd) {
-        dispatch(
-          getStatistics({
-            dateFrom: periodStart,
-            dateTo: periodEnd,
-          })
-        );
-      }
-      setCircleDiagData(
-        reduceTransactionsToCircleBarData({ transactions, categories })
-      );
-      setExpenseChartData(
-        reduceTransactionsToAreaChartData({
-          transactions,
-          type: 'expense',
-          startDate: periodStart,
-          periodType,
-        })
-      );
-      setIncomeChartData(
-        reduceTransactionsToAreaChartData({
-          transactions,
-          type: 'income',
-          startDate: periodStart,
-          periodType,
+    if (!(categories.length > 0)) {
+      dispatch(getCategories);
+    }
+    if (dateFrom !== periodStart || dateTo !== periodEnd) {
+      dispatch(
+        getStatistics({
+          dateFrom: periodStart,
+          dateTo: periodEnd,
         })
       );
     }
+    setCircleDiagData(
+      reduceTransactionsToCircleBarData({ transactions, categories })
+    );
+    setExpenseChartData(
+      reduceTransactionsToAreaChartData({
+        transactions,
+        type: 'expense',
+        startDate: periodStart,
+        periodType,
+      })
+    );
+    setIncomeChartData(
+      reduceTransactionsToAreaChartData({
+        transactions,
+        type: 'income',
+        startDate: periodStart,
+        periodType,
+      })
+    );
+    setOveralIncome(
+      transactions
+        .filter((e) => e.amount > 0)
+        .reduce((acc, e) => acc + e.amount, 0)
+    );
+    setOveralExpense(
+      transactions
+        .filter((e) => e.amount < 0)
+        .reduce((acc, e) => acc + e.amount, 0)
+    );
   }, [statistics, dispatch, categories, isFetching, periodType]);
 
   return (
@@ -122,15 +136,23 @@ export function ChartPanelOnDashboard() {
           minHeight: '140px',
         }}
       >
-        <ChartNameWithIcon color="greener" caption={`${periodType} receipt`}>
+        <ChartNameWithValue
+          color="greener"
+          caption={`${periodType} receipt`}
+          value={moneyNumToString({ amount: overalIncome })}
+        >
           <IncomeIcon />
-        </ChartNameWithIcon>
+        </ChartNameWithValue>
         <ExpenseIncomeAreaChart data={incomeChartData} income />
       </CardBox>
       <CardBox height="25%" style={{ overflow: 'hidden', minHeight: '140px' }}>
-        <ChartNameWithIcon color="red" caption={`${periodType} expense`}>
+        <ChartNameWithValue
+          color="red"
+          caption={`${periodType} expense`}
+          value={moneyNumToString({ amount: overalExpense, negative: true })}
+        >
           <ExpenseIcon />
-        </ChartNameWithIcon>
+        </ChartNameWithValue>
         <ExpenseIncomeAreaChart data={expenseChartData} expense />
       </CardBox>
       <CardBox height="50%" style={{ overflow: 'hidden', minHeight: '298px' }}>
