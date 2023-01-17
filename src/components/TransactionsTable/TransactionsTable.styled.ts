@@ -27,12 +27,19 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.secondary,
     padding: theme.spacing(1),
     minHeight: `calc(${theme.spacing(5)} * 0.8125)`,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    '&:nth-of-type(1), &:nth-of-type(2)': {
+      maxWidth: '170px',
+      minWidth: '25px',
+    },
   },
   [theme.breakpoints.down('sm')]: {
     [`&.${tableCellClasses.head}, &.${tableCellClasses.body}`]: {
       paddingLeft: '2px',
       paddingRight: '2px',
       textAlign: 'center',
+      '&:nth-of-type(1), &:nth-of-type(2)': { maxWidth: '75px' },
     },
   },
 }));

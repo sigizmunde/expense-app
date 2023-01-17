@@ -45,6 +45,8 @@ const StatsWrapper = styled(Box)(({ theme }) => ({
 
 const CategoryName = styled(Typography)(({ theme }) => ({
   ...theme.typography.h5,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
   marginTop: theme.spacing(1),
 }));
 

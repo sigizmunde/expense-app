@@ -39,6 +39,12 @@ const StyledDatePicker = styled(MobileDatePicker)(({ theme }) => ({
   },
 }));
 
+const StyledMenuItem = styled(MenuItem)(() => ({
+  maxWidth: '320px',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}));
+
 const validationSchema = Yup.object({
   label: Yup.string().required('Label is required'),
   categoryId: Yup.number().required('Choose a category'),
@@ -184,9 +190,9 @@ export function TransactionForm({
           >
             {categories &&
               categories.map((e) => (
-                <MenuItem key={e.id} value={e.id}>
+                <StyledMenuItem key={e.id} value={e.id}>
                   {e.label}
-                </MenuItem>
+                </StyledMenuItem>
               ))}
           </DashSelectInput>
         )}
