@@ -6,7 +6,7 @@ import { ChartNameWithIcon, IChartNameProps } from './ChartNameWithIcon';
 const TitleValue = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
   whiteSpace: 'nowrap',
-  overflow: 'ellipsis',
+  textOverflow: 'ellipsis',
   color: theme.palette.secondary.main,
   marginLeft: 'auto',
 }));
