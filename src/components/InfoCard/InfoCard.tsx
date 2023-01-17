@@ -56,7 +56,6 @@ const CardIcon = styled(IconButton)<ICustomProps & IconButtonProps>(
 
 const CardValue = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
-  lineHeight: 1.2,
   color: theme.palette.secondary.main,
   minWidth: 0,
   maxWidth: '100%',
@@ -66,13 +65,15 @@ const CardValue = styled(Typography)(({ theme }) => ({
   [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
     fontSize: '20px',
   },
-  [`${theme.breakpoints.down('md')} or (max-height: 680px)`]: {
+  [`${theme.breakpoints.down('sm')} or (max-height: 680px)`]: {
     ...theme.typography.h5,
+    lineHeight: 1,
   },
 }));
 
 const CardCaption = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
+  lineHeight: 1,
   color: theme.palette.secondary.main,
   opacity: 0.7,
   minWidth: 0,
@@ -80,6 +81,7 @@ const CardCaption = styled(Typography)(({ theme }) => ({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  marginRight: 'auto',
 }));
 
 const InfoCardBox = styled(Box)(({ theme }) => ({
@@ -88,6 +90,7 @@ const InfoCardBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(1),
   maxWidth: '100%',
+  width: '100%',
 }));
 
 const InfoCardInnerBox = styled(Box)<{ sizetype: TInfoCardSize }>(
@@ -98,20 +101,22 @@ const InfoCardInnerBox = styled(Box)<{ sizetype: TInfoCardSize }>(
       justifyContent: 'center',
       gap: `0 ${theme.spacing(1)}`,
       overflow: 'hidden',
+      [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
+        flexDirection: 'column',
+      },
+      [`${theme.breakpoints.down('sm')} or (max-height: 680px)`]: {
+        width: '100%',
+        flexDirection: 'row-reverse',
+        flexWrap: 'wrap',
+        justifyContent: 'start',
+        alignItems: 'baseline',
+        alignContent: 'center',
+      },
     };
     return sizetype === 'large'
       ? {
           ...style,
           flexDirection: 'column-reverse',
-
-          [`${theme.breakpoints.down('lg')} or (max-height: 875px)`]: {
-            flexDirection: 'column',
-          },
-          [`${theme.breakpoints.down('md')} or (max-height: 680px)`]: {
-            flexDirection: 'row-reverse',
-            flexWrap: 'wrap',
-            justifyContent: 'start',
-          },
         }
       : {
           ...style,
