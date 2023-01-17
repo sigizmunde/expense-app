@@ -69,27 +69,27 @@ export function ChartPanelOnAnalytics() {
   }, [statistics]);
 
   useEffect(() => {
+    if (isFetching) return;
+
     const { transactions, dateFrom } = statistics;
 
-    if (!isFetching) {
-      setCircleDiagData(
-        reduceTransactionsToCircleBarData({ transactions, categories })
-      );
-      setAreaChartData(
-        reduceTransactionsToAreaChartData({
-          transactions,
-          startDate: dateFrom || dayjs().toISOString(),
-          periodType,
-        })
-      );
-      setBarChartData(
-        reduceTransactionsToBarChartData({
-          transactions,
-          startDate: dateFrom || dayjs().toISOString(),
-          periodType,
-        })
-      );
-    }
+    setCircleDiagData(
+      reduceTransactionsToCircleBarData({ transactions, categories })
+    );
+    setAreaChartData(
+      reduceTransactionsToAreaChartData({
+        transactions,
+        startDate: dateFrom || dayjs().toISOString(),
+        periodType,
+      })
+    );
+    setBarChartData(
+      reduceTransactionsToBarChartData({
+        transactions,
+        startDate: dateFrom || dayjs().toISOString(),
+        periodType,
+      })
+    );
   }, [statistics, categories, isFetching, periodType]);
 
   return (
