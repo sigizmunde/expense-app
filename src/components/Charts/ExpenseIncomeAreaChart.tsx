@@ -67,6 +67,9 @@ const DiagramBox = styled(Box)(() => ({
   height: '75%',
   left: 0,
   bottom: 0,
+  '& .recharts-tooltip-wrapper:focus': {
+    outline: 'none',
+  },
 }));
 
 const TooltipContainer = styled(Box)(({ theme: styleTheme }) => ({
@@ -288,6 +291,7 @@ export function ExpenseIncomeAreaChart({
             <YAxis
               axisLine={false}
               tickSize={0}
+              minTickGap={24}
               padding={{ bottom: 16 }}
               width={45}
               tick={<CustomizedYAxisTick />}

@@ -60,6 +60,9 @@ const HistogramBox = styled(Box)(() => ({
   height: '75%',
   left: 0,
   bottom: 0,
+  '& .recharts-tooltip-wrapper:focus': {
+    outline: 'none',
+  },
 }));
 
 const TooltipBox = styled(Box)(({ theme: styleTheme }) => ({
@@ -130,7 +133,7 @@ function CustomizedXAxisTick({
 }) {
   const transform =
     payload && payload?.value.length > 2
-      ? 'translate(-15, -5) rotate(-90)'
+      ? 'translate(-15, 0) rotate(-90)'
       : 'translate(5, -8)';
   return (
     <g transform={`translate(${x},${y})`}>
