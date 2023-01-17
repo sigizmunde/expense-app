@@ -6,18 +6,23 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { dataSelectors } from '../../store/data/dataSelectors';
 import {
   Sorted,
+  StyledAmountTableCell,
   StyledTable,
   StyledTableCell,
   StyledTableRow,
 } from './TransactionsTable.styled';
 import { moneyNumToString } from '../../utils/moneyNumToString';
-import { theme } from '../../styles/theme';
 import { getTransactions } from '../../store/data/dataThunk';
 import { TransactionCategory } from '../TransactionCategory/TransactionCategory';
 import { IPagination } from '../../types/data';
 import { TableSortSwitch2 } from '../TableSortSwitch2/TableSortSwitch2';
 import { useGetTransactionsWithTableIndex } from '../../hooks/useGetTransactions';
 import { EditTransactionPopupMenu } from '../EditTransactionPopupMenu/EditTransactionPopupMenu';
+import {
+  HideNotOnMobile,
+  HideOnMobile,
+  RotateOnMobile,
+} from '../AdaptiveMarkupUtils/AdaptiveMarkupUtils';
 
 export function TransactionTable() {
   const dispatch = useAppDispatch();
@@ -71,7 +76,9 @@ export function TransactionTable() {
       <TableHead>
         <TableRow>
           <StyledTableCell>#</StyledTableCell>
-          <StyledTableCell>Category</StyledTableCell>
+          <StyledTableCell>
+            <HideOnMobile>Category</HideOnMobile>
+          </StyledTableCell>
           <StyledTableCell>Name</StyledTableCell>
           <StyledTableCell onClick={() => toggleSort('date')}>
             <Sorted>
@@ -98,22 +105,19 @@ export function TransactionTable() {
             </StyledTableCell>
             <StyledTableCell>{row.label}</StyledTableCell>
             <StyledTableCell style={{ fontSize: '12px' }}>
-              {dayjs(row.date).format('DD/MM/YYYY')}
+              <HideOnMobile>
+                {dayjs(row.date).format('DD/MM/YYYY')}
+              </HideOnMobile>
+              <HideNotOnMobile>
+                {dayjs(row.date).format('DD/MM')}
+              </HideNotOnMobile>
             </StyledTableCell>
-            <StyledTableCell
-              align="center"
-              style={{
-                ...theme.typography.h5,
-                color: theme.palette.custom.orange,
-                display: 'flex',
-                flexWrap: 'nowrap',
-                justifyContent: 'end',
-                alignItems: 'center',
-              }}
-            >
+            <StyledAmountTableCell>
               {moneyNumToString({ amount: row.amount, currencySign: '$' })}
-              <EditTransactionPopupMenu id={row.id} />
-            </StyledTableCell>
+              <RotateOnMobile>
+                <EditTransactionPopupMenu id={row.id} />
+              </RotateOnMobile>
+            </StyledAmountTableCell>
           </StyledTableRow>
         ))}
       </TableBody>

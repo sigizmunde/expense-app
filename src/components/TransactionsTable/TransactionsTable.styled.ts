@@ -18,12 +18,40 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     paddingTop: 0,
     paddingBottom: theme.spacing(1),
     whiteSpace: 'nowrap',
+    [theme.breakpoints.down('sm')]: {
+      verticalAlign: 'bottom',
+    },
   },
   [`&.${tableCellClasses.body}`]: {
     ...theme.typography.subtitle1,
     color: theme.palette.secondary,
     padding: theme.spacing(1),
     minHeight: `calc(${theme.spacing(5)} * 0.8125)`,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    '&:nth-of-type(1), &:nth-of-type(2)': {
+      maxWidth: '170px',
+      minWidth: '25px',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    [`&.${tableCellClasses.head}, &.${tableCellClasses.body}`]: {
+      paddingLeft: '2px',
+      paddingRight: '2px',
+      textAlign: 'center',
+      '&:nth-of-type(1), &:nth-of-type(2)': { maxWidth: '75px' },
+    },
+  },
+}));
+
+export const StyledAmountTableCell = styled(StyledTableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    ...theme.typography.h5,
+    color: theme.palette.custom.orange,
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'end',
+    alignItems: 'center',
   },
 }));
 
@@ -33,10 +61,13 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export const Sorted = styled(Box)(() => ({
+export const Sorted = styled(Box)(({ theme }) => ({
   font: 'inherit',
   lineHeight: 'inherit',
   display: 'inline-flex',
   alignItems: 'center',
   gap: 0,
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column-reverse',
+  },
 }));

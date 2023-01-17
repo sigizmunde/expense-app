@@ -12,6 +12,17 @@ export const DashboardContainerBox = styled(Container)(({ theme }) => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
+  [theme.breakpoints.down('md')]: {
+    marginTop: theme.spacing(5),
+    flexDirection: 'column-reverse',
+    height: 'auto',
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(5),
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(6),
+    },
+  },
 }));
 
 export function DashboardContainer({

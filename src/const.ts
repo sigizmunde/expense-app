@@ -28,3 +28,5 @@ export const COLORS = [
   '#62b2ea',
   '#ad7ee7',
 ];
+
+export const PLACEHOLDER_COLOR = '#CCC';

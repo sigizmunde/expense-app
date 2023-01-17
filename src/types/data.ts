@@ -60,3 +60,36 @@ export interface ITotalInfo {
   totalExpense: number;
   totalTransactions: number;
 }
+
+export interface ICircleDiagramDataRecord {
+  id: number;
+  name: string;
+  value: number;
+  fill: string;
+}
+
+export interface IDiagramDataRecord {
+  id: number;
+  name?: string;
+}
+
+export interface IAreaDiagramDataRecord extends IDiagramDataRecord {
+  expense?: number;
+  income?: number;
+}
+
+export interface IBarDiagramDataRecord extends IDiagramDataRecord {
+  value?: number;
+}
+
+export interface IStatisticsState extends ITransactionsResponse {
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface IStatisticsQueryProps {
+  dateFrom: string;
+  dateTo: string;
+}
+
+export type TPeriodType = 'day' | 'week' | 'month' | 'year';

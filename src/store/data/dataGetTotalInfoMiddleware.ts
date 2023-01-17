@@ -1,5 +1,6 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import { getUser } from '../auth/authThunk';
+import { resetStatistics } from '../statistics/statisticsSlice';
 import {
   addTransaction,
   deleteTransaction,
@@ -18,6 +19,7 @@ export const dataGetTotalInfoMiddleware: Middleware =
       action.type === updateTransaction.fulfilled.type
     ) {
       store.dispatch(getTotalInfo());
+      store.dispatch(resetStatistics());
     }
     next(action);
   };

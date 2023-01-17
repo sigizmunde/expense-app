@@ -10,6 +10,7 @@ export function ColorBullet({ color }: { color: string }) {
         borderRadius: '50%',
         transform: 'translateY(15%)',
         margin: `0 ${theme.spacing(0)}`,
+        flexShrink: 0,
       })}
     />
   );

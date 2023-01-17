@@ -1,4 +1,10 @@
-import { styled, Container, Box, Typography } from '@mui/material';
+import {
+  styled,
+  Container,
+  Box,
+  Typography,
+  ContainerProps,
+} from '@mui/material';
 import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
@@ -16,7 +22,13 @@ const BlockHeader = styled(Box)(({ theme }) => ({
   padding: `0 ${theme.spacing(5)}`,
   marginBottom: `calc(${theme.spacing(4)} + ${theme.spacing(1)})`,
   [theme.breakpoints.down('md')]: {
+    padding: `0 ${theme.spacing(4)}`,
+  },
+  [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
+    '& .MuiFormControl-root': {
+      width: '100%',
+    },
   },
 }));
 
@@ -24,7 +36,7 @@ const TableName = styled(Typography)(({ theme }) => ({
   ...theme.typography.h4,
 }));
 
-const TableGrid = styled(Container)(({ theme }) => ({
+const TableGrid = styled(Container)<ContainerProps>(({ theme }) => ({
   backgroundColor: 'transparent',
   width: '100%',
   display: 'grid',
@@ -38,6 +50,11 @@ const TableGrid = styled(Container)(({ theme }) => ({
     gridTemplateColumns: 'repeat(2, 1fr)',
   },
   [theme.breakpoints.down('md')]: {
+    '&.MuiContainer-root': {
+      padding: `0 ${theme.spacing(2)} ${theme.spacing(2)}`,
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
     gridTemplateColumns: 'unset',
   },
 }));

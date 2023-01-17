@@ -12,9 +12,23 @@ const DashHeaderPanel = styled(Container)(({ theme }) => ({
   gridColumn: 'span 7',
   backgroundColor: 'transparent',
   width: '100%',
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
   justifyContent: 'space-between',
   gap: theme.spacing(3),
+  [theme.breakpoints.down('md')]: {
+    position: 'absolute',
+    top: theme.spacing(3),
+    left: '50%',
+    transform: 'translate(-48%, 0)',
+    width: '90%',
+    [theme.breakpoints.down('sm')]: {
+      transform: 'translate(-50%, 0) scale(90%)',
+      gridAutoFlow: 'dense',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      marginLeft: theme.spacing(2),
+    },
+  },
 }));
 
 export function DashHeader() {

@@ -1,9 +1,10 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 import { store } from '../store/store';
 import { isTokenExpired } from './isTokenExpired';
 import { token } from './token';
 
 export async function tokenRefreshOnExpire(config: AxiosRequestConfig) {
+  config.headers = { ...config.headers } as RawAxiosRequestHeaders;
   if (config.headers && config.headers.Authorization) {
     const currentToken = (config.headers.Authorization as string).split(' ')[1];
     if (isTokenExpired(currentToken)) {

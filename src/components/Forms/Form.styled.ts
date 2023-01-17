@@ -8,6 +8,12 @@ export const FormBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   gap: theme.spacing(4),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+    paddingTop: `calc(${theme.spacing(5)} + 16px)`,
+    width: '100%',
+    maxWidth: '360px',
+  },
 }));
 
 export const FieldsBox = styled(Box)(({ theme }) => ({

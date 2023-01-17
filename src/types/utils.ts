@@ -21,3 +21,7 @@ export interface IItem {
 export interface IProps {
   items: IItem[];
 }
+
+export interface IDefaultObject {
+  [key: string]: unknown;
+}

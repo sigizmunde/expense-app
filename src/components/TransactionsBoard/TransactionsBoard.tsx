@@ -15,10 +15,13 @@ const TableContainer = styled(Container)(({ theme }) => ({
   overflow: 'auto',
 }));
 
-const FlexContainer = styled(Container)(() => ({
+const FlexContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignContent: 'end',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
 }));
 
 export function TransactionsBoard() {

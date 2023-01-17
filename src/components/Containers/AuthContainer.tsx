@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 export const AuthContainer = styled(Box)(({ theme }) => ({
   height: '100vh',
   minHeight: '700px',
-  width: '100vw',
+  width: '100%',
   display: 'flex',
   alignItems: 'stretch',
   justifyContent: 'stretch',
