@@ -100,7 +100,7 @@ export function CalendarBlock() {
     event: React.MouseEvent<HTMLElement>,
     newPeriodType: TPeriodType
   ) => {
-    setPeriodType(newPeriodType);
+    setPeriodType((prevType) => newPeriodType || prevType);
   };
 
   useEffect(() => {
